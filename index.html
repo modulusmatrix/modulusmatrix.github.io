@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MODULUS X | Formula Solver</title>
+    <title>MODULUS X | 1. Formül Açılımı</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -21,14 +21,13 @@
             border: 1px solid rgba(0, 242, 254, 0.15);
             border-radius: 16px;
             width: 100%;
-            max-width: 480px;
-            padding: 30px 25px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            text-align: center;
+            max-width: 460px;
+            padding: 35px 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
-        .matrix-title { font-size: 2rem; font-weight: 800; color: #00f2fe; letter-spacing: 2px; text-transform: uppercase; }
-        .matrix-subtitle { font-size: 0.85rem; color: #52667a; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 25px; }
-        .form-group { margin-bottom: 16px; text-align: left; }
+        .matrix-title { font-size: 2.2rem; font-weight: 800; color: #00f2fe; letter-spacing: 3px; text-transform: uppercase; text-align: center; margin-bottom: 5px; }
+        .matrix-subtitle { font-size: 0.85rem; color: #52667a; text-transform: uppercase; letter-spacing: 4px; text-align: center; margin-bottom: 30px; }
+        .form-group { margin-bottom: 18px; text-align: left; }
         .form-group label { display: block; font-size: 0.85rem; color: #a3b8cc; margin-bottom: 6px; font-weight: 500; }
         .form-control {
             width: 100%; background: #172030; border: 1px solid #222f47; border-radius: 8px;
@@ -39,11 +38,12 @@
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
         .btn-calistir {
             width: 100%; background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%); border: none;
-            border-radius: 8px; padding: 15px; color: #fff; font-weight: 700; font-size: 1rem;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px;
+            border-radius: 8px; padding: 16px; color: #fff; font-weight: 700; font-size: 1rem;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 2px; margin-top: 15px;
             box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4); transition: all 0.3s;
         }
         .btn-calistir:hover { opacity: 0.9; box-shadow: 0 4px 20px rgba(0, 242, 254, 0.6); }
+        #matrix-result-panel { width: 100%; }
     </style>
 </head>
 <body>
@@ -54,7 +54,7 @@
 
         <div class="form-group">
             <label for="xAlani">X Alanı (Derdiniz, Sıkıntınız veya Projeniz)</label>
-            <input type="text" id="xAlani" class="form-control" placeholder="Örn: Yeni bir sektöre geçmeli miyim?, Ayrılık Kararı">
+            <input type="text" id="xAlani" class="form-control" placeholder="Örn: İngilizce öğrenmek, Yeni bir iş kurmak">
         </div>
 
         <div class="form-group grid-3">
@@ -84,11 +84,13 @@
         </div>
 
         <div class="form-group">
-            <label for="birlesmeAlani">Birleşme Sahası (Entegre Olunacak Yeni Çevre)</label>
-            <input type="text" id="birlesmeAlani" class="form-control" placeholder="Örn: Dijital Yazılım Dünyası, Yeni Ortaklık">
+            <label for="birlesmeAlani">Birleşme Sahası (Entegre Olunacak Çevre)</label>
+            <input type="text" id="birlesmeAlani" class="form-control" placeholder="Örn: Küresel pazar, Dil akademisi">
         </div>
 
         <button class="btn-calistir">MATRİSİ ÇALIŞTIR</button>
+        
+        <div id="matrix-result-panel"></div>
     </div>
 
     <script src="matrix-engine.js"></script>
