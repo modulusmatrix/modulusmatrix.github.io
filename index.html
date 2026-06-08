@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MODULUS X | Yer Değiştirme ve Birleşme Teorisidir</title>
+    <title>MODULUS X | Yer Değiştirme ve Birleşme Teorisi</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
@@ -32,7 +32,6 @@
         .system-title { font-size: 2rem; font-weight: 800; color: #4fc3f7; letter-spacing: 3px; }
         .system-subtitle { font-size: 0.85rem; color: #8fa3bf; margin-top: 5px; letter-spacing: 1px; }
         
-        /* Formül Şablon Alanı */
         .formula-box {
             background: #121721;
             border: 1px solid #222c3d;
@@ -76,7 +75,6 @@
         .btn-matrix:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(2, 136, 209, 0.4); }
         .btn-matrix:disabled { background: #2c374e; color: #526480; cursor: not-allowed; }
 
-        /* Sonuç Rapor Alanı */
         .action-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         .action-table th { color: #4fc3f7; font-size: 0.8rem; text-align: left; padding: 10px; border-bottom: 2px solid #222c3d; text-transform: uppercase; }
         .action-table td { padding: 12px 10px; font-size: 0.85rem; border-bottom: 1px solid #1a212e; color: #e2e8f0; line-height: 1.6; }
@@ -91,51 +89,166 @@
         </div>
 
         <div class="formula-box">
-            <span class="formula-highlight">Formül:</span> Zaman * ((YD₁ ± YD₂) * B ± (YD₃ ± YD₄) * B...) = <span class="formula-highlight">±DEĞER</span><br>
+            <span class="formula-highlight">Formül:</span> Zaman * ((YD₁ ± YD₂) * B) = <span class="formula-highlight">Takdir Edilen Değer</span><br>
             <span style="font-size: 0.8rem; color: #697f9f;">*İnsan sadece yer değiştirir ve birleştirir; değeri yaratan Allah'tır.</span>
         </div>
 
         <div class="row">
             <div class="col input-group">
-                <label for="zamanS">S (İleri/Geri Zamansal Seviye)</label>
-                <input type="number" id="zamanS" class="eq-param" value="2100" title="Örnek: Işınlanmayı bulan toplumun hedef yılı">
+                <label for="zamanS">S (Hedeflenen İleri Zaman Boyutu)</label>
+                <input type="number" id="zamanS" class="eq-param" value="2100">
             </div>
             <div class="col input-group">
-                <label for="zamanZ">Z (Dünya Standart Zamanı)</label>
+                <label for="zamanZ">Z (Sabit Dünya Zaman Metresi)</label>
                 <input type="number" id="zamanZ" class="eq-param" value="2026">
             </div>
         </div>
 
         <div class="row">
             <div class="col input-group">
-                <label for="maneviBoyut">Manevi Boyut (0 - 10)</label>
+                <label for="maneviBoyut">Manevi Boyut (İhlas / 0-10)</label>
                 <input type="number" id="maneviBoyut" class="eq-param" min="0" max="10" value="9">
             </div>
             <div class="col input-group">
-                <label for="maddiBoyut">Maddi Boyut (0 - 10)</label>
+                <label for="maddiBoyut">Maddi Boyut (Esbab / 0-10)</label>
                 <input type="number" id="maddiBoyut" class="eq-param" min="0" max="10" value="5">
             </div>
             <div class="col input-group">
-                <label for="disBoyut">Dış Çevre Boyutu (0 - 10)</label>
+                <label for="disBoyut">Dış Çevre Direnci (0-10)</label>
                 <input type="number" id="disBoyut" class="eq-param" min="0" max="10" value="7">
             </div>
         </div>
 
         <div class="input-group">
-            <label for="xAlani">X_Sahası (Yer Değiştirme Yapılacak Eylem/Problem)</label>
-            <input type="text" id="xAlani" class="eq-param" placeholder="Örn: Kitap Yazmak, Teknoloji Geliştirmek">
+            <label for="xAlani">X_Sahası (Kulun Yapacağı Fiili Yer Değiştirme)</label>
+            <input type="text" id="xAlani" class="eq-param" value="Kitap Yazmak ve Bilgi Yaymak">
         </div>
 
         <div class="input-group">
-            <label for="birlesmeAlani">Entegrasyon / Birleşme Sahası (Ekosistem/Ortam)</label>
-            <input type="text" id="birlesmeAlani" class="eq-param" placeholder="Örn: Dijital Yayıncılık, İslam Bilim Halkası">
+            <label for="birlesmeAlani">Birleşme Sahası (Entegre Olunacak İttifak/Ekosistem)</label>
+            <input type="text" id="birlesmeAlani" class="eq-param" value="Dijital Yayıncılık ve İslam Gençlik Halkası">
         </div>
 
-        <button class="btn-matrix">TEORİK SENTEZİ ÇALIŞTIR</button>
+        <button class="btn-matrix" id="sentezButonu">TEORİK SENTEZİ ÇALIŞTIR</button>
         
         <div id="matrix-result-panel"></div>
     </div>
 
-    <script src="matrix-engine.js"></script>
+    <script>
+        document.getElementById('sentezButonu').addEventListener('click', function() {
+            const xAlani = document.getElementById('xAlani').value.trim();
+            const birlesmeAlani = document.getElementById('birlesmeAlani').value.trim();
+            const maddi = parseFloat(document.getElementById('maddiBoyut').value) || 0;
+            const manevi = parseFloat(document.getElementById('maneviBoyut').value) || 0;
+            const disBoyut = parseFloat(document.getElementById('disBoyut').value) || 0;
+            const zamanS = parseInt(document.getElementById('zamanS').value) || 2026;
+            const zamanZ = parseInt(document.getElementById('zamanZ').value) || 2026;
+
+            if (!xAlani || !birlesmeAlani) {
+                alert("Teorik Hata: Kul irade gösterip alanları doldurmalıdır.");
+                return;
+            }
+
+            const btn = document.getElementById('sentezButonu');
+            btn.innerHTML = 'KUL YER DEĞİŞTİRİYOR...';
+            btn.disabled = true;
+
+            setTimeout(() => {
+                const zamanMetresi = zamanS - zamanZ;
+                const maneviKatsayi = manevi * 1.5; 
+                const maddiKatsayi = maddi * 0.8; 
+                const disCevreEtkisi = disBoyut > 0 ? (disBoyut * 0.2) : 0.5;
+
+                const netTeoriSkoru = ((maddiKatsayi + maneviKatsayi) / disCevreEtkisi) * (zamanMetresi === 0 ? 1 : zamanMetresi);
+                const isPositive = netTeoriSkoru > 0 && manevi >= 6;
+
+                const softGreen = "#4ade80";
+                const softRed = "#f87171";
+
+                let stratejiRaporu = "";
+
+                // 1. Zamana Tapma ve Bereket Kontrolü
+                if (zamanMetresi <= 0) {
+                    stratejiRaporu += `
+                        <tr>
+                            <td style="color:${softRed}; font-weight:bold;">ZAMANSAL RİSK</td>
+                            <td><strong>Zamana Tapma Tehdidi:</strong> Dünya zaman metresinin esiri olma riski var. Sadece bugünün dar bütçesine bakmak bereketi kaçırır. S-Z çarpanını büyütmek için eylemi ebediyet vizyonuyla kodlayın.</td>
+                            <td style="color:#8fa3bf; font-size:0.75rem;">"Zamana tapan bereketi kaybeder."</td>
+                        </tr>`;
+                } else {
+                    stratejiRaporu += `
+                        <tr>
+                            <td style="color:${softGreen}; font-weight:bold;">ZAMANSAL BEREKET</td>
+                            <td><strong>Gelecek Ufku:</strong> Zaman metresinin ${zamanMetresi} birim ötesindesiniz. Bu doğru yer değiştirme, sabırla birleştiğinde bir saati 300 gün gibi bereketli kılacaktır.</td>
+                            <td style="color:#8fa3bf; font-size:0.75rem;">Zaman Genişlemesi Aktif</td>
+                        </tr>`;
+                }
+
+                // 2. Mutlak Hakikat: Kul Yaratamaz
+                stratejiRaporu += `
+                    <tr>
+                        <td style="color:#ffb74d; font-weight:bold;">MUTLAK HAKİKAT</td>
+                        <td><strong>Değer Yaratımı İllüzyonu:</strong> [${xAlani}] sahasında kul olarak siz asla bir değer "yaratamazsınız". Siz sadece esbabı yerine getirir, yer değiştirirsiniz. Değeri ve başarıyı yaratacak tek merci Allah'tır. Kibri sıfırlayın.</td>
+                        <td style="color:#8fa3bf; font-size:0.75rem;">"Değeri Allah ortaya çıkarır."</td>
+                    </tr>`;
+
+                // 3. Manevi Denge Kontrolü
+                if (manevi < 6) {
+                    stratejiRaporu += `
+                        <tr>
+                            <td style="color:${softRed}; font-weight:bold;">MANEVİ TEHDİT</td>
+                            <td><strong>Niyet Sapması:</strong> Maddi çıkar algısı ihlası gölgelemiş. Acilen niyet izolasyonu yapın. Eylemi sadece Allah rızası eksenine oturtun.</td>
+                            <td style="color:#8fa3bf; font-size:0.75rem;">"Ruhsuz eylem cesettir."</td>
+                        </tr>`;
+                } else {
+                    stratejiRaporu += `
+                        <tr>
+                            <td style="color:${softGreen}; font-weight:bold;">İHLAS KORUMASI</td>
+                            <td><strong>Kalbi Kararlılık:</strong> Manevi katsayınız tam. Bu ihlas gücünü, [${birlesmeAlani}] sahasında doğru helal birleşmelerle taçlandırma vaktidir.</td>
+                            <td style="color:#8fa3bf; font-size:0.75rem;">Manevi Vektör Stabil</td>
+                        </tr>`;
+                }
+
+                // 4. Birleşme Analizi
+                stratejiRaporu += `
+                    <tr>
+                        <td style="color:#c084fc; font-weight:bold;">BİRLEŞME EMRE</td>
+                        <td><strong>Aksiyon Çağrısı:</strong> Yer değiştirme tek başına yetmez. [${xAlani}] birikiminizi acilen [${birlesmeAlani}] ekosistemindeki organik ittifaklarla birleştirin. Birleşme olmazsa sonuç teoride kalır, sıfırlanır.</td>
+                        <td style="color:#8fa3bf; font-size:0.75rem;">"Birleşme yoksa değer doğmaz."</td>
+                    </tr>`;
+
+                document.getElementById('matrix-result-panel').innerHTML = `
+                    <div style="margin-top: 25px; padding: 20px; background: #121721; border: 1px solid #222c3d; border-radius: 10px;">
+                        <div style="text-align: center; margin-bottom: 15px; border-bottom: 1px solid #1f2736; padding-bottom: 12px;">
+                            <span style="font-size:0.75rem; color:#8fa3bf; letter-spacing:1px; text-transform:uppercase;">İLÂHİ DEĞER VE SENTEZ RAPORU</span>
+                            <h3 style="color:${isPositive ? softGreen : softRed}; font-size:1.1rem; margin-top:5px;">
+                                ${isPositive ? `✓ MATRİS DENGEDE: Kul Sebeplere Sarılarak Yer Değiştirdi` : `⚠ SİSTEMİK SAPMA: Maddi Putlar ve Zaman Sıkışması`}
+                            </h3>
+                        </div>
+
+                        <table class="action-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:25%;">Teorik Katman</th>
+                                    <th style="width:50%;">Algoritmik Eylem Sonucu</th>
+                                    <th style="width:25%;">Teori Esası</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${stratejiRaporu}
+                            </tbody>
+                        </table>
+
+                        <div style="font-size:0.7rem; color:#526480; text-align:center; margin-top:15px; font-style:italic;">
+                            Teorik Katsayı Endeksi: ${netTeoriSkoru.toFixed(2)} | Durum: Takdir Allah'ındır.
+                        </div>
+                    </div>
+                `;
+
+                btn.innerHTML = 'TEORİK SENTEZİ ÇALIŞTIR';
+                btn.disabled = false;
+            }, 1000);
+        });
+    </script>
 </body>
 </html>
