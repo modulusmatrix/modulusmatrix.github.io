@@ -3,70 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MODULUS X | Algorithmic Matrix</title>
+    <title>MODULUS X | Matrix</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* Beyni en az yoran derin, mat gece mavisi/gri tonu */
         body {
-            background-color: #060913;
-            font-family: 'Courier New', Courier, monospace;
+            background-color: #1b2230; 
+            font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #94a3b8;
+            color: #d1dcf0;
             padding: 15px;
         }
+        
+        /* Kart arka planı: Yumuşak antrasit-safir tonu */
         .matrix-core {
-            background: #0b111e;
-            border: 1px solid #1e293b;
-            border-radius: 12px;
+            background: #232c3f;
+            border: 1px solid #2d3952;
+            border-radius: 16px;
             width: 100%;
             max-width: 500px;
-            padding: 25px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.3);
         }
-        .system-header { text-align: center; margin-bottom: 30px; font-family: sans-serif; }
-        .system-title { font-size: 1.8rem; font-weight: 900; color: #00f2fe; letter-spacing: 5px; }
-        .system-version { font-size: 0.7rem; color: #475569; letter-spacing: 3px; margin-top: 5px; text-transform: uppercase; }
         
+        .system-header { text-align: center; margin-bottom: 25px; }
+        .system-title { font-size: 1.8rem; font-weight: 800; color: #5ce1e6; letter-spacing: 4px; }
+        .system-version { font-size: 0.75rem; color: #788fa9; letter-spacing: 2px; margin-top: 5px; text-transform: uppercase; }
+        
+        /* İç Denklem Alanı: Gözü dinlendiren mat arka plan */
         .equation-wrapper {
-            background: #070c16;
-            border: 1px solid rgba(0, 242, 254, 0.1);
-            border-radius: 8px;
-            padding: 20px;
+            background: #181f2c;
+            border: 1px solid #263147;
+            border-radius: 10px;
+            padding: 22px;
             margin-bottom: 20px;
-            line-height: 2.4;
+            line-height: 2.5;
             font-size: 0.95rem;
-            color: #fff;
+            color: #cbd5e1;
+            font-family: 'Courier New', Courier, monospace;
         }
+        
+        /* Odaklanmayı artıran yumuşak giriş kutuları */
         .eq-param {
-            background: #111a2e;
-            border: 1px solid #334155;
-            border-radius: 4px;
-            padding: 6px 10px;
-            color: #00f2fe;
+            background: #232c3f;
+            border: 1px solid #3b4b66;
+            border-radius: 6px;
+            padding: 5px 10px;
+            color: #ffffff;
             font-family: sans-serif;
             font-size: 0.9rem;
             outline: none;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
-        .eq-param:focus { border-color: #00f2fe; background: #16223b; box-shadow: 0 0 8px rgba(0,242,254,0.2); }
+        .eq-param:focus { border-color: #5ce1e6; background: #29344b; }
         .eq-num { width: 65px; text-align: center; }
         .eq-text { width: 160px; }
-        .eq-value { border-color: rgba(224, 0, 255, 0.4); color: #e000ff; width: 180px; }
-        .eq-value:focus { border-color: #e000ff; box-shadow: 0 0 8px rgba(224,0,255,0.2); }
-
-        .btn-matrix {
-            width: 100%; background: #00f2fe; border: none; border-radius: 6px;
-            padding: 16px; color: #060913; font-weight: 900; font-size: 0.95rem;
-            cursor: pointer; letter-spacing: 2px; text-transform: uppercase;
-            transition: all 0.2s; font-family: sans-serif;
-        }
-        .btn-matrix:hover { background: #00d6e0; box-shadow: 0 0 15px rgba(0, 242, 254, 0.4); }
         
+        /* Değer Kutusu: Bağlayıcı ve sakinleştirici Lavanta tonu */
+        .eq-value { border-color: #93c5fd; color: #93c5fd; width: 180px; font-weight: 600; }
+        .eq-value:focus { border-color: #5ce1e6; }
+
+        /* Buton: Güven veren ve gözü yormayan Turkuaz gradyanı */
+        .btn-matrix {
+            width: 100%; background: linear-gradient(135deg, #4faec4 0%, #358da0 100%); border: none; border-radius: 8px;
+            padding: 16px; color: #ffffff; font-weight: 700; font-size: 0.95rem;
+            cursor: pointer; letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.2s ease; font-family: sans-serif;
+            box-shadow: 0 4px 12px rgba(53, 141, 160, 0.2);
+        }
+        .btn-matrix:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(92, 225, 230, 0.4); }
+        .btn-matrix:disabled { background: #334155; color: #64748b; cursor: not-allowed; box-shadow: none; }
+
+        /* Sonuç Tablosu */
         .action-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .action-table th { color: #00f2fe; font-size: 0.75rem; text-align: left; padding: 8px; border-bottom: 1px solid #1e293b; text-transform: uppercase; }
-        .action-table td { padding: 12px 8px; font-size: 0.75rem; border-bottom: 1px solid #111a2e; color: #cbd5e1; line-height: 1.5; }
+        .action-table th { color: #5ce1e6; font-size: 0.75rem; text-align: left; padding: 10px 8px; border-bottom: 2px solid #263147; text-transform: uppercase; font-family: sans-serif; }
+        .action-table td { padding: 12px 8px; font-size: 0.8rem; border-bottom: 1px solid #232c3f; color: #e2e8f0; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -74,7 +89,7 @@
     <div class="matrix-core">
         <div class="system-header">
             <div class="system-title">MODULUS X</div>
-            <div class="system-version">Formula Application Interface</div>
+            <div class="system-version">Algorithmic Vector Interface</div>
         </div>
 
         <div class="equation-wrapper">
