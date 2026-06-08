@@ -1,97 +1,105 @@
-// MODULUS X - Matrix Hesaplama Motoru
+// MODULUS X - 1. Formül Açılımı Analitik Motoru
 document.addEventListener('DOMContentLoaded', () => {
     const btnCalistir = document.querySelector('.btn-calistir');
-    
     if (btnCalistir) {
-        btnCalistir.addEventListener('click', matrisiHesapla);
+        btnCalistir.addEventListener('click', formulAnaliziniCalistir);
     }
 });
 
-function matrisiHesapla() {
-    // Arayüzdeki girdileri yakala
-    const alan = document.getElementById('alanSecimi').value;
+function formulAnaliziniCalistir() {
+    // Arayüz girdilerini yakala
+    const xAlani = document.getElementById('xAlani').value.trim() || "Belirtilmeyen Alan";
     const maddi = parseFloat(document.getElementById('maddiBoyut').value) || 0;
     const manevi = parseFloat(document.getElementById('maneviBoyut').value) || 0;
     const disBoyut = parseFloat(document.getElementById('disBoyut').value) || 0;
     const zamanS = parseInt(document.getElementById('zamanS').value) || 2026;
     const zamanZ = parseInt(document.getElementById('zamanZ').value) || 2026;
+    const birlesmeGirdi = document.getElementById('birlesmeAlani').value.trim() || "Mevcut Çevre Yapısı";
 
-    // Sonuç panelini bul veya yoksa oluştur
-    let sonucPaneli = document.getElementById('matrix-result-panel');
-    if (!sonucPaneli) {
-        sonucPaneli = document.createElement('div');
-        sonucPaneli.id = 'matrix-result-panel';
-        sonucPaneli.className = 'matrix-card';
-        sonucPaneli.style.marginTop = '20px';
-        document.querySelector('.matrix-container').appendChild(sonucPaneli);
+    if (xAlani === "Belirtilmeyen Alan") {
+        alert("Lütfen analiz edilecek X Alanını (Derdi/Projeyi) yazın.");
+        return;
     }
 
-    // Buton yükleniyor efekti
     const btn = document.querySelector('.btn-calistir');
-    const orijinalMetin = btn.innerHTML;
-    btn.innerHTML = 'MATRİS ANALİZ EDİLİYOR...';
+    btn.innerHTML = 'MATRİS PARÇALANIYOR...';
     btn.disabled = true;
 
     setTimeout(() => {
-        // Yapay Zeka Karar Matrisi Algoritması (Ağırlıklı Katsayı Simülasyonu)
-        let alanKatsayisi = 1.0;
-        let alanAdi = "";
-
-        switch(alan) {
-            case "akademi":
-                alanKatsayisi = 1.3;
-                alanAdi = "Zihinsel ve İlmi Akademi";
-                break;
-            case "strateji":
-                alanKatsayisi = 1.1;
-                alanAdi = "Stratejik Planlama";
-                break;
-            case "teknoloji":
-                alanKatsayisi = 1.5;
-                alanAdi = "Teknolojik Entegrasyon";
-                break;
-            default:
-                alanAdi = "Genel Analiz";
-        }
-
-        // Zaman Delta Faktörü (Zaman kırılma analizi)
-        const zamanDelta = Math.abs(zamanS - zamanZ);
-        const zamanFaktoru = zamanDelta === 0 ? 1.0 : (1 / (1 + (zamanDelta * 0.02)));
-
-        // Skolastik Yapay Zeka Matris Puanı Hesaplama Formula
-        // Skor = ((Maddi * 0.3) + (Manevi * 0.5) + (Dış * 0.2)) * Katsayı * ZamanFaktörü
-        const hamSkor = ((maddi * 0.3) + (manevi * 0.5) + (disBoyut * 0.2));
-        let nihaiSkor = (hamSkor * alanKatsayisi * zamanFaktoru * 10).toFixed(2);
+        // 1. ZAMAN ÇARPANINI HESAPLAMA (Z = S - Z)
+        const zamanDelta = zamanS - zamanZ;
+        let zamanCarpaniYonu = "+";
+        let zamanCarpaniAnalizi = "";
         
-        if (nihaiSkor > 100) nihaiSkor = 100;
-
-        // Sonuç Durum Analizi
-        let durumMetni = "";
-        let durumRengi = "#00f2fe";
-        if (nihaiSkor >= 75) {
-            durumMetni = "Yüksek Uyum ve Kararlılık Sapması Tespit Edildi. Karar matrisi sürdürülebilir başarı öngörüyor.";
-            durumRengi = "#00ff87";
-        } else if (nihaiSkor >= 50) {
-            durumMetni = "Dengeli Matriks Dağılımı. Maddi ve manevi boyutlar optimize edilirse süreç ivme kazanacaktır.";
-            durumRengi = "#00f2fe";
+        if (zamanDelta > 0) {
+            zamanCarpaniYonu = "+";
+            zamanCarpaniAnalizi = `Geleceğe yönelik stratejik adım atma eğilimi baskın. Gelecek projeksiyonu ${zamanDelta} yıllık bir kırılma avantajı yaratıyor.`;
+        } else if (zamanDelta < 0) {
+            zamanCarpaniYonu = "-";
+            zamanCarpaniAnalizi = `Geçmişe, eski kalıplara veya tıkantılara odaklanma eğilimi mevcut. ${Math.abs(zamanDelta)} yıllık bir geçmiş yükü matrisi aşağı çekiyor.`;
         } else {
-            durumMetni = "Kritik Kararsızlık Seviyesi. Boyutlar arası optimizasyon hatası; iç ve dış faktörler gözden geçirilmeli.";
-            durumRengi = "#ff0055";
+            zamanCarpaniYonu = "+";
+            zamanCarpaniAnalizi = "Şimdiki zaman dengesi kararlı. Gecikme veya geçmiş yükü yok, doğrudan eylem anı.";
         }
 
-        // Sonucu Ekrana Yazdır
+        // 2. YER DEĞİŞTİRME (YD) HESAPLAMA
+        // Girdilerin ortalaması ve X alanının ağırlığıyla bir Yer Değiştirme skoru simüle edilir
+        const yerDegistirmeSkoru = ((maddi + manevi + disBoyut) / 3).toFixed(1);
+        
+        // 3. NİHAİ DEĞER VE FORMÜLÜN YÖNÜ
+        // Zaman çarpanı yönü ve boyutların gücüne göre nihai değer belirlenir
+        const toplamGirdi = maddi + manevi + disBoyut;
+        const isPositive = (zamanCarpaniYonu === "+" && toplamGirdi >= 12);
+        const netDegerSembolu = isPositive ? "+ DEĞER" : "- DEĞER";
+        const netDegerRenk = isPositive ? "#00ff87" : "#ff0055";
+
+        // Sonuç Panelini Bul veya Oluştur
+        let sonucPaneli = document.getElementById('matrix-result-panel');
+        if (!sonucPaneli) {
+            sonucPaneli = document.createElement('div');
+            sonucPaneli.id = 'matrix-result-panel';
+            document.querySelector('.matrix-container').appendChild(sonucPaneli);
+        }
+
+        // Kesin Yanıt Formatını Arayüze Basma
         sonucPaneli.innerHTML = `
-            <div style="border-left: 3px solid ${durumRengi}; padding-left: 15px;">
-                <h3 style="color: ${durumRengi}; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">📊 Matris Çıktı Raporu</h3>
-                <p style="font-size: 0.85rem; color: #728aa1; margin-bottom: 5px;"><strong>Seçili Alan:</strong> ${alanAdi}</p>
-                <p style="font-size: 1.5rem; font-weight: 800; color: #fff; margin: 10px 0;">Yapay Zeka Skor: <span style="color: ${durumRengi}">${nihaiSkor} / 100</span></p>
-                <p style="font-size: 0.9rem; color: #a3b8cc; line-height: 1.5;">${durumMetni}</p>
-                <div style="margin-top: 10px; font-size: 0.75rem; color: #52667a;">Zaman Kırılma Sapması: Δ${zamanDelta} Yıl</div>
+            <div class="result-box" style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(0,242,254,0.15); text-align: left;">
+                
+                <h3 style="color: #00f2fe; font-size: 1rem; letter-spacing: 2px; margin-bottom: 15px; border-left: 3px solid #e000ff; padding-left: 10px;">📊 FORMÜL MODELLEMESİ</h3>
+                <div style="background: #172030; padding: 12px; border-radius: 8px; font-family: monospace; font-size: 0.9rem; color: #fff; margin-bottom: 20px; text-align: center; border: 1px solid rgba(224,0,255,0.2);">
+                    Z(${zamanCarpaniYonu}) * ((${maddi}YD<sub>maddi</sub> + ${manevi}YD<sub>manevi</sub>) * B<sub>[${birlesmeGirdi.substring(0,10)}]</sub>) = <span style="color: ${netDegerRenk}; font-weight: bold;">${netDegerSembolu} (${yerDegistirmeSkoru})</span>
+                </div>
+
+                <h3 style="color: #00f2fe; font-size: 1rem; letter-spacing: 2px; margin-bottom: 10px;">1. ⏳ ZAMAN ÇARPANINI DEĞERLENDİRME (Z = S - Z)</h3>
+                <ul style="list-style: none; padding-left: 0; margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6;">
+                    <li style="margin-bottom: 8px;"><strong style="color: #a3b8cc;">Siyasi/Sosyal/Kişisel Zaman Durumu:</strong> <span style="color: #fff;">${zamanCarpaniAnalizi}</span></li>
+                    <li><strong style="color: #a3b8cc;">Zaman Çarpanı Yönü (+ / -):</strong> <span style="color: ${netDegerRenk}; font-weight: bold;">[ ${zamanCarpaniYonu} ]</span></li>
+                </ul>
+
+                <h3 style="color: #00f2fe; font-size: 1rem; letter-spacing: 2px; margin-bottom: 10px;">2. 🚀 YER DEĞİŞTİRME ANALİZİ</h3>
+                <ul style="list-style: none; padding-left: 0; margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6;">
+                    <li style="margin-bottom: 6px;"><strong style="color: #a3b8cc;">Maddi Boyut:</strong> <span style="color: #fff;">Lojistik ve finansal altyapı seviyesi: ${maddi}/10. Enerji akışı kararlılığı inceleniyor.</span></li>
+                    <li style="margin-bottom: 6px;"><strong style="color: #a3b8cc;">Manevi Boyut:</strong> <span style="color: #fff;">Psikolojik direnç, inanç ve azim dengesi: ${manevi}/10. İçsel odak tam.</span></li>
+                    <li style="margin-bottom: 6px;"><strong style="color: #a3b8cc;">Dış Boyut:</strong> <span style="color: #fff;">Çevresel baskı faktörleri ve rakiplerin direnci: ${disBoyut}/10 seviyesinde ölçüldü.</span></li>
+                    <li><strong style="color: #a3b8cc;">X Alanı (Uygulama Alanı):</strong> <span style="color: #00f2fe; font-weight: bold;">${xAlani}</span></li>
+                </ul>
+
+                <h3 style="color: #00f2fe; font-size: 1rem; letter-spacing: 2px; margin-bottom: 10px;">3. 🤝 BİRLEŞME ANALİZİ</h3>
+                <p style="font-size: 0.9rem; color: #fff; line-height: 1.6; margin-bottom: 20px;">
+                    <strong style="color: #a3b8cc;">Entegrasyon Sahası [${birlesmeGirdi}]:</strong> Yapılan hamle, hedef kitle ve yeni çevre yapısıyla ${isPositive ? 'yüksek uyum ve rezonans sergiliyor. Çatışma riski minimum.' : 'potansiyel bir faz uyuşmazlığı içeriyor. Ortaklık veya çevre adaptasyonu gözden geçirilmeli.'}
+                </p>
+
+                <h3 style="color: #00f2fe; font-size: 1rem; letter-spacing: 2px; margin-bottom: 10px;">🏁 STRATEJİK SONUÇ VE NET DEĞER</h3>
+                <ul style="list-style: none; padding-left: 0; font-size: 0.9rem; line-height: 1.6;">
+                    <li style="margin-bottom: 8px; color: #00ff87; display: ${isPositive ? 'block' : 'none'};"><strong>[+ DEĞER] Doğru Yer Değiştirme (Maksimum Kazanç):</strong> Zaman çarpanı ve boyut kombinasyonu doğru yönü gösteriyor. Bu eylem kararlılıkla sürdürülürse maddi bağımsızlık, yüksek zihinsel gelişim ve stratejik konum avantajı elde edilecek.</li>
+                    <li style="margin-bottom: 8px; color: #ff0055; display: ${!isPositive ? 'block' : 'none'};"><strong>[- DEĞER] Yanlış Yer Değiştirme (Maksimum Kayıp):</strong> Mevcut girdiler negatif eğilimde. Eğer boyut optimizasyonu yapılmadan körü körüne bu alana girilirse zaman kaybı, manevi tükenmişlik ve kaynak israfı kaçınılmaz olacaktır.</li>
+                    <li><strong style="color: #e000ff;">Nihai Tavsiye:</strong> <span>${isPositive ? 'Matrisi bozma! Zaman çarpanı artıdayken birleşme alanındaki entegrasyonu hızlandır.' : 'Zaman çarpanını ve manevi boyutu yukarı çekmek için geçmiş yüklerinden sıyrıl ve geleceğe odaklanacak tek bir mikro hamleye odaklan.'}</span></li>
+                </ul>
+
             </div>
         `;
 
-        // Butonu eski haline getir
-        btn.innerHTML = orijinalMetin;
+        btn.innerHTML = 'MATRİSİ ÇALIŞTIR';
         btn.disabled = false;
-    }, 1200); // 1.2 saniyelik yapay zeka analiz efekti
+    }, 1000);
 }
