@@ -7,40 +7,41 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
+        /* Sayfa bütünüyle beyaza yakın, mat bir sarı (fildişi/krem) tonuna kavuştu */
         body {
-            background-color: #161b26; 
+            background-color: #faf8f0; 
             font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #d1dcf0;
+            color: #231c14;
             padding: 20px;
         }
         
         .matrix-core {
-            background: #1f2736;
-            border: 1px solid #2b354a;
-            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #e3dec3;
+            border-radius: 12px;
             width: 100%;
             max-width: 650px;
-            padding: 25px;
-            box-shadow: 0 20px 40px rgba(10, 15, 26, 0.4);
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(35, 28, 20, 0.05);
         }
 
-        /* Üst Hakikat Paneli - Boşluklar Azaltıldı */
+        /* Üst Hakikat Künyesi */
         .theory-essence-box {
-            background-color: #fffef0; 
-            border: 1px solid #eadeb8;
-            border-radius: 12px;
+            background-color: #fffdf3; 
+            border: 1px solid #ebdca5;
+            border-radius: 8px;
             padding: 15px 12px;
-            margin-bottom: 12px; 
+            margin-bottom: 20px; 
             text-align: center;
         }
 
         .essence-text {
             font-family: 'Times New Roman', Times, Georgia, serif; 
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 700;
             color: #231c14; 
             line-height: 1.4;
@@ -48,7 +49,6 @@
             font-style: italic;
         }
 
-        /* İstediğin Küçük Puntolu İsim ve Kitap Alanı */
         .essence-footer {
             font-family: 'Times New Roman', Times, Georgia, serif;
             font-size: 0.7rem; 
@@ -61,60 +61,54 @@
             width: 95%;
         }
         
-        .system-header { text-align: center; margin-bottom: 15px; }
-        .system-title { font-size: 1.6rem; font-weight: 800; color: #4fc3f7; letter-spacing: 4px; display: block; }
-        
-        /* Değer Göstergesi */
-        .value-counter-box {
-            background: #121721;
-            border: 1px solid #222c3d;
-            border-radius: 10px;
-            padding: 12px;
-            text-align: center;
-            margin-bottom: 12px;
-        }
-        .value-label { font-size: 0.75rem; color: #8fa3bf; text-transform: uppercase; letter-spacing: 1px; }
-        .value-display { font-size: 1.4rem; font-weight: 800; color: #ffb74d; margin-top: 3px; font-family: monospace; }
+        .system-header { text-align: center; margin-bottom: 20px; }
+        .system-title { font-size: 1.5rem; font-weight: 800; color: #231c14; letter-spacing: 4px; display: block; border-bottom: 1px solid #e3dec3; padding-bottom: 8px; }
 
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 0.85rem; color: #8fa3bf; margin-bottom: 6px; font-weight: 600; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; font-size: 0.9rem; color: #5c4f3e; margin-bottom: 8px; font-weight: 600; }
         
-        /* Kişinin İsteğini Yazacağı Büyük Boş Kutu */
+        /* Kişinin Durumunu Yazacağı Büyük Boş Kutu */
         .action-textarea {
             width: 100%;
-            height: 120px;
-            background: #fffef9;
-            border: 2px solid #34445c;
-            border-radius: 10px;
+            height: 150px;
+            background: #ffffff;
+            border: 1px solid #c4bfa3;
+            border-radius: 8px;
             padding: 14px;
-            color: #1c2331;
+            color: #231c14;
             font-family: inherit;
             font-size: 0.95rem;
             line-height: 1.5;
             outline: none;
             resize: none;
             transition: all 0.2s ease;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
-        .action-textarea:focus { border-color: #4fc3f7; background: #ffffff; }
-        .action-textarea::placeholder { color: #7e8b9b; font-style: italic; }
+        .action-textarea:focus { border-color: #7d6c55; box-shadow: 0 0 5px rgba(125, 108, 85, 0.2); }
+        .action-textarea::placeholder { color: #9c937c; font-style: italic; }
         
         .btn-matrix {
             width: 100%; 
-            background: linear-gradient(135deg, #0288d1 0%, #01579b 100%); 
-            border: none; border-radius: 8px;
-            padding: 16px; color: #ffffff; font-weight: 700; font-size: 1rem;
-            cursor: pointer; letter-spacing: 2px; text-transform: uppercase;
-            transition: all 0.2s ease; display: block;
+            background: #231c14; 
+            border: none; 
+            border-radius: 6px;
+            padding: 16px; 
+            color: #ffffff; 
+            font-weight: 700; 
+            font-size: 0.95rem;
+            cursor: pointer; 
+            letter-spacing: 1.5px; 
+            text-transform: uppercase;
+            transition: all 0.2s ease; 
+            display: block;
         }
-        .btn-matrix:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(2, 136, 209, 0.4); }
-        .btn-matrix:disabled { background: #2c374e; color: #526480; cursor: not-allowed; }
+        .btn-matrix:hover { background: #3d3225; }
+        .btn-matrix:disabled { background: #e3dec3; color: #9c937c; cursor: not-allowed; }
 
-        .action-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .action-table th { color: #4fc3f7; font-size: 0.75rem; text-align: left; padding: 8px; border-bottom: 2px solid #222c3d; text-transform: uppercase; }
-        .action-table td { padding: 12px 8px; font-size: 0.85rem; border-bottom: 1px solid #1a212e; color: #e2e8f0; line-height: 1.6; }
+        .action-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .action-table th { color: #5c4f3e; font-size: 0.8rem; text-align: left; padding: 10px; border-bottom: 2px solid #231c14; text-transform: uppercase; letter-spacing: 0.5px; }
+        .action-table td { padding: 12px 10px; font-size: 0.85rem; border-bottom: 1px solid #e3dec3; color: #231c14; line-height: 1.6; }
         
-        .source-tag { background: #223147; color: #81a5d6; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; }
+        .source-tag { background: #f2edd5; color: #5c4f3e; padding: 2px 6px; border-radius: 4px; font-size: 0.7rem; font-weight: bold; display: inline-block; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -134,14 +128,9 @@
             <span class="system-title">MODULUS X</span>
         </div>
 
-        <div class="value-counter-box">
-            <div class="value-label">Takdir Edilen Teorik Değer Oranı</div>
-            <div class="value-display" id="dinamikDeğer">KULUN İRADESİ BEKLENİYOR...</div>
-        </div>
-
         <div class="input-group">
-            <label for="kulIradeMetni">Niyetiniz, Fiili Eyleminiz ve Birleşmek İstediğiniz Saha (İsteğinizi Yazın)</label>
-            <textarea id="kulIradeMetni" class="action-textarea" placeholder="Örn: Dinimi daha iyi anlatmak için dijital platformlarda bir kitap yazıp yayınlamak istiyorum fakat vaktim çok kısıtlı ve çevremden manevi bir direnç görüyorum..."></textarea>
+            <label for="kulIradeMetni">Mevcut Durumunuz, Niyetiniz ve Yapmak İstediğiniz Fiili Eylem</label>
+            <textarea id="kulIradeMetni" class="action-textarea" placeholder="Durumunuzu ve hedefinizi buraya yazın... Örn: İlim yaymak adına bir kitap yazmak istiyorum ancak vakit bulamıyorum ve çevrem eylemlerimi kısıtlıyor..."></textarea>
         </div>
 
         <button class="btn-matrix" id="sentezButonu">TEORİK SENTEZİ BAŞLAT</button>
@@ -150,113 +139,112 @@
     </div>
 
     <script>
-        // Metin yazıldıkça değer kutusunu canlı güncelleyen hafif algoritma
-        document.getElementById('kulIradeMetni').addEventListener('input', function() {
-            const metin = this.value.trim();
-            const degerEkrani = document.getElementById('dinamikDeğer');
-            
-            if (metin.length < 5) {
-                degerEkrani.innerHTML = "KULUN İRADESİ BEKLENİYOR...";
-                degerEkrani.style.color = "#ffb74d";
-                return;
-            }
-
-            // Arka planda niyet kalitesi ölçümü (Kelime bazlı sezgisel değer üretimi)
-            let temelSkor = metin.length * 1.2;
-            if(metin.toLowerCase().includes("para") || metin.toLowerCase().includes("çıkar") || metin.toLowerCase().includes("zenginlik")) {
-                temelSkor = temelSkor * 0.4; // Maddi odak puanı düşürür
-            }
-            if(metin.toLowerCase().includes("allah") || metin.toLowerCase().includes("kitap") || metin.toLowerCase().includes("ilim") || metin.toLowerCase().includes("hizmet")) {
-                temelSkor = temelSkor * 1.8; // Manevi/İhlas odak puanı katlar
-            }
-
-            degerEkrani.innerHTML = "Σ " + temelSkor.toFixed(0) + " DEĞER BİRİMİ";
-            degerEkrani.style.color = temelSkor > 100 ? "#4ade80" : "#f87171";
-        });
-
         document.getElementById('sentezButonu').addEventListener('click', function() {
             const metin = document.getElementById('kulIradeMetni').value.trim();
 
             if (metin.length < 10) {
-                alert("Teorik Hata: Algoritmanın küresel arşivlere ulaşıp zaman sentezi yapabilmesi için niyetinizi/eyleminizi daha detaylı yazmalısınız.");
+                alert("Teorik Hata: Algoritmanın durumunuzu tüm boyutlarıyla analiz edebilmesi için lütfen mevcut durumunuzu biraz daha detaylı açıklayın.");
                 return;
             }
 
             const btn = document.getElementById('sentezButonu');
-            btn.innerHTML = 'KÜRESEL ARŞİVLER ENTEGRE EDİLİYOR (KURAN-HADİS)...';
+            btn.innerHTML = 'SİSTEMİK BOYUTLAR ANALİZ EDİLİYOR...';
             btn.disabled = true;
 
             setTimeout(() => {
-                // Algoritma Metinden Zamanın İlerisinde mi Gerisinde mi Olduğuna Karar Veriyor
-                let zamanKarari = "İLERİSİNDE (EBEDİYET UFKU)";
-                let zamanAciklamasi = "Yazdığınız eylem, dünya zaman metresinin ötesinde bir gelecek vizyonu barındırıyor. Bereket çarpanı aktif.";
-                let isZamanPositive = true;
+                const altMetin = metin.toLowerCase();
 
-                // Eğer metinde "vaktim yok", "hemen", "dünya", "para" gibi sıkışmışlık ifadeleri yoğunsa algoritma "Zamanın Gerisinde" kararı verir
-                if (metin.toLowerCase().includes("vaktim yok") || metin.toLowerCase().includes("zamanım az") || metin.toLowerCase().includes("korkuyorum") || metin.toLowerCase().includes("engel")) {
-                    zamanKarari = "GERİSİNDE (DÜNYA ZAMAN SIKIŞMASI)";
-                    zamanAciklamasi = "Algoritma Analizi: Eyleminiz dünya zaman metresinin esiri olma riski taşıyor. Acelecilik ve rızık kaygısı bereketi daraltıyor.";
-                    isZamanPositive = false;
+                // 1. BOYUT: Zaman Metresi Analizi (S - Z)
+                let zamanAnalizi = "<strong>İlerisinde (Ebediyet Ufku):</strong> Durumunuz anlık dünya dertlerinin ötesinde, kalıcı ve uzun vadeli bir eylem bilinci içeriyor. Zaman çarpanı bereket yönünde çalışıyor.";
+                if (altMetin.includes("vaktim yok") || altMetin.includes("zamanım az") || altMetin.includes("yetişemiyorum") || altMetin.includes("hemen") || altMetin.includes("geç kaldım")) {
+                    zamanAnalizi = "<strong>Gerisinde (Zaman Sıkışması):</strong> Algoritma, değişken-sabit dünya zaman metresinin baskısı altında olduğunuzu tespit etti. Acelecilik ve vakitsizlik algısı, fiili yer değiştirme bereketini daraltıyor.";
                 }
 
-                // Küresel Kütüphane Arşivi (Kuran ve Hadis) Eşleştirmeleri
+                // 2. BOYUT: Manevi Boyut Analizi (İhlas Vektörü)
+                let maneviAnalizi = "<strong>Yüksek İhlas Potansiyeli:</strong> Niyetinizde doğrudan ilim, hizmet veya rıza odaklı bir yönelim algılandı. Manevi katsayı stabil.";
+                if (altMetin.includes("para") || altMetin.includes("kazanç") || altMetin.includes("zenginlik") || altMetin.includes("şöhret")) {
+                    maneviAnalizi = "<strong>Maddi Odak Riski:</strong> Durumunuzda maddi çıktı beklentisinin ihlas boyutunu gölgeleme riski var. Eylemi tamamen halis niyet çizgisine çekmelisiniz.";
+                }
+
+                // 3. BOYUT: Maddi Boyut ve Eylemsellik Analizi (Esbab)
+                let maddiAnalizi = "<strong>Eyleme Hazır / Sebeplere Sarılan:</strong> Durumunuz durağan değil, bir çıkış yolu ve hareket arayışı barındırıyor.";
+                if (altMetin.includes("yapamıyorum") || altMetin.includes("duruyorum") || altMetin.includes("korkuyorum") || altMetin.includes("erteliyorum")) {
+                    maddiAnalizi = "<strong>Eylemsel Atalet (Durağanlık):</strong> Teorinin temeli harekettir. Fikir boyutunda kalıp fiili yer değiştirmeye (harekete) dökülmeyen niyetler değer üretemez.";
+                }
+
+                // 4. BOYUT: Dış Çevre Direnci Analizi
+                let cevreAnalizi = "<strong>Direnç Düşük / Saha Temiz:</strong> Eyleminizi gerçekleştirmek için dış çevre şartları ve zemin uygun görünüyor.";
+                if (altMetin.includes("çevrem") || altMetin.includes("engel") || altMetin.includes("baskı") || altMetin.includes("izin") || altMetin.includes("kimse")) {
+                    cevreAnalizi = "<strong>Yüksek Dış Çevre Direnci:</strong> Etrafınızdaki sosyal veya fiziksel faktörler birleşme sahasını daraltıyor. Bu direnci kırmak için sabırla yer değiştirme alanınızı esnetmelisiniz.";
+                }
+
+                // Küresel Kütüphane Arşivi Entegrasyonu (Kuran ve Hadis)
                 let ayetReferans = "Şüphesiz insan için kendi çalışmasından (emeğinden) başkası yoktur. (Necm, 39)";
                 let hadisReferans = "Ameller niyetlere göredir. Herkese niyet ettiği şey vardır. (Buhari)";
 
-                if (metin.toLowerCase().includes("kitap") || metin.toLowerCase().includes("yazmak") || metin.toLowerCase().includes("ilim")) {
+                if (altMetin.includes("kitap") || altMetin.includes("yazmak") || altMetin.includes("ilim") || altMetin.includes("okumak")) {
                     ayetReferans = "Yaratan Rabbinin adıyla oku! O, insanı bir alaktan yarattı. Oku! Rabbin sonsuz kerem sahibidir. O, kalemle yazmayı öğretendir. (Alak, 1-4)";
                     hadisReferans = "İlim tahsil etmek amacıyla bir yola giren kimseye Allah, cennete çıkan yolu kolaylaştırır. (Müslim)";
+                } else if (altMetin.includes("birlik") || altMetin.includes("insanlar") || altMetin.includes("topluluk") || altMetin.includes("ortak")) {
+                    ayetReferans = "İyilik ve takva üzere yardımlaşın, günah ve düşmanlık üzere yardımlaşmayın. (Maide, 2)";
+                    hadisReferans = "Mü'minin mü'mine karşı durumu, parçaları birbirini bağlayıp tahkim eden tek bir bina gibidir. (Buhari)";
                 }
 
-                // Saatlerce Ekran Başında Durmayı Engelleyen "Saha Görevleri"
-                let sahaGorevi1 = "Bilgisayarı/Telefonu hemen kapatın. Bugün yazdığınız eylem için zihinsel bir taslak hazırlamak üzere 20 dakika sessizce tefekkür edin.";
-                let sahaGorevi2 = "Yazdığınız birleşme sahasına ait helal bir ittifak halkası kurmak için belirlediğiniz bir kişiyle ilk iletişimi (yüz yüze veya mesajla) başlatın.";
-
-                const softGreen = "#4ade80";
-                const softRed = "#f87171";
+                // Eylemsel Görevler (Kişiyi ekrandan uzaklaştıran)
+                let eylemGorevi1 = "Şimdi ekranı kapatın. Durumunuzda tespit edilen tıkanıklıkları aşmak adına, zihninizi durultmak için sessiz bir ortamda 15 dakika tefekkür edin.";
+                let eylemGorevi2 = "Bugün hedefinize yönelik en küçük de olsa fiili bir adım atın (Bir sayfa yazın, bir araştırma yapın veya eyleminize ortak edeceğiniz o doğru kişiyle iletişime geçin).";
 
                 document.getElementById('matrix-result-panel').innerHTML = `
-                    <div style="margin-top: 20px; padding: 15px; background: #121721; border: 1px solid #222c3d; border-radius: 10px;">
-                        <div style="text-align: center; margin-bottom: 12px; border-bottom: 1px solid #1f2736; padding-bottom: 10px;">
-                            <span style="font-size:0.7rem; color:#8fa3bf; letter-spacing:1px; text-transform:uppercase;">ALGORİTMİK SENTEZ VE SAHA RAPORU</span>
-                            <h3 style="color:${isZamanPositive ? softGreen : softRed}; font-size:1rem; margin-top:5px;">
-                                MATRİS ZAMAN KARARI: ZAMANIN ${zamanKarari}
-                            </h3>
+                    <div style="margin-top: 25px; padding: 20px; background: #fffdf5; border: 1px solid #e3dec3; border-radius: 8px;">
+                        <div style="text-align: center; margin-bottom: 15px; border-bottom: 1px solid #e3dec3; padding-bottom: 10px;">
+                            <h3 style="font-size: 1.1rem; color: #231c14; letter-spacing: 1px;">BÜTÜNCÜL TEORİK DURUM RAPORU</h3>
                         </div>
 
                         <table class="action-table">
                             <thead>
                                 <tr>
-                                    <th style="width:30%;">Boyut Katmanı</th>
-                                    <th style="width:70%;">Sistemik Çıktı ve Kaynak</th>
+                                    <th style="width:30%;">Teorik Katman</th>
+                                    <th style="width:70%;">Durum Analizi ve Algoritmik Çıktı</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td style="color:#4fc3f7; font-weight:bold;">ZAMAN METRESİ</td>
-                                    <td>${zamanAciklamasi}</td>
+                                    <td style="font-weight:bold;">ZAMAN METRESİ</td>
+                                    <td>${zamanAnalizi}</td>
                                 </tr>
                                 <tr>
-                                    <td style="color:#ffb74d; font-weight:bold;">KÜRESEL ARŞİV<br><span class="source-tag">KURAN-I KERİM</span></td>
-                                    <td style="font-style: italic; color: #fffef0;">"${ayetReferans}"</td>
+                                    <td style="font-weight:bold;">MANEVİ BOYUT</td>
+                                    <td>${maneviAnalizi}</td>
                                 </tr>
                                 <tr>
-                                    <td style="color:#ffb74d; font-weight:bold;">KÜRESEL ARŞİV<br><span class="source-tag">HADİS-İ ŞERİF</span></td>
-                                    <td style="font-style: italic; color: #fffef0;">"${hadisReferans}"</td>
+                                    <td style="font-weight:bold;">MADDİ BOYUT</td>
+                                    <td>${maddiAnalizi}</td>
                                 </tr>
                                 <tr>
-                                    <td style="color:#c084fc; font-weight:bold;">FİİLİ GÖREV 1<br><span style="font-size:0.7rem; color:#8fa3bf;">(SAHAYA ÇIKIN)</span></td>
-                                    <td style="color: #4ade80; font-weight: 500;">⚠ ${sahaGorevi1}</td>
+                                    <td style="font-weight:bold;">DIŞ ÇEVRE DİRENCİ</td>
+                                    <td>${cevreAnalizi}</td>
                                 </tr>
                                 <tr>
-                                    <td style="color:#c084fc; font-weight:bold;">FİİLİ GÖREV 2<br><span style="font-size:0.7rem; color:#8fa3bf;">(BİRLEŞME EMRE)</span></td>
-                                    <td style="color: #4ade80; font-weight: 500;">⚠ ${sahaGorevi2}</td>
+                                    <td style="font-weight:bold;">KÜRESEL ARŞİV<br><span class="source-tag">KURAN-I KERİM</span></td>
+                                    <td style="font-style: italic;">"${ayetReferans}"</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold;">KÜRESEL ARŞİV<br><span class="source-tag">HADİS-İ ŞERİF</span></td>
+                                    <td style="font-style: italic;">"${hadisReferans}"</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold; color: #7d6c55;">FİİLİ GÖREV 1</td>
+                                    <td style="font-weight: 600;">👉 ${eylemGorevi1}</td>
+                                </tr>
+                                <tr>
+                                    <td style="font-weight:bold; color: #7d6c55;">FİİLİ GÖREV 2</td>
+                                    <td style="font-weight: 600;">👉 ${eylemGorevi2}</td>
                                 </tr>
                             </tbody>
                         </table>
                         
-                        <div style="font-size:0.75rem; color:#697f9f; text-align:center; margin-top:12px; font-style:italic;">
-                            *Uyarım: Görevleri aldıysanız tarayıcıyı kapatıp eyleme geçin. Değeri ancak hareket büyütecektir.
+                        <div style="font-size:0.75rem; color:#7d6c55; text-align:center; margin-top:15px; font-style:italic; border-top: 1px solid #e3dec3; padding-top: 10px;">
+                            *Görevlerinizi aldıysanız uygulamayı kapatıp eylemsel harekete geçiniz.
                         </div>
                     </div>
                 `;
