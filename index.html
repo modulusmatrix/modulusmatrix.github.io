@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modulus X - Full Formula AI Matrix</title>
+    <title>Modulus X - Action Matrix AI</title>
     <style>
         body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #0f111a; color: #e2e8f0; margin: 0; padding: 15px; }
         .container { max-width: 550px; margin: 20px auto; background: #1a1c2a; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); border: 1px solid #334155; }
@@ -19,52 +19,53 @@
         .result-box { margin-top: 20px; padding: 15px; border-radius: 6px; display: none; }
         .positive { background: rgba(16, 185, 129, 0.08); border: 1px solid #10b981; }
         .negative { background: rgba(239, 68, 68, 0.08); border: 1px solid #ef4444; }
-        .analysis-text { font-size: 14px; margin: 10px 0; line-height: 1.5; }
-        .source { font-size: 12px; color: #a78bfa; margin-top: 10px; display: block; font-weight: bold; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 4px; }
-        .component-output { font-size: 12px; color: #38bdf8; margin-bottom: 5px; font-family: monospace; }
+        
+        /* Grafik Tasarımı */
+        .chart-container { display: flex; justify-content: center; align-items: center; margin: 15px 0; }
+        .progress-circle { position: relative; width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; }
+        
+        /* Görev Listesi Tasarımı */
+        .tasks-container { background: rgba(15, 17, 26, 0.6); padding: 12px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #38bdf8; }
+        .tasks-title { color: #f59e0b; font-size: 14px; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; }
+        .task-item { font-size: 13px; margin-bottom: 6px; display: flex; align-items: flex-start; }
+        .task-item before { content: "🎯 "; margin-right: 5px; }
+        
+        .source { font-size: 12px; color: #a78bfa; margin-top: 15px; display: block; font-weight: bold; background: rgba(0,0,0,0.2); padding: 8px; border-radius: 4px; }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>MODULUS X MATRIX</h1>
-    <div class="subtitle">1. FÖRMÜL AÇILIMI VE YAPAY ZEKA SİSTEMİ</div>
+    <div class="subtitle">FORMÜL GRAFİĞİ VE EYLEM GÖREV MOTORU</div>
     
-    <div class="section-title">1.1. Zaman Çarpanı (ZAMAN = S - Z)</div>
+    <div class="section-title">1.1. Zaman Çarpanı (S - Z)</div>
     <div class="form-grid">
-        <div class="form-group"><label>S (İleri/Geri Zaman Dilimi):</label><input type="number" id="sValue" value="2100"></div>
+        <div class="form-group"><label>S (İleri/Geri Zaman Seviyesi):</label><input type="number" id="sValue" value="2100"></div>
         <div class="form-group"><label>Z (Sabit Dünya Zamanı):</label><input type="number" id="zValue" value="2030"></div>
     </div>
 
-    <div class="section-title">1.2. Boyut Bileşenleri (Maddi + Manevi + Dış + X)</div>
+    <div class="section-title">1.2. Boyut Bileşenleri</div>
     <div class="form-grid">
         <div class="form-group"><label>Maddi Boyut (1-10):</label><input type="number" id="maddi" value="8"></div>
         <div class="form-group"><label>Manevi Boyut (1-10):</label><input type="number" id="manevi" value="9"></div>
         <div class="form-group"><label>Dış Boyut (1-10):</label><input type="number" id="dis" value="7"></div>
-        <div class="form-group"><label>X Alanı Adı:</label><input type="text" id="xAlani" value="Mekke"></div>
+        <div class="form-group"><label>X Alanı Adı:</label><input type="text" id="xAlani" value="Toplum"></div>
     </div>
 
-    <div class="section-title">1.3. Serbest Değer ve Niyet Değerlendirmesi</div>
+    <div class="section-title">1.3. Serbest Niyet İfadesi</div>
     <div class="form-group">
-        <label>Hedeflenen Eylem / Durum İfadesi:</label>
-        <textarea id="userText" placeholder="Örn: İlim öğrenmek amacıyla hicret etmek istiyorum..."></textarea>
+        <label>Hedeflenen Eylem / Durum:</label>
+        <textarea id="userText" placeholder="Örn: İlim öğrenmek istiyorum..."></textarea>
     </div>
 
-    <button onclick="analizEt()">MATRİSİ TAM KAPASİTE ÇALIŞTIR</button>
+    <button onclick="analizEt()">MATRİSİ VE EYLEMLERİ ÇALIŞTIR</button>
     <div id="result" class="result-box"></div>
 </div>
 
 <script>
 const ISLAMIC_DB = {
-    pozitif: [
-        { kaynak: "Asr Suresi 1-3", metin: "Zamana andolsun ki insan hüsrandadır. Ancak iman edip salih ameller işleyenler, birbirlerine hakkı ve sabrı tavsiye edenler müstesna." },
-        { kaynak: "Nisa Suresi 100", metin: "Allah yolunda hicret eden kimse, yeryüzünde gidecek çok yer ve bolluk bulur." },
-        { kaynak: "Hadis-i Şerif (Buhari)", metin: "İlim aramak amacıyla bir yola giren kimseye Allah cennet yolunu kolaylaştırır." }
-    ],
-    negatif: [
-        { kaynak: "Furkan Suresi 27", metin: "O gün zalim ellerini ısırarak: Keşke peygamberle birlikte bir yol tutsaydım der." },
-        { kaynak: "Hadis-i Şerif (Tirmizi)", metin: "Kul bir günah işlediği zaman kalbinde siyah bir nokta oluşur. Eğer tövbe etmezse o nokta kalbini kaplar." },
-        { kaynak: "Tekasür Suresi 1-2", metin: "Çoğaltma yarışı (hırsı) sizi oyaladı; ta kabirlere varıncaya kadar." }
-    ]
+    pozitif: { kaynak: "Asr Suresi", metin: "Zamana andolsun ki insan hüsrandadır. Ancak iman edip salih ameller işleyenler müstesna." },
+    negatif: { kaynak: "Furkan Suresi", metin: "O gün zalim ellerini ısırarak: Keşke peygamberle birlikte bir yol tutsaydım der." }
 };
 
 function analizEt() {
@@ -73,79 +74,72 @@ function analizEt() {
     const maddi = parseFloat(document.getElementById('maddi').value);
     const manevi = parseFloat(document.getElementById('manevi').value);
     const dis = parseFloat(document.getElementById('dis').value);
-    const xAlani = document.getElementById('xAlani').value;
+    const xAlani = document.getElementById('xAlani').value || "Mevcut Alan";
     const userText = document.getElementById('userText').value.toLowerCase();
     
-    // 1.1 ZAMAN ÇARPANINI HESAPLA
     const zaman = s - z;
+    const boyutToplami = maddi + manevi + dis + 2;
     
-    // X alanı uzunluğuna göre dinamik bir alan ağırlığı (Yapay Zeka katsayısı)
-    const xAgirlik = xAlani.trim().length > 0 ? 5 : 1; 
-    
-    // 1.2 YER DEĞİŞTİRME FONSİYONU: Dokümandaki ((B1) ± (B2)) mantığı
-    const yerDegistirme = (maddi + manevi + dis + xAgirlik) * 1.2;
-    
-    // 1.3 BİRLEŞME FONKSİYONU: Dokümandaki ((B1) * (B2)) çarpımsal etki mantığı
-    const birlesme = (maddi + manevi + dis + xAgirlik) * 0.8;
-    
-    // YAPAY ZEKA METİN ANALİZİ VE DEĞER DEĞİŞKENİ BASKILAMASI
-    let aiMetinKatsayisi = 1.0;
-    let niyetYorumu = "";
-    
-    const pozitifKelimeler = ["hicret", "ilim", "sabır", "öğren", "salih", "şükür", "iyilik", "yardım"];
-    const negatifKelimeler = ["hırs", "para", "israf", "tembellik", "korkmuyorum", "günah", "gunah", "yalan"];
+    // Niyet katsayısı tespiti
+    let niyetKatsayisi = 1.0;
+    if (userText.includes("günah") || userText.includes("korkmuyorum") || userText.includes("hırs")) niyetKatsayisi = -1.5;
+    else if (userText.includes("ilim") || userText.includes("hicret") || userText.includes("sabır")) niyetKatsayisi = 1.4;
 
-    let pozitifPuan = pozitifKelimeler.filter(k => userText.includes(k)).length;
-    let negatifPuan = negatifKelimeler.filter(k => userText.includes(k)).length;
-
-    if (userText.includes("günah") || userText.includes("gunah") || userText.includes("korkmuyorum")) {
-        negatifPuan += 3;
-    }
-
-    if (pozitifPuan > 0 || negatifPuan > 0) {
-        if (pozitifPuan >= negatifPuan) {
-            aiMetinKatsayisi = 1.3;
-            niyetYorumu = "Niyet Analizi: Pozitif ve ivmeli bir manevi arayış saptandı.";
-        } else {
-            aiMetinKatsayisi = -2.0; 
-            niyetYorumu = "Niyet Analizi: Cümlede sorumluluk bilincinden uzaklaşma veya hüsran riski saptandı.";
-        }
-    } else {
-        niyetYorumu = "Niyet Analizi: Nötr durum girdisi yapıldı.";
-    }
-
-    // FORMÜL TAM HESAPLAMASI: Zaman * (Yer Değiştirme * Birleşme) * Yapay Zeka Etkisi
-    const netDeger = zaman * (yerDegistirme * birlesme) * aiMetinKatsayisi;
+    const netDeger = zaman * (boyutToplami * 1.2) * (boyutToplami * 0.8) * niyetKatsayisi;
     
+    // Grafiği Yüzdelik Dilime Çevirme Mantığı (Maksimum etkiyi 5000 kabul edelim)
+    let eylemsellikYuzdesi = Math.min(Math.abs(netDeger) / 50, 100);
+    if(eylemsellikYuzdesi < 10) eylemsellikYuzdesi = 15; // Görsel taban puan
+
     const resultBox = document.getElementById('result');
     resultBox.style.display = 'block';
     
-    let durumYorumu = "";
-    let secilenRef = {};
+    let grafikRengi = netDeger > 0 ? "#10b981" : "#ef4444";
+    let durumBasligi = netDeger > 0 ? "[+] MAKSİMUM DEĞER KAZANCI" : "[-] MAKSİMUM DEĞER KAYBI";
+    resultBox.className = netDeger > 0 ? "result-box positive" : "result-box negative";
 
+    // YAPAY ZEKA AKSİYONER GÖREV MOTORU
+    let gorevler = [];
     if (netDeger > 0) {
-        resultBox.className = "result-box positive";
-        durumYorumu = `<strong>[+] Değer = Doğru yer değiştirme maksimum değer kazancı.</strong><br><br>
-        <strong>Yer Değiştirme Yorumu:</strong> Belirtilen "${xAlani}" alanına doğru hareket, maddi ve manevi boyutlarınızı pozitif yönde ivmelendirmiştir. Zaman çarpanınız bulunduğunuz anın ilerisinde (artı değerde) bir bilinç düzeyi sunmaktadır.<br><br>
-        <strong>Birleşme Yorumu:</strong> Maddi ve manevi enerjileriniz dış boyut ile kusursuz bütünleşerek toplumsal veya bireysel bir sıçrama (Bereket/Kazanç) oluşturmuştur.`;
-        secilenRef = ISLAMIC_DB.pozitif[Math.floor(Math.random() * ISLAMIC_DB.pozitif.length)];
+        gorevler = [
+            `<strong>Zamanı Yönet:</strong> Gelecek planlarınızı ertelemeden sabitlemek için bu hafta her gün en az 30 dakikanızı "${xAlani}" alanında ilmi derinleşmeye ayırın.`,
+            `<strong>Manevi Entegrasyon (Birleşme):</strong> Formülünüzdeki birleşme başarısını korumak için çevrenizdeki en az bir kişiye hakkı ve sabrı tavsiye eden (Asr Suresi gereği) bir iyilik yapın.`,
+            `<strong>Alan İvmelendirmesi:</strong> "${xAlani}" üzerinde maddi ve manevi boyutunuzu dengeleyecek somut bir sadaka veya yardımlaşma faaliyeti başlatın.`
+        ];
     } else {
-        resultBox.className = "result-box negative";
-        durumYorumu = `<strong>[-] Değer = Yanlış yer değiştirme maksimum değer kaybedişi (Hüsran).</strong><br><br>
-        <strong>Yer Değiştirme Yorumu:</strong> Yapılan eylem veya seçilen "${xAlani}" alanı, boyut bileşenlerinizde dengesizlik yaratarak istikrarsızlığa yol açmıştır. Zaman çarpanı sizi geriye doğru çekmektedir.<br><br>
-        <strong>Birleşme Yorumu:</strong> Maddi ve manevi unsurlarınız dış dünya ile yapıcı bir bağ kuramamış, bütünleşme krizine yol açarak sistemin çöküşüne (Maksimum Değer Kaybına) neden olmuştur.`;
-        secilenRef = ISLAMIC_DB.negatif[Math.floor(Math.random() * ISLAMIC_DB.negatif.length)];
+        gorevler = [
+            `<strong>Acil Durum Freni (Tövbe):</strong> Mevcut niyet veya eylem çizginiz sistemde değer kaybına neden oluyor. Zihinsel odağınızı hırstan uzaklaştırıp derhal istiğfar ve arınmaya yöneltin.`,
+            `<strong>Mekân/Alan Değişimi:</strong> Formüldeki yer değiştirme katsayınız hüsran üretiyor. Size zarar veren ortamlardan, internet sitelerinden veya alışkanlıklardan bu bugünden itibaren uzaklaşın.`,
+            `<strong>Denge Ayarı:</strong> Maddi boyut hırsınızı azaltın; manevi boyutunuzu sıfırlamamak için bu akşam sessiz bir ortamda tefekkür edin ve vaktinizi israf etmeyi durdurun.`
+        ];
     }
 
+    let ref = netDeger > 0 ? ISLAMIC_DB.pozitif : ISLAMIC_DB.negatif;
+
     resultBox.innerHTML = `
-        <div class="component-output">Δ Zaman (S-Z): ${zaman > 0 ? '+' : ''}${zaman}</div>
-        <div class="component-output">Yer Değiştirme Katsayısı: ${yerDegistirme.toFixed(1)}</div>
-        <div class="component-output">Birleşme Katsayısı: ${birlesme.toFixed(1)}</div>
-        <div class="component-output">Net Matris Değeri: ${netDeger.toFixed(1)}</div>
-        <hr style="border: 0; border-top: 1px solid #334155; margin: 10px 0;">
-        <div class="ai-note">${niyetYorumu}</div>
-        <div class="analysis-text">${durumYorumu}</div>
-        <span class="source">[${secilenRef.kaynak}]: "${secilenRef.metin}"</span>
+        <strong style="font-size:16px;">${durumBasligi}</strong>
+        
+        <!-- Yapay Zeka Canlı Grafik Alanı -->
+        <div class="chart-container">
+            <div class="progress-circle" style="background: conic-gradient(${grafikRengi} ${eylemsellikYuzdesi * 3.6}deg, #334155 0deg); color: #fff;">
+                <div style="position: absolute; width: 90px; height: 90px; background: #1a1c2a; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <span style="font-size:11px; color:#94a3b8;">Eylemsellik</span>
+                    <span>%${eylemsellikYuzdesi.toFixed(0)}</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="font-size:13px; color:#94a3b8; text-align:center; margin-bottom:15px;">Matris Gücü: ${netDeger.toFixed(0)} Puan</div>
+        
+        <!-- Atanan Görevler -->
+        <div class="tasks-container">
+            <div class="tasks-title">🎯 YAPAY ZEKA EYLEMSEL GÖREVLERİNİZ</div>
+            <div class="task-item">${gorevler[0]}</div>
+            <div class="task-item">${gorevler[1]}</div>
+            <div class="task-item">${gorevler[2]}</div>
+        </div>
+
+        <span class="source">[${ref.kaynak}]: "${ref.metin}"</span>
     `;
 }
 </script>
