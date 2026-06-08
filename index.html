@@ -3,122 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MODULUS X | Decision Matrix</title>
+    <title>MODULUS X | Algorithmic Matrix</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background-color: #080c14;
-            font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+            background-color: #060913;
+            font-family: 'Courier New', Courier, monospace;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            color: #e2e8f0;
-            padding: 20px;
-        }
-        .matrix-container {
-            background: linear-gradient(145deg, #0f1626, #131c32);
-            border: 1px solid rgba(0, 242, 254, 0.12);
-            border-radius: 20px;
-            width: 100%;
-            max-width: 520px;
-            padding: 30px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.7), inset 0 1px 2px rgba(255,255,255,0.05);
-        }
-        .matrix-header { text-align: center; margin-bottom: 25px; }
-        .matrix-title { font-size: 2.4rem; font-weight: 900; color: #00f2fe; letter-spacing: 4px; text-transform: uppercase; line-height: 1.1; }
-        .matrix-subtitle { font-size: 0.8rem; color: #4e6178; text-transform: uppercase; letter-spacing: 5px; margin-top: 5px; }
-        
-        /* Değer Kutusu Üst Alan Kuralı */
-        .value-section {
-            background: rgba(224, 0, 255, 0.03);
-            border: 1px solid rgba(224, 0, 255, 0.2);
-            border-radius: 12px;
+            color: #94a3b8;
             padding: 15px;
+        }
+        .matrix-core {
+            background: #0b111e;
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 500px;
+            padding: 25px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+        .system-header { text-align: center; margin-bottom: 30px; font-family: sans-serif; }
+        .system-title { font-size: 1.8rem; font-weight: 900; color: #00f2fe; letter-spacing: 5px; }
+        .system-version { font-size: 0.7rem; color: #475569; letter-spacing: 3px; margin-top: 5px; text-transform: uppercase; }
+        
+        /* Denklem Alanı Stili */
+        .equation-wrapper {
+            background: #070c16;
+            border: 1px solid rgba(0, 242, 254, 0.1);
+            border-radius: 8px;
+            padding: 20px;
             margin-bottom: 20px;
+            line-height: 2.2;
+            font-size: 1rem;
+            color: #fff;
         }
-        .section-tag { font-size: 0.75rem; font-weight: 700; color: #e000ff; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; display: block;}
-        
-        .form-group { margin-bottom: 15px; text-align: left; }
-        .form-group label { display: block; font-size: 0.8rem; color: #718096; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .form-control {
-            width: 100%; background: #0b111e; border: 1px solid #1e293b; border-radius: 8px;
-            padding: 12px 14px; color: #fff; font-size: 0.95rem; outline: none; transition: all 0.25s ease;
+        .eq-param {
+            background: #111a2e;
+            border: 1px solid #334155;
+            border-radius: 4px;
+            padding: 4px 8px;
+            color: #00f2fe;
+            font-family: sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: all 0.2s;
         }
-        .form-control:focus { border-color: #00f2fe; box-shadow: 0 0 12px rgba(0, 242, 254, 0.15); }
-        .value-input { border-color: rgba(224, 0, 255, 0.3); font-weight: 600; color: #f4beff; }
-        .value-input:focus { border-color: #e000ff; box-shadow: 0 0 12px rgba(224, 0, 255, 0.2); }
-        
-        /* Kompakt Düzen İndeksleri */
-        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
-        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-        
-        .btn-calistir {
-            width: 100%; background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%); border: none;
-            border-radius: 8px; padding: 16px; color: #fff; font-weight: 800; font-size: 0.95rem;
-            cursor: pointer; text-transform: uppercase; letter-spacing: 2px; margin-top: 10px;
-            transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0, 114, 255, 0.3);
-        }
-        .btn-calistir:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0, 242, 254, 0.5); }
-        .btn-calistir:disabled { background: #1a2333; color: #4a5568; cursor: not-allowed; box-shadow: none; }
+        .eq-param:focus { border-color: #00f2fe; background: #16223b; box-shadow: 0 0 8px rgba(0,242,254,0.2); }
+        .eq-num { width: 50px; text-align: center; }
+        .eq-text { width: 140px; }
+        .eq-value { border-color: rgba(224, 0, 255, 0.4); color: #e000ff; width: 160px; }
+        .eq-value:focus { border-color: #e000ff; box-shadow: 0 0 8px rgba(224,0,255,0.2); }
 
-        /* Matris Sonuç Yapısı */
-        .table-action { width: 100%; border-collapse: collapse; margin-top: 15px; background: #090f1c; border-radius: 8px; overflow: hidden; }
-        .table-action th { background: #141f36; padding: 10px; font-size: 0.75rem; text-align: left; color: #00f2fe; text-transform: uppercase; }
-        .table-action td { padding: 12px 10px; font-size: 0.8rem; border-bottom: 1px solid #141f36; line-height: 1.4; }
+        .btn-matrix {
+            width: 100%; background: #00f2fe; border: none; border-radius: 6px;
+            padding: 15px; color: #060913; font-weight: 900; font-size: 0.9rem;
+            cursor: pointer; letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.2s; font-family: sans-serif;
+        }
+        .btn-matrix:hover { background: #00d6e0; box-shadow: 0 0 15px rgba(0, 242, 254, 0.4); }
+        .btn-matrix:disabled { background: #1e293b; color: #475569; cursor: not-allowed; box-shadow: none; }
+
+        /* Sonuç Paneli Stilleri */
+        .action-table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 10px; }
+        .action-table th { color: #00f2fe; font-size: 0.75rem; text-align: left; padding: 8px; border-bottom: 1px solid #1e293b; text-transform: uppercase; font-family: sans-serif; }
+        .action-table td { padding: 10px 8px; font-size: 0.75rem; border-bottom: 1px solid #111a2e; color: #cbd5e1; line-height: 1.4; }
     </style>
 </head>
 <body>
 
-    <div class="matrix-container">
-        <div class="matrix-header">
-            <div class="matrix-title">Modulus X</div>
-            <div class="matrix-subtitle">Decision Control Matrix</div>
+    <div class="matrix-core">
+        <div class="system-header">
+            <div class="system-title">MODULUS X</div>
+            <div class="system-version">Formula Application Interface</div>
         </div>
 
-        <div class="value-section">
-            <span class="section-tag">⚡ Üretilecek Nihai Değer (Çıktı)</span>
-            <input type="text" id="uretilecekDeger" class="form-control value-input" placeholder="Örn: İlmi Derinlik, Finansal Özgürlük, Kalbi Huzur">
+        <div class="equation-wrapper">
+            <strong>DEĞER</strong> = 
+            <input type="text" id="uretilecekDeger" class="eq-param eq-value" placeholder="[Hedef Değer]">
+            <br>
+            <strong>Z</strong> ( 
+            <input type="number" id="zamanS" class="eq-param eq-num" value="2030" title="Zaman S"> - 
+            <input type="number" id="zamanZ" class="eq-param eq-num" value="2026" title="Zaman Z"> 
+            ) * [ <br>
+            &nbsp;&nbsp;<strong>Maddi:</strong> <input type="number" id="maddiBoyut" class="eq-param eq-num" min="0" max="10" value="5"> + <br>
+            &nbsp;&nbsp;<strong>Manevi:</strong> <input type="number" id="maneviBoyut" class="eq-param eq-num" min="0" max="10" value="9"> <br>
+            ] / <strong>DışÇevre:</strong> <input type="number" id="disBoyut" class="eq-param eq-num" min="0" max="10" value="7">
+            <br>
+            <strong>X_Sahası:</strong> <input type="text" id="xAlani" class="eq-param eq-text" placeholder="Eylem/Problem">
+            <br>
+            <strong>Entegrasyon:</strong> <input type="text" id="birlesmeAlani" class="eq-param eq-text" placeholder="Ortam/Ekosistem">
         </div>
 
-        <div class="form-group">
-            <label for="xAlani">X Değişkeni (Eylem / Problem Sahası)</label>
-            <input type="text" id="xAlani" class="form-control" placeholder="Örn: İngilizce Öğrenmek, Ticarete Atılmak">
-        </div>
-
-        <div class="form-group grid-3">
-            <div>
-                <label>Maddi (0-10)</label>
-                <input type="number" id="maddiBoyut" class="form-control" min="0" max="10" value="5">
-            </div>
-            <div>
-                <label>Manevi (0-10)</label>
-                <input type="number" id="maneviBoyut" class="form-control" min="0" max="10" value="9">
-            </div>
-            <div>
-                <label>Dış Çevre</label>
-                <input type="number" id="disBoyut" class="form-control" min="0" max="10" value="7">
-            </div>
-        </div>
-
-        <div class="form-group grid-2">
-            <div>
-                <label>Zaman S (Bireysel)</label>
-                <input type="number" id="zamanS" class="form-control" value="2030">
-            </div>
-            <div>
-                <label>Zaman Z (Dünya)</label>
-                <input type="number" id="zamanZ" class="form-control" value="2026">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="birlesmeAlani">Birleşme Ortamı (Ekosistem)</label>
-            <input type="text" id="birlesmeAlani" class="form-control" placeholder="Örn: Dijital Pazar, Akademik Çevre">
-        </div>
-
-        <button class="btn-calistir">Matrisi Hesapla</button>
+        <button class="btn-matrix">Matrisi Hesapla</button>
         
         <div id="matrix-result-panel"></div>
     </div>
