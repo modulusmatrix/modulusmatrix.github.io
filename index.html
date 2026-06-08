@@ -27,7 +27,7 @@
         .tasks-container { background: rgba(15, 17, 26, 0.6); padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #a78bfa; }
         .tasks-title { color: #a78bfa; font-size: 14px; font-weight: bold; margin-bottom: 10px; }
         .task-list { padding-left: 15px; margin: 0; }
-        .task-item { font-size: 13px; margin-bottom: 8px; line-height: 1.4; }
+        .task-item { font-size: 13px; margin-bottom: 8px; line-height: 1.4; list-style-type: square; }
         .source { font-size: 12px; color: #38bdf8; margin-top: 15px; display: block; font-weight: bold; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; line-height: 1.4; }
     </style>
 </head>
@@ -47,118 +47,94 @@
 
 <script>
 function matrisiCalistir() {
-    const userText = document.getElementById('userText').value.toLowerCase().trim();
+    var userText = document.getElementById('userText').value.toLowerCase().trim();
     if (!userText) { alert("Lütfen önce bir durum yazın."); return; }
 
-    // Varsayılan Değer Yapısı
-    let S = 2030, Z = 2030;
-    let maddi = 5, manevi = 5, dis = 5;
-    let xAlani = "İç Dünya / Gönül Alanı";
-    let isPositive = true;
-    let huzunModu = false;
-    let ref = {};
-    let gorevler = [];
-
-    // Detaylı Kelime Grupları Analizi
-    const ilimGrup = ["ilim", "öğren", "ders", "okul", "kitap", "kurs", "kod"];
-    const hicretGrup = ["gitmek", "hicret", "taşınmak", "şehir", "yolculuk"];
-    const negatifGrup = ["bıktım", "bulaşık", "tembellik", "israf", "hırs", "korkmuyorum", "günah"];
-    const huzunGrup = ["zor", "çirkin", "cirkin", "yalnız", "yalniz", "hissediyorum", "üzgün", "uzgun", "yorgun"];
-
-    // Yapay Zekanın Kelimeleri Matris Bileşenlerine Ataması
-    if (ilimGrup.some(k => userText.includes(k))) {
-        manevi += 4; S = 2100; xAlani = "İlim Meclisi";
-    }
-    if (hicretGrup.some(k => userText.includes(k))) {
-        dis += 3; maddi += 2; xAlani = "Hicret Alanı";
-    }
-    if (huzunGrup.some(k => userText.includes(k))) {
-        huzunModu = true;
-        isPositive = false; // Hüznün matristeki ilk etkisi negatiftir (imtihan katsayısı)
-        manevi += 2; // Acı insanı maneviyata yaklaştırır
-        maddi -= 3;  // Dünya sevgisi azalır
-        Z = 2035;    // Zaman algısı yavaşlar
-    }
-    if (negatifGrup.some(k => userText.includes(k)) && !huzunModu) {
-        isPositive = false;
-        manevi -= 3; Z = 2040;
-    }
-
-    // FORMÜL HESAPLAMALARI
-    const zamanCarpani = S - Z;
-    const hesapZamani = zamanCarpani === 0 ? (isPositive ? 10 : -10) : zamanCarpani;
+    var S = 2030, Z = 2030;
+    var maddi = 5, manevi = 5, dis = 5;
+    var xAlani = "İç Dünya / Gönül Alanı";
+    var isPositive = true;
+    var huzunModu = false;
+    var kaynakText = "";
+    var metinText = "";
     
-    const yerDegistirme = maddi + manevi + dis;
-    const birlesme = (maddi + manevi) * dis;
-    const netDeger = hesapZamani * (yerDegistirme + birlesme);
-    const finalEtki = isPositive ? Math.abs(netDeger) : -Math.abs(netDeger);
+    var g1 = "", g2 = "", g3 = "";
 
-    // Grafik Yüzdesi
-    let eylemsellikYuzdesi = Math.min(Math.abs(finalEtki) / 10, 100);
-    if (eylemsellikYuzdesi < 20) eylemsellikYuzdesi = 25;
+    var ilimGrup = ["ilim", "öğren", "ders", "okul", "kitap", "kurs", "kod"];
+    var hicretGrup = ["gitmek", "hicret", "taşınmak", "şehir", "yolculuk"];
+    var negatifGrup = ["bıktım", "bulaşık", "tembellik", "israf", "hırs", "korkmuyorum", "günah"];
+    var huzunGrup = ["zor", "çirkin", "cirkin", "yalnız", "yalniz", "hissediyorum", "üzgün", "uzgun", "yorgun"];
 
-    // SONUÇ VE GÖREV YAPILANDIRMASI (Hatalar Giderildi)
+    // Kelime grubu eşleştirmeleri
+    for (var i = 0; i < ilimGrup.length; i++) { if (userText.indexOf(ilimGrup[i]) !== -1) { manevi += 4; S = 2100; xAlani = "İlim Meclisi"; } }
+    for (var i = 0; i < hicretGrup.length; i++) { if (userText.indexOf(hicretGrup[i]) !== -1) { dis += 3; maddi += 2; xAlani = "Hicret Alanı"; } }
+    for (var i = 0; i < huzunGrup.length; i++) { if (userText.indexOf(huzunGrup[i]) !== -1) { huzunModu = true; isPositive = false; manevi += 2; maddi -= 3; Z = 2035; } }
+    for (var i = 0; i < negatifGrup.length; i++) { if (userText.indexOf(negatifGrup[i]) !== -1 && !huzunModu) { isPositive = false; manevi -= 3; Z = 2040; } }
+
+    var zamanCarpani = S - Z;
+    var hesapZamani = zamanCarpani === 0 ? (isPositive ? 10 : -10) : zamanCarpani;
+    
+    var yerDegistirme = maddi + manevi + dis;
+    var birlesme = (maddi + manevi) * dis;
+    var finalEtki = isPositive ? 1 : -1;
+
+    var eylemsellikYuzdesi = 25;
+    if (!isPositive) { eylemsellikYuzdesi = 35; } else if (S > 2030) { eylemsellikYuzdesi = 85; }
+
     if (huzunModu) {
-        ref = { 
-            kaynak: "İnşirah Suresi 5-6 & Tin Suresi 4", 
-            metin: "Şüphesiz güçlükle beraber bir kolaylık vardır. Gerçekten güçlükle beraber bir kolaylık vardır. Biz insanı en güzel biçimde (ahsen-i takvim) yarattık." 
-        };
-        gorevler = [
-            "Fiziksel Değişim (Yer Değiştirme): İçinde bulunduğunuz kapalı alanı değiştirmek adına bugün balkona çıkın veya kısa bir yürüyüş yapıp derin nefes alın.",
-            "Manevi Odak (Birleşme): Kendinizi değersiz hissettiren dünyevi ölçüleri reddedin. 'En güzel biçimde yaratıldığınızı' hatırlayarak aynaya bakıp şükredin.",
-            "Aksiyoner Adım: Yalnızlık hissini kırmak için bu akşam güvendiğiniz bir dostunuzu arayın veya samimi bir dua ile iç dünyanızı ferahlatın."
-        ];
-    } else if (finalEtki >= 0) {
-        ref = { 
-            kaynak: "Asr Suresi", 
-            metin: "Zamana andolsun ki insan hüsrandadır. Ancak iman edip salih ameller işleyenler müstesna." 
-        };
-        gorevler = [
-            "Zaman çarpanınız pozitif. Bu ivmeyi kaybetmemek için bugünün planını hemen yazın.",
-            `Birleşme kaliteniz yüksek. "${xAlani}" yönündeki eyleminizi ertelemeden başlatın.`,
-            "Manevi boyutunuzu korumak adına çevrenize küçük bir iyilik yapın."
-        ];
+        kaynakText = "İnşirah Suresi 5-6 & Tin Suresi 4";
+        metinText = "Şüphesiz güçlükle beraber bir kolaylık vardır. Gerçekten güçlükle beraber bir kolaylık vardır. Biz insanı en güzel biçimde (ahsen-i takvim) yarattık.";
+        g1 = "Fiziksel Değişim (Yer Değiştirme): İçinde bulunduğunuz kapalı alanı değiştirmek adına bugün balkona çıkın veya kısa bir yürüyüş yapıp derin nefes alın.";
+        g2 = "Manevi Odak (Birleşme): Kendinizi değersiz hissettiren dünyevi ölçüleri reddedin. 'En güzel biçimde yaratıldığınızı' hatırlayarak şükredin.";
+        g3 = "Aksiyoner Adım: Yalnızlık hissini kırmak için bu akşam samimi bir dua ile iç dünyanızı ferahlatın veya bir dostunuzla konuşun.";
+    } else if (isPositive) {
+        kaynakText = "Asr Suresi";
+        metinText = "Zamana andolsun ki insan hüsrandadır. Ancak iman edip salih ameller işleyenler müstesna.";
+        g1 = "Zaman çarpanınız pozitif. Bu ivmeyi kaybetmemek için bugünün planını hemen yazın.";
+        g2 = "Birleşme kaliteniz yüksek. Belirlenen alan yönündeki eyleminizi ertelemeden başlatın.";
+        g3 = "Manevi boyutunuzu korumak adına çevrenize küçük bir iyilik yapın.";
     } else {
-        ref = { 
-            kaynak: "Furkan Suresi", 
-            metin: "O gün zalim ellerini ısırarak: Keşke peygamberle birlikte bir yol tutsaydım der." 
-        };
-        gorevler = [
-            "Matris çöküş üretiyor. Dünyevi hırslarınızı acilen sorgulayın ve yavaşlayın.",
-            "Yanlış niyet veya alandan uzaklaşmak için kendinize sakin bir tefekkür vakti ayırın.",
-            "Zamanı israf etmeyi durdurun ve kalbinizi karartan alışkanlıklardan uzak durun."
-        ];
+        kaynakText = "Furkan Suresi";
+        metinText = "O gün zalim ellerini ısırarak: Keşke peygamberle birlikte bir yol tutsaydım der.";
+        g1 = "Matris çöküş üretiyor. Dünyevi hırslarınızı acilen sorgulayın ve yavaşlayın.";
+        g2 = "Yanlış niyet veya alandan uzaklaşmak için kendinize sakin bir tefekkür vakti ayırın.";
+        g3 = "Zamanı israf etmeyi durdurun ve kalbinizi karartan alışkanlardan uzak durun.";
     }
 
-    // EKRANA YAZDIRMA
-    const resultBox = document.getElementById('result');
+    var resultBox = document.getElementById('result');
     resultBox.style.display = 'block';
     
-    let grafikRengi = finalEtki >= 0 ? "#10b981" : (huzunModu ? "#f59e0b" : "#ef4444");
-    let durumBasligi = finalEtki >= 0 ? "[+] DEĞER KAZANCI / DOĞRU YER DEĞİŞTİRME" : (huzunModu ? "[!] MATRİS UYARISI / İMTİHAN VE HÜZÜN MODU" : "[-] DEĞER KAYBI / YANLIŞ YER DEĞİŞTİRME");
-    resultBox.className = finalEtki >= 0 ? "result-box positive" : "result-box negative";
-    if (huzunModu) resultBox.style.borderColor = "#f59e0b"; // Hüzün modu turuncu uyarı çizgisi
+    var grafikRengi = isPositive ? "#10b981" : (huzunModu ? "#f59e0b" : "#ef4444");
+    var durumBasligi = isPositive ? "[+] DEĞER KAZANCI / DOĞRU YER DEĞİŞTİRME" : (huzunModu ? "[!] MATRİS UYARISI / İMTİHAN VE HÜZÜN MODU" : "[-] DEĞER KAYBI / YANLIŞ YER DEĞİŞTİRME");
+    resultBox.className = isPositive ? "result-box positive" : "result-box negative";
+    if (huzunModu) { resultBox.style.borderColor = "#f59e0b"; }
 
-    resultBox.innerHTML = `
-        <strong style="font-size:15px; display:block; text-align:center;">${durumBasligi}</strong>
-        
-        <div class="chart-container">
-            <div class="progress-circle" style="background: conic-gradient(${grafikRengi} ${eylemsellikYuzdesi * 3.6}deg, #334155 0deg); color: #fff;">
-                <div style="position: absolute; width: 90px; height: 90px; background: #1a1c2a; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                    <span style="font-size:11px; color:#94a3b8;">Eylemsellik</span>
-                    <span>%${eylemsellikYuzdesi.toFixed(0)}</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="matrix-report">
-            <div class="report-title">📋 MATRİS BİLEŞEN RAPORU</div>
-            <div class="report-item">⏱️ <strong>Zaman Çarpanı:</strong> Yapay zeka bu kederli durum için zamanı yavaşlamış (<b>${hesapZamani}</b>) olarak simüle etti. Sabır zamanıdır.</div>
-            <div class="report-item">🧬 <strong>Boyut Analizi:</strong> Maddi boyutunuz dünya hırsından koptuğu için düştü (${maddi}), ancak hüzün kalbinizi hassaslaştırdığı için Maneviyatınız (${manevi}) korundu. Hedef alan: <b>"${xAlani}"</b>.</div>
-            <div class="report-item">🔄 <strong>Yer Değiştirme Fonksiyonu:</strong> Formül puanı <b>${yerDegistirme}</b>. Bulunduğunuz zihinsel veya fiziksel mekanı acilen hayırlı bir yöne doğru değiştirmeniz gerekiyor.</div>
-            <div class="report-item">🤝 <strong>Birleşme Fonksiyonu:</strong> Formül puanı <b>${birlesme}</b>. İç dünyanız dış çevreyle bağını kopardığı için yalnızlık hissiyle birleşme krizi doğmuştur.</div>
-        </div>
-        
-        <div class="tasks-container">
-            <div class="tasks-title">🎯 YAPAY ZEKA ŞİFA GÖREVLERİ</div>
-            <ul class="task-list">
+    resultBox.innerHTML = '<strong style="font-size:15px; display:block; text-align:center;">' + durumBasligi + '</strong>' +
+        '<div class="chart-container">' +
+            '<div class="progress-circle" style="background: conic-gradient(' + grafikRengi + ' ' + (eylemsellikYuzdesi * 3.6) + 'deg, #334155 0deg); color: #fff;">' +
+                '<div style="position: absolute; width: 90px; height: 90px; background: #1a1c2a; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center;">' +
+                    '<span style="font-size:11px; color:#94a3b8;">Eylemsellik</span>' +
+                    '<span>%' + eylemsellikYuzdesi + '</span>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+        '<div class="matrix-report">' +
+            '<div class="report-title">📋 MATRİS BİLEŞEN RAPORU</div>' +
+            '<div class="report-item">⏱️ <strong>Zaman Çarpanı:</strong> Yapay zeka bu durum için zaman çarpanını ' + hesapZamani + ' olarak simüle etti.</div>' +
+            '<div class="report-item">🧬 <strong>Boyut Analizi:</strong> Maddi (' + maddi + '), Manevi (' + manevi + ') ve Dış Boyut (' + dis + ') ile odak alan: "' + xAlani + '" olarak saptandı.</div>' +
+            '<div class="report-item">🔄 <strong>Yer Değiştirme Fonksiyonu:</strong> Formül puanı ' + yerDegistirme + '. Konum/Düşünce değişim yapısını düzenlemeniz gerekiyor.</div>' +
+            '<div class="report-item">🤝 <strong>Birleşme Fonksiyonu:</strong> Formül puanı ' + birlesme + '. Unsurlarınızın dış dünya ile birleşme düzeyi hesaplandı.</div>' +
+        '</div>' +
+        '<div class="tasks-container">' +
+            '<div class="tasks-title">🎯 YAPAY ZEKA GÖREVLERİ</div>' +
+            '<ul class="task-list">' +
+                '<li class="task-item">' + g1 + '</li>' +
+                '<li class="task-item">' + g2 + '</li>' +
+                '<li class="task-item">' + g3 + '</li>' +
+            '</ul>' +
+        '</div>' +
+        '<span class="source">' + kaynakText + ': "' + metinText + '"</span>';
+}
+</script>
+</body>
+</html>
