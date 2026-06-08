@@ -21,21 +21,34 @@
             border: 1px solid rgba(0, 242, 254, 0.15);
             border-radius: 16px;
             width: 100%;
-            max-width: 460px;
+            max-width: 480px;
             padding: 35px 25px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6);
         }
         .matrix-title { font-size: 2.2rem; font-weight: 800; color: #00f2fe; letter-spacing: 3px; text-transform: uppercase; text-align: center; margin-bottom: 5px; }
         .matrix-subtitle { font-size: 0.85rem; color: #52667a; text-transform: uppercase; letter-spacing: 4px; text-align: center; margin-bottom: 30px; }
+        
+        /* Felsefi Değer Kutusu Stili */
+        .value-group {
+            margin-bottom: 22px;
+            padding: 15px;
+            background: rgba(224, 0, 255, 0.05);
+            border: 1px dashed rgba(224, 0, 255, 0.3);
+            border-radius: 10px;
+        }
+        
         .form-group { margin-bottom: 18px; text-align: left; }
         .form-group label { display: block; font-size: 0.85rem; color: #a3b8cc; margin-bottom: 6px; font-weight: 500; }
         .form-control {
             width: 100%; background: #172030; border: 1px solid #222f47; border-radius: 8px;
-            padding: 12px; color: #fff; font-size: 0.95rem; outline: none; transition: border-color 0.3s;
+            padding: 12px; color: #fff; font-size: 0.95rem; outline: none; transition: all 0.3s;
         }
-        .form-control:focus { border-color: #00f2fe; }
+        .form-control:focus { border-color: #00f2fe; box-shadow: 0 0 10px rgba(0, 242, 254, 0.2); }
+        .form-control.value-input:focus { border-color: #e000ff; box-shadow: 0 0 10px rgba(224, 0, 255, 0.3); }
+        
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
         .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+        
         .btn-calistir {
             width: 100%; background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%); border: none;
             border-radius: 8px; padding: 16px; color: #fff; font-weight: 700; font-size: 1rem;
@@ -51,6 +64,13 @@
     <div class="matrix-container">
         <div class="matrix-title">Modulus X</div>
         <div class="matrix-subtitle">1. Formül Açılımı Sistemi</div>
+
+        <div class="value-group">
+            <div class="form-group" style="margin-bottom: 0;">
+                <label for="uretilecekDeger" style="color: #e000ff; font-weight: 700; letter-spacing: 1px;">✨ Üretilecek Hedef Değer (Çıktı)</label>
+                <input type="text" id="uretilecekDeger" class="form-control value-input" style="border-color: rgba(224, 0, 255, 0.4);" placeholder="Örn: Helal kazanç, İlim yaymak, Küresel başarı">
+            </div>
+        </div>
 
         <div class="form-group">
             <label for="xAlani">X Alanı (Derdiniz, Sıkıntınız veya Projeniz)</label>
