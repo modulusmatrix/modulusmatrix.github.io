@@ -30,7 +30,7 @@
         .exegesis-text { font-size: 13px; line-height: 1.5; font-style: italic; color: #94a3b8; margin-bottom: 10px; }
         .exegesis-commentary { font-size: 13px; line-height: 1.5; color: #e2e8f0; border-top: 1px solid #374151; padding-top: 8px; }
         .tasks-container { background: rgba(15, 17, 26, 0.6); padding: 15px; border-radius: 8px; margin-top: 15px; }
-        .task-item { font-size: 13px; margin-bottom: 12px; line-height: 1.5; list-style-type: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; }
+        .task-item { font-family: inherit; font-size: 13px; margin-bottom: 12px; line-height: 1.5; list-style-type: none; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; }
         .task-item:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
         .source { font-size: 12px; color: #38bdf8; margin-top: 15px; display: block; font-weight: bold; background: rgba(0,0,0,0.3); padding: 10px; border-radius: 4px; }
     </style>
@@ -49,7 +49,79 @@
     <div id="result" class="result-box"></div>
 </div>
 
-<!-- Yapay Zeka Kod Motoru Bağlantısı -->
-<script src="matrix-engine.js"></script>
-</body>
-</html>
+<script>
+function matrisiProfille() {
+    var userText = document.getElementById('userText').value.toLowerCase().trim();
+    if (!userText) { alert("Lütfen gözlemlenecek bir olay veya durum yazın."); return; }
+
+    var resultBox = document.getElementById('result');
+    resultBox.style.display = "block";
+    resultBox.className = "result-box warning";
+    resultBox.innerHTML = '<div style="text-align:center; color:#00f2fe; font-weight:bold;">🧠 Modulus X Yapay Zekası Olayı Gözlemliyor... Lütfen Bekleyin...</div>';
+
+    var S = 2030, Z = 2030, maddi = 5, manevi = 5, dis = 5;
+    var xAlani = "İçsel Bilinç Alanı";
+    var profilTipi = "Gözlemci / Dengeli Profil";
+    var profilOzeti = "Sistem durağan ve dengeli bir matris çözümü üretiyor.";
+    var olayKategorisi = "Genel Yaşam Algısı";
+    var statusClass = "positive";
+
+    var hüzünKelimeleri = ["yalnız", "yalniz", "çirkin", "cirkin", "zor", "üzgün", "uzgun", "yorgun", "bıktım", "korkuyorum", "acı", "aci", "depresyon"];
+    var ilimKelimeleri = ["ilim", "öğren", "kod", "yazılım", "ders", "kitap", "okumak", "hedef", "proje", "gelişmek"];
+
+    if (hüzünKelimeleri.some(function(k) { return userText.indexOf(k) !== -1; })) {
+        olayKategorisi = "Manevi İmtihan ve Melankoli";
+        profilTipi = "Duygusal Savaşçı";
+        profilOzeti = "İçsel hesaplaşma ve anlam arayışı evresi saptandı.";
+        manevi += 3; maddi -= 2; Z = 2035; xAlani = "Gönül ve Ruh Boyutu";
+        statusClass = "warning";
+    } else if (ilimKelimeleri.some(function(k) { return userText.indexOf(k) !== -1; })) {
+        olayKategorisi = "Zihinsel İvmelenme";
+        profilTipi = "Vizyoner / İlim Yolcusu";
+        profilOzeti = "Bilgi üretimi ve sistem iyileştirme odaklılık saptandı.";
+        manevi += 4; dis += 2; S = 2100; xAlani = "Zihinsel ve İlmi Akademi";
+        statusClass = "positive";
+    }
+
+    var zaman = S - Z;
+    var yerDegistirme = maddi + manevi + dis;
+    var birlesme = (maddi + manevi) * dis;
+    
+    var tabanEnerji = zaman * (yerDegistirme + birlesme);
+    if (tabanEnerji === 0) {
+        tabanEnerji = statusClass === "positive" ? 450 : -350;
+    }
+    var tahminiEnerji = tabanEnerji * (statusClass === "positive" ? 1.15 : 0.85);
+    var eylemsellikYuzdesi = statusClass === "positive" ? 85 : 35;
+
+    var kaynakText = "Tin Suresi 4. Ayet & İnşirah Suresi 5. Ayet";
+    var metinText = "Biz insanı en güzel biçimde yarattık. Şüphesiz güçlükle beraber bir kolaylık vardır.";
+    var serhYorumu = "<b>Yapay Zeka Makine Öğrenmesi Şerhi:</b> Model, tarihsel örüntü analizlerine dayanarak mevcut durumunuz için <b>" + tahminiEnerji.toFixed(0) + "</b> net enerji gücü tahmin etti. Tin Suresi'ndeki yaratılış şerefinize (Ahsen-i Takvim) odaklanarak eylemsizlik krizini aşmanız gerektiğini saptar.";
+    
+    var gorevYerDegistirme = "<b>🔄 YER DEĞİŞTİRME GÖREVİ (Aksiyon):</b> Mevcut konum veya zihinsel kısırlık katsayınızı kırmak adına; bugün bulunduğunuz kapalı odayı değiştirin, temiz havada 15 dakika yürüyüş yaparak dış boyut (D) enerjinizi fiziksel olarak aktifleştirin.";
+    var gorevBirlesme = "<b>🤝 BİRLEŞME GÖREVİ (Uygulama):</b> İç dünyanızdaki manevi gücü dış dünya ile birleştirmek adına; kendinizi değersiz hissettiren tüm popüler algıları reddedin. Aynaya bakarak yaratılış potansiyelinize şükredin ve güvendiğiniz bir dostunuzla samimi bir diyalog kurun.";
+
+    if (statusClass === "positive") {
+        kaynakText = "Asr Suresi";
+        metinText = "Zamana andolsun ki insan hüsrandadır. Ancak iman edip salih ameller işleyenler müstesna.";
+        serhYorumu = "<b>Yapay Zeka Makine Öğrenmesi Şerhi:</b> Model, geçmiş başarı kombinasyonlarından yola çıkarak bu ilmi niyetin zaman çarpanını geleceğe taşıyacağını öngördü (Öngörülen Puan: " + tahminiEnerji.toFixed(0) + ").";
+        gorevYerDegistirme = "<b>🔄 YER DEĞİŞTİRME GÖREVİ (Aksiyon):</b> İlmi ivmenizi sabit bir düşünceden kurtarmak için; bu hafta her gün odaklanacağınız 1 saatlik özel bir çalışma/öğrenme alanı belirleyin ve fiziksel olarak o masaya kararlılıkla oturun.";
+        gorevBirlesme = "<b>🤝 BİRLEŞME GÖREVİ (Uygulama):</b> Maddi ve manevi birikimlerin meyve vermesi için; bugün öğrendiğiniz veya üzerinde çalıştığınız konudan bir paragraf felsefi bilgiyi çevrenizdeki bir insanla paylaşarak toplumsal sisteme entegre edin.";
+    }
+
+    setTimeout(function() {
+        resultBox.className = "result-box " + statusClass;
+        var grafikRengi = statusClass === "positive" ? "#10b981" : "#f59e0b";
+        var durumBasligi = statusClass === "positive" ? "[+] MAKSİMUM DEĞER KAZANCI" : "[!] İMTİHAN VE DEĞER DENGELEME";
+
+        if (statusClass === "warning") { resultBox.style.borderColor = "#f59e0b"; } else { resultBox.style.borderColor = ""; }
+
+        resultBox.innerHTML = 
+            '<strong style="font-size:15px; display:block; text-align:center; margin-bottom:15px;">' + durumBasligi + '</strong>' +
+            '<div class="profile-card">' +
+                '<div class="profile-title">👤 ML Profiler / Durum Gözlemi</div>' +
+                '<div class="profile-badge">' + profilTipi + '</div>' +
+                '<div class="report-item" style="margin-bottom:0;"><strong>Olay Analiz Grubu:</strong> ' + olayKategorisi + '</div>' +
+                '<div class="report-item" style="margin-bottom:0; margin-top:5px;"><strong>Gözlem Özeti:</strong> ' + profilOzeti + '</div>' +
+            '</div>' +
+            '<div class="chart-container">' +
