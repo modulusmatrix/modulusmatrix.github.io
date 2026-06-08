@@ -1,226 +1,79 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MODULUS X | AI Decision Matrix & Portfolyo</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
-        body {
-            background-color: #080b11;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            padding: 40px 20px;
-            color: #fff;
-        }
+class ModulusXApiService {
+  // Gerçek OpenAI API anahtarınızı buraya yerleştireceksiniz
+  final String _apiKey = 'YOUR_OPENAI_API_KEY'; 
+  final String _apiUrl = 'https://openai.com';
 
-        /* Arka plan matrix/devre efekti */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                radial-gradient(rgba(0, 242, 254, 0.05) 2px, transparent 0),
-                radial-gradient(rgba(224, 0, 255, 0.05) 2px, transparent 0);
-            background-size: 40px 40px;
-            background-position: 0 0, 20px 20px;
-            z-index: 1;
-        }
+  Future<Map<String, dynamic>> formuluCalistir({
+    required String kullaniciDerdi,
+    required String secilenKesim,
+    required double kaygiSeviyesi,
+    required double azimSeviyesi,
+  }) async {
+    
+    // Yapay zekaya Bayram Gedikli'nin formül kurallarını ve İslami filtreleri öğretiyoruz
+    final String sistemTalimati = """
+    Sen 'Modulus X: AI Decision Matrix' uygulamasının karar motorusun. 
+    Kullanıcının profil bilgileri şunlardır:
+    - Toplumsal Kesim/Katman: $secilenKesim
+    - İçsel Kaygı Skoru (Zamanı geri çeken etken): $kaygiSeviyesi/5
+    - İnanç ve Azim Skoru (Manevi Boyut): $azimSeviyesi/5
 
-        .main-container {
-            position: relative;
-            z-index: 2;
-            text-align: center;
-            max-width: 600px;
-            width: 100%;
-        }
+    Görevin: Kullanıcının derdini Bayram Gedikli'nin 'Zaman * ((Yer Değiştirme) * Birleşme) = Değer' formülüne göre analiz et.
+    Zaman = S - Z mantığına göre kullanıcının çağın ve sünnetin neresinde olduğunu hesapla.
+    Kuran ve Sünnet süzgecinden geçir. Eğer plan haram, kul hakkı veya zulüm içeriyorsa BİRLEŞMEYİ DURDUR uyarısı ver.
 
-        /* Işıklı Logo Alanı */
-        .logo-wrapper {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            margin: 0 auto 20px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+    SADECE aşağıdaki JSON formatında cevap ver, başka hiçbir metin ekleme:
+    {
+      "durum_ozeti": "Kısa durum analizi",
+      "zaman_metresi": "S-Z analizi sonucu (+ veya - yıl/skor)",
+      "dini_referans": "İlgili Ayet ve Hadis meali",
+      "formul_skoru": "Maksimum Değer Kazanışı veya Kaybedişi",
+      "aksiyon_plani": [
+        {"id": 1, "gorev": "Hemen şimdi yapılacak ilk eylem", "sure": "İlk 5 Dakika"},
+        {"id": 2, "gorev": "Yapılacak ikinci eylem", "sure": "İlk 24 Saat"},
+        {"id": 3, "gorev": "Yapılacak üçüncü eylem", "sure": "Bu Hafta"}
+      ]
+    }
+    """;
 
-        .logo-glow {
-            position: absolute;
-            width: 140px;
-            height: 140px;
-            background: radial-gradient(circle, rgba(0, 242, 254, 0.4) 0%, rgba(224, 0, 255, 0.3) 50%, transparent 100%);
-            filter: blur(20px);
-            animation: pulseGlow 4s ease-in-out infinite alternate;
-        }
+    try {
+      final response = await http.post(
+        Uri.parse(_apiUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $_apiKey',
+        },
+        body: jsonEncode({
+          'model': 'gpt-4o-mini', // Hızlı ve maliyeti düşük en güncel model
+          'messages': [
+            {'role': 'system', 'content': sistemTalimati},
+            {'role': 'user', 'content': kullaniciDerdi}
+          ],
+          'temperature': 0.3, // Kararların tutarlı ve ciddi olması için düşük sıcaklık
+        }),
+      );
 
-        @keyframes pulseGlow {
-            0% { transform: scale(0.9); opacity: 0.6; }
-            100% { transform: scale(1.1); opacity: 0.9; }
-        }
-
-        .circuit-logo {
-            width: 100%;
-            height: 100%;
-            filter: drop-shadow(0 0 12px rgba(0, 242, 254, 0.6));
-        }
-
-        /* Başlıklar */
-        .title-brand {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            background: linear-gradient(135deg, #8ae6ff 0%, #b92eff 50%, #615eff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 5px;
-        }
-
-        .subtitle-brand {
-            font-size: 1rem;
-            font-weight: 400;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: #728aa1;
-            margin-bottom: 15px;
-        }
-
-        .line-decorator {
-            width: 80px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #00f2fe, #e000ff, transparent);
-            margin: 0 auto 25px auto;
-            box-shadow: 0 0 8px #00f2fe;
-        }
-
-        .about-text {
-            color: #a3b8cc;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            margin-bottom: 35px;
-        }
-
-        /* Yeni Eklenen İçerik Kartları Yapısı */
-        .section-title {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #00f2fe;
-            margin-bottom: 15px;
-            text-align: left;
-            border-left: 3px solid #e000ff;
-            padding-left: 10px;
-        }
-
-        .card {
-            background: rgba(13, 20, 33, 0.7);
-            border: 1px solid rgba(0, 242, 254, 0.15);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: left;
-            margin-bottom: 15px;
-            backdrop-filter: blur(5px);
-        }
-
-        .card h3 {
-            color: #fff;
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-
-        .card p {
-            color: #728aa1;
-            font-size: 0.85rem;
-            line-height: 1.5;
-        }
-
-        /* Sosyal Medya Butonları */
-        .btn-container {
-            margin-top: 30px;
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-        }
-
-        .btn {
-            text-decoration: none;
-            color: #00f2fe;
-            border: 1px solid #00f2fe;
-            padding: 10px 25px;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            background: rgba(0, 242, 254, 0.02);
-            transition: all 0.3s;
-        }
-
-        .btn-alt {
-            color: #e000ff;
-            border: 1px solid #e000ff;
-            background: rgba(224, 0, 255, 0.02);
-        }
-    </style>
-</head>
-<body>
-
-    <div class="main-container">
-        <div class="logo-wrapper">
-            <div class="logo-glow"></div>
-            <svg class="circuit-logo" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M 40,40 L 70,70 M 160,40 L 130,70 M 40,160 L 70,130 M 160,160 L 130,130" stroke="#00f2fe" stroke-width="1.5" stroke-dasharray="4 2"/>
-                <path d="M 20,100 L 60,100 M 180,100 L 140,100 M 100,20 L 100,60 M 100,180 L 100,140" stroke="#e000ff" stroke-width="1.5"/>
-                <circle cx="40" cy="40" r="3" fill="#00f2fe"/><circle cx="160" cy="40" r="3" fill="#00f2fe"/>
-                <circle cx="40" cy="160" r="3" fill="#00f2fe"/><circle cx="160" cy="160" r="3" fill="#00f2fe"/>
-                <path d="M 50,50 L 90,90 L 90,110 L 50,150" stroke="#00f2fe" stroke-width="4" stroke-linecap="round"/>
-                <path d="M 150,50 L 110,90 L 110,110 L 150,150" stroke="#00f2fe" stroke-width="4" stroke-linecap="round"/>
-                <circle cx="100" cy="100" r="12" fill="url(#coreGradient)"/>
-                <defs>
-                    <radialGradient id="coreGradient" cx="50%" cy="50%" r="50%">
-                        <stop offset="0%" stop-color="#ffffff"/>
-                        <stop offset="40%" stop-color="#00f2fe"/>
-                        <stop offset="100%" stop-color="#e000ff" stop-opacity="0"/>
-                    </radialGradient>
-                </defs>
-            </svg>
-        </div>
-
-        <h1 class="title-brand">Modulus X</h1>
-        <div class="subtitle-brand">AI Decision Matrix</div>
-        <div class="line-decorator"></div>
-        
-        <p class="about-text">
-            Yapay zeka teknolojileri, yaratıcı kurgu dünyaları ve dijital tasarımlar üzerine geliştirdiğim projelerin yer aldığı kişisel alanıma hoş geldiniz.
-        </p>
-
-        <div class="section-title">Çalışmalarım & Projeler</div>
-        
-        <div class="card">
-            <h3>🤖 Edebi Kurgu & Yapay Zeka</h3>
-            <p>Geleneksel hikaye anlatıcılığını, yapay zekanın derin analiz yetenekleriyle birleştirerek edebi kalitede metinler ve özgün senaryolar üretiyorum.</p>
-        </div>
-
-        <div class="card">
-            <h3>🌐 Dijital Matris Modelleme</h3>
-            <p>GitHub Pages ve siber temalar üzerinde veri görselleştirme ve modern web arayüzleri geliştirme çalışmaları yapıyorum.</p>
-        </div>
-
-        <div class="btn-container">
-            <a href="https://github.com/modulusmatrix" target="_blank" class="btn">GitHub</a>
-            <a href="#" class="btn btn-alt">İletişim</a>
-        </div>
-    </div>
-
-</body>
-</html>
+      if (response.statusCode == 200) {
+        // Gelen yanıtı JSON olarak çözüyoruz
+        final Map<String, dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
+        final String aiCevabi = data['choices'][0]['message']['content'];
+        return jsonDecode(aiCevabi); // Uygulama ekranında kullanılacak hazır harita
+      } else {
+        throw Exception('API Hatası: ${response.statusCode}');
+      }
+    } catch (e) {
+      return {
+        "durum_ozeti": "Bağlantı hatası oluştu.",
+        "zaman_metresi": "Hesaplanamadı",
+        "dini_referans": "Hata",
+        "formul_skoru": "Hata",
+        "aksiyon_plani": [
+          {"id": 1, "gorev": "Lütfen internet bağlantınızı kontrol edip tekrar deneyin.", "sure": "Şimdi"}
+        ]
+      };
+    }
+  }
+}
