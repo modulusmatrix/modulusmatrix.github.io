@@ -2,60 +2,67 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <title>MODULUS X | Yer Değiştirme ve Birleşme</title>
+    <title>MODULUS X | Yer Değiştirme ve Birleşme Teorisi</title>
     <style>
-        body { background-color: #faf8f0; font-family: 'Times New Roman', serif; display: flex; justify-content: center; padding: 20px; color: #231c14; }
-        .container { background: #ffffff; padding: 40px; border-radius: 8px; width: 100%; max-width: 650px; border: 1px solid #e3dec3; box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
-        h1 { text-align: center; letter-spacing: 5px; font-size: 1.8rem; margin-bottom: 20px; border-bottom: 2px solid #231c14; padding-bottom: 10px; }
-        .essence { font-style: italic; text-align: center; margin-bottom: 30px; color: #5c4f3e; }
-        textarea { width: 100%; height: 160px; padding: 15px; border: 1px solid #c4bfa3; border-radius: 4px; background: #fffdf5; font-family: serif; font-size: 1rem; }
-        button { width: 100%; padding: 16px; background: #231c14; color: #fff; border: none; cursor: pointer; margin-top: 15px; font-weight: bold; text-transform: uppercase; letter-spacing: 2px; }
-        #result { margin-top: 30px; line-height: 1.8; font-size: 1rem; border-top: 1px solid #e3dec3; padding-top: 20px; }
+        body { background: #faf8f0; font-family: 'Times New Roman', serif; display: flex; justify-content: center; padding: 20px; color: #231c14; }
+        .container { background: #fff; padding: 30px; border-radius: 8px; width: 100%; max-width: 650px; border: 1px solid #e3dec3; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        h2 { text-align: center; letter-spacing: 3px; border-bottom: 1px solid #e3dec3; padding-bottom: 10px; }
+        .essence { font-style: italic; text-align: center; margin: 20px 0; font-size: 1.1rem; }
+        textarea { width: 100%; height: 150px; padding: 15px; border: 1px solid #c4bfa3; border-radius: 4px; background: #fffdf5; font-family: inherit; }
+        button { width: 100%; padding: 15px; background: #231c14; color: #fff; border: none; cursor: pointer; margin-top: 10px; font-weight: bold; text-transform: uppercase; }
+        button:disabled { background: #e3dec3; }
+        #result { margin-top: 25px; line-height: 1.7; font-size: 0.95rem; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>MODULUS X</h1>
+    <h2>MODULUS X</h2>
     <p class="essence">"İnsan sadece yer değiştirme ve birleşme yapar, değeri yaratan Allah'tır."</p>
-    <textarea id="userInput" placeholder="Mevcut durumunuzu, niyetinizi ve fiili eyleminizi yazın..."></textarea>
-    <button onclick="teorikSentez()">TEORİK SENTEZİ BAŞLAT</button>
+    <textarea id="userInput" placeholder="Durumunuzu, niyetinizi ve fiili eyleminizi yazın..."></textarea>
+    <button id="btn" onclick="analyze()">TEORİK SENTEZİ BAŞLAT</button>
     <div id="result"></div>
 </div>
 
 <script>
-    function teorikSentez() {
-        const metin = document.getElementById('userInput').value.toLowerCase();
-        const res = document.getElementById('result');
-        if (metin.length < 10) { alert("Lütfen durumunuzu biraz daha detaylı ifade edin."); return; }
+    const API_KEY = "AQ.Ab8RN6IogUeEMlDdXN0jOeGCbopevwOPWuM405c5MPrGFTMoDQ"; 
 
-        // Kitabındaki boyutlara göre dinamik analiz motoru
-        const zamanAnalizi = metin.includes('vakit') || metin.includes('yetişemiyorum') ? 
-            "ZAMAN METRESİ: Dünya zaman metresinin gerisinde kalma riski (İhlas kaybı veya atalet)." : 
-            "ZAMAN METRESİ: Ebediyet ufkunda yer değiştirme potansiyeli yüksek (Bereketli zaman).";
+    async function analyze() {
+        const text = document.getElementById('userInput').value;
+        const resultDiv = document.getElementById('result');
+        const btn = document.getElementById('btn');
+        
+        if (!text) return alert("Lütfen durumunuzu girin.");
+        
+        btn.disabled = true;
+        resultDiv.innerText = "Küresel arşivler taranıyor, formül hesaplanıyor...";
 
-        const maneviAnalizi = metin.includes('para') || metin.includes('kazanç') ? 
-            "MANEVİ BOYUT: Maddi çıkar odaklı yer değiştirme, manevi değeri minimize eder." : 
-            "MANEVİ BOYUT: İhlas vektörü güçlü, doğru birleşmelere açık bir zemin.";
+        const prompt = `Sen Bayram Gedikli'nin "Yer Değiştirme ve Birleşme Teorisi"ni uygulayan bir algoritmasın.
+        Kullanıcının durumu: "${text}"
+        
+        Bu durumu Bayram Gedikli'nin 4 boyutuyla analiz et:
+        1. Zaman Metresi: (İleri mi, geri mi, neden?)
+        2. Manevi Boyut: (İhlas ve niyet analizi)
+        3. Maddi Boyut: (Esbab ve fiili hareket analizi)
+        4. Dış Çevre: (Direnç analizi)
+        
+        Ayrıca; Kuran-ı Kerim ve Hadis-i Şeriflerden bu duruma en uygun olan ayet ve hadisi seçip paylaş.
+        Son olarak; kişinin ekran başında vakit harcamasını engelleyen, hayatın içinde yapması gereken 2 somut, nokta atışı "fiili yer değiştirme ve birleşme" görevi ver.
+        Teorinin diline sadık kal, kısa ve vurucu ol.`;
 
-        const maddiAnalizi = metin.includes('yapamıyorum') || metin.includes('korku') ? 
-            "MADDİ BOYUT (ESBAB): Eylemsel atalet. Teorinin hayata geçmesi için 'fiili' bir yer değiştirme şart." : 
-            "MADDİ BOYUT (ESBAB): Sebepler dairesinde doğru eşleşme potansiyeli.";
-
-        const referans = metin.includes('oku') || metin.includes('kitap') ? 
-            "KURAN REFERANSI: 'Yaratan Rabbinin adıyla oku! O, kalemle yazmayı öğretendir.' (Alak 1-4)" : 
-            "KURAN REFERANSI: 'İnsan için ancak çalıştığı vardır.' (Necm 39)";
-
-        const gorev = metin.includes('birleşme') ? 
-            "GÖREV: Sahaya inin, teorik olanı fiiliyata dökmek için muhatabınızla yüz yüze iletişime geçin." : 
-            "GÖREV: Ekranı kapatın, bugün yapacağınız eylemi zihninizde değil, somut dünyada bir adımla başlatın.";
-
-        res.innerHTML = `<strong>ANALİZ SONUCU:</strong><br><br>
-                         ${zamanAnalizi}<br>
-                         ${maneviAnalizi}<br>
-                         ${maddiAnalizi}<br><br>
-                         <strong>TEORİK HAKİKAT:</strong><br>${referans}<br><br>
-                         <strong>FİİLİ GÖREV:</strong><br>${gorev}`;
+        try {
+            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            });
+            const data = await response.json();
+            resultDiv.innerText = data.candidates[0].content.parts[0].text;
+        } catch (e) {
+            resultDiv.innerText = "Sistemik hata oluştu. Lütfen bağlantınızı kontrol edin.";
+        } finally {
+            btn.disabled = false;
+        }
     }
 </script>
 </body>
