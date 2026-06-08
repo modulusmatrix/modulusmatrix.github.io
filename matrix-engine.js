@@ -5,9 +5,8 @@ function matrisiProfille() {
     var resultBox = document.getElementById('result');
     resultBox.style.display = "block";
     resultBox.className = "result-box warning";
-    resultBox.innerHTML = `<div style="text-align:center; color:#00f2fe; font-weight:bold;">🧠 Modulus X Yapay Zekası Olayı Gözlemliyor... Lütfen Bekleyin...</div>`;
+    resultBox.innerHTML = "<div style='text-align:center; color:#00f2fe; font-weight:bold;'>🧠 Modulus X Yapay Zekası Olayı Gözlemliyor... Lütfen Bekleyin...</div>";
 
-    // Girdi Parametreleri
     var S = 2030, Z = 2030, maddi = 5, manevi = 5, dis = 5;
     var xAlani = "İçsel Bilinç Alanı";
     var profilTipi = "Gözlemci / Dengeli Profil";
@@ -18,7 +17,6 @@ function matrisiProfille() {
     var hüzünKelimeleri = ["yalnız", "yalniz", "çirkin", "cirkin", "zor", "üzgün", "uzgun", "yorgun", "bıktım", "korkuyorum", "acı", "aci", "depresyon"];
     var ilimKelimeleri = ["ilim", "öğren", "kod", "yazılım", "ders", "kitap", "okumak", "hedef", "proje", "gelişmek"];
 
-    // Kelime Grupları Gözlemi
     if (hüzünKelimeleri.some(function(k) { return userText.indexOf(k) !== -1; })) {
         olayKategorisi = "Manevi İmtihan ve Melankoli";
         profilTipi = "Duygusal Savaşçı";
@@ -33,7 +31,6 @@ function matrisiProfille() {
         statusClass = "positive";
     }
 
-    // FORMÜL İŞLEME MANTIĞI
     var zaman = S - Z;
     var yerDegistirme = maddi + manevi + dis;
     var birlesme = (maddi + manevi) * dis;
@@ -45,21 +42,19 @@ function matrisiProfille() {
     var tahminiEnerji = tabanEnerji * (statusClass === "positive" ? 1.15 : 0.85);
     var eylemsellikYuzdesi = statusClass === "positive" ? 85 : 35;
 
-    // MATRİS GÖREV ATAMALARI
     var kaynakText = "Tin Suresi 4. Ayet & İnşirah Suresi 5. Ayet";
     var metinText = "Biz insanı en güzel biçimde yarattık. Şüphesiz güçlükle beraber bir kolaylık vardır.";
     var serhYorumu = "<b>Yapay Zeka Makine Öğrenmesi Şerhi:</b> Model, tarihsel örüntü analizlerine dayanarak mevcut durumunuz için <b>" + tahminiEnerji.toFixed(0) + "</b> net enerji gücü tahmin etti. Tin Suresi'ndeki yaratılış şerefinize (Ahsen-i Takvim) odaklanarak eylemsizlik krizini aşmanız gerektiğini saptar.";
     
-    // Eylemselliğe Dökülen Spesifik Görevler
-    var gorevYerDegistirme = "<b>🔄 YER DEĞİŞTİRME GÖREVİ (Aksiyon):</b> Mevcut konum veya zihinsel kısırlık katsayınızı kırmak adına; bugün bulunduğunuz kapalı odayı değiştirin, temiz havada 15 dakika yürüyüş yaparak dış boyut (D) enerjinizi fiziksel olarak aktifleştirin.";
-    var gorevBirlesme = "<b>🤝 BİRLEŞME GÖREVİ (Uygulama):</b> İç dünyanızdaki manevi gücü dış dünya ile birleştirmek adına; kendinizi değersiz hissettiren tüm popüler algıları reddedin. Aynaya bakarak yaratılış potansiyelinize şükredin ve güvendiğiniz bir dostunuzla samimi bir diyalog kurun.";
+    var gorevYerDegistirme = "<b>🔄 YER DEĞİŞTİRME GÖREVİ (Aksiyon):</b> Mevcut konum veya zihinsel kısırlık katsayınızı kırmak adına; bugün bulunduğunuz kapalı odayı değiştirin, temiz havada 15 dakika yürüyüş yaparak dış boyut (D) katsayısını canlandırın.";
+    var gorevBirlesme = "<b>🤝 BİRLEŞME GÖREVİ (Uygulama):</b> İç dünyanızdaki manevi gücü dış dünya ile birleştirmek adına; kendinizi değersiz hissettiren tüm popüler algıları reddedin. Aynaya bakarak yaratılış değerinize şükredin.";
 
     if (statusClass === "positive") {
         kaynakText = "Asr Suresi";
         metinText = "Zamana andolsun ki insan hüsrandadır. Ancak iman edip salih ameller işleyenler müstesna.";
         serhYorumu = "<b>Yapay Zeka Makine Öğrenmesi Şerhi:</b> Model, geçmiş başarı kombinasyonlarından yola çıkarak bu ilmi niyetin zaman çarpanını geleceğe taşıyacağını öngördü (Öngörülen Puan: " + tahminiEnerji.toFixed(0) + ").";
-        gorevYerDegistirme = "<b>🔄 YER DEĞİŞTİRME GÖREVİ (Aksiyon):</b> İlmi ivmenizi sabit bir düşünceden kurtarmak için; bu hafta her gün odaklanacağınız 1 saatlik özel bir çalışma/öğrenme alanı belirleyin ve fiziksel olarak o masaya kararlılıkla oturun.";
-        gorevBirlesme = "<b>🤝 BİRLEŞME GÖREVİ (Uygulama):</b> Maddi ve manevi birikimlerin meyve vermesi için; bugün öğrendiğiniz veya üzerinde çalıştığınız konudan bir paragraf felsefi bilgiyi çevrenizdeki bir insanla paylaşarak toplumsal sisteme entegre edin.";
+        gorevYerDegistirme = "<b>🔄 YER DEĞİŞTİRME GÖREVİ (Aksiyon):</b> İlmi ivmenizi sabit bir düşünceden kurtarmak için; bu hafta her gün odaklanacağınız 1 saatlik özel bir çalışma alanı belirleyin ve fiziksel olarak o masaya kararlılıkla oturun.";
+        gorevBirlesme = "<b>🤝 BİRLEŞME GÖREVİ (Uygulama):</b> Maddi ve manevi birikimlerin meyve vermesi için; bugün öğrendiğiniz konudan bir felsefi bilgiyi çevrenizdeki bir insanla paylaşarak toplumsal sisteme entegre edin.";
     }
 
     setTimeout(function() {
@@ -69,7 +64,7 @@ function matrisiProfille() {
 
         if (statusClass === "warning") { resultBox.style.borderColor = "#f59e0b"; } else { resultBox.style.borderColor = ""; }
 
-        // JavaScript Backtick (`) Yapısı ile Yazı Kayması Kesin Olarak Engellendi
+        // Kırılmaları önleyen yeni temiz HTML enjeksiyon şablonu
         resultBox.innerHTML = `
             <strong style="font-size:15px; display:block; text-align:center; margin-bottom:15px;">${durumBasligi}</strong>
             <div class="profile-card">
@@ -90,8 +85,8 @@ function matrisiProfille() {
                 <div class="report-title">📋 MAKİNE ÖĞRENMESİ ÖNGÖRÜ RAPORU</div>
                 <div class="report-item">🔮 <strong>Model Tahmin Puanı (E):</strong> <b>${tahminiEnerji.toFixed(1)}</b></div>
                 <div class="report-item">🧬 <strong>Algılanan Boyut Yapısı:</strong> Maddi: ${maddi} | Manevi: ${manevi} | Dış: ${dis} | Alan: "${xAlani}"</div>
-                <div class="report-item">🔄 <strong>Yer Değiştirme Fonksiyonu:</strong> Değer: <b>${yerDegistirme}</b>.</div>
-                <div class="report-item">🤝 <strong>Birleşme Fonksiyonu:</strong> Değer: <b>${birlesme}</b>.</div>
+                <div class="report-item">🔄 <strong>Yer Değiştirme Fonksiyonu:</strong> Değer: <b>${yerDegistirme}</b></div>
+                <div class="report-item">🤝 <strong>Birleşme Fonksiyonu:</strong> Değer: <b>${birlesme}</b></div>
             </div>
             <div class="exegesis-box" style="border-left: 4px solid ${grafikRengi}; padding-left:10px; background:rgba(0,0,0,0.2); padding:10px; border-radius:4px; margin-top:15px;">
                 <div class="exegesis-title" style="color:${grafikRengi}; font-weight:bold; margin-bottom:5px;">📖 Kutsal Metin ve Felsefi Şerh</div>
@@ -101,7 +96,7 @@ function matrisiProfille() {
             <div class="tasks-container" style="border-left: 4px solid ${grafikRengi}; padding-left:10px; margin-top:15px;">
                 <div class="tasks-title" style="color:#a78bfa; font-weight:bold; margin-bottom:12px;">🎯 FORMÜLÜ AKTİFLEŞTİRECEK EYLEMSEL GÖREVLER</div>
                 <ul style="padding:0; margin:0; list-style-type:none; font-size:13px; line-height:1.5;">
-                    <li class="task-item">🔹 ${gorevYerDegistirme}</li>
+                    <li class="task-item" style="margin-bottom:8px;">🔹 ${gorevYerDegistirme}</li>
                     <li class="task-item">🔹 ${gorevBirlesme}</li>
                 </ul>
             </div>
