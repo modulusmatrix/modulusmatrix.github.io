@@ -29,22 +29,21 @@
         .system-title { font-size: 1.8rem; font-weight: 900; color: #00f2fe; letter-spacing: 5px; }
         .system-version { font-size: 0.7rem; color: #475569; letter-spacing: 3px; margin-top: 5px; text-transform: uppercase; }
         
-        /* Denklem Alanı Stili */
         .equation-wrapper {
             background: #070c16;
             border: 1px solid rgba(0, 242, 254, 0.1);
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
-            line-height: 2.2;
-            font-size: 1rem;
+            line-height: 2.4;
+            font-size: 0.95rem;
             color: #fff;
         }
         .eq-param {
             background: #111a2e;
             border: 1px solid #334155;
             border-radius: 4px;
-            padding: 4px 8px;
+            padding: 6px 10px;
             color: #00f2fe;
             font-family: sans-serif;
             font-size: 0.9rem;
@@ -52,24 +51,22 @@
             transition: all 0.2s;
         }
         .eq-param:focus { border-color: #00f2fe; background: #16223b; box-shadow: 0 0 8px rgba(0,242,254,0.2); }
-        .eq-num { width: 50px; text-align: center; }
-        .eq-text { width: 140px; }
-        .eq-value { border-color: rgba(224, 0, 255, 0.4); color: #e000ff; width: 160px; }
+        .eq-num { width: 65px; text-align: center; }
+        .eq-text { width: 160px; }
+        .eq-value { border-color: rgba(224, 0, 255, 0.4); color: #e000ff; width: 180px; }
         .eq-value:focus { border-color: #e000ff; box-shadow: 0 0 8px rgba(224,0,255,0.2); }
 
         .btn-matrix {
             width: 100%; background: #00f2fe; border: none; border-radius: 6px;
-            padding: 15px; color: #060913; font-weight: 900; font-size: 0.9rem;
+            padding: 16px; color: #060913; font-weight: 900; font-size: 0.95rem;
             cursor: pointer; letter-spacing: 2px; text-transform: uppercase;
             transition: all 0.2s; font-family: sans-serif;
         }
         .btn-matrix:hover { background: #00d6e0; box-shadow: 0 0 15px rgba(0, 242, 254, 0.4); }
-        .btn-matrix:disabled { background: #1e293b; color: #475569; cursor: not-allowed; box-shadow: none; }
-
-        /* Sonuç Paneli Stilleri */
-        .action-table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 10px; }
-        .action-table th { color: #00f2fe; font-size: 0.75rem; text-align: left; padding: 8px; border-bottom: 1px solid #1e293b; text-transform: uppercase; font-family: sans-serif; }
-        .action-table td { padding: 10px 8px; font-size: 0.75rem; border-bottom: 1px solid #111a2e; color: #cbd5e1; line-height: 1.4; }
+        
+        .action-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        .action-table th { color: #00f2fe; font-size: 0.75rem; text-align: left; padding: 8px; border-bottom: 1px solid #1e293b; text-transform: uppercase; }
+        .action-table td { padding: 12px 8px; font-size: 0.75rem; border-bottom: 1px solid #111a2e; color: #cbd5e1; line-height: 1.5; }
     </style>
 </head>
 <body>
@@ -85,8 +82,8 @@
             <input type="text" id="uretilecekDeger" class="eq-param eq-value" placeholder="[Hedef Değer]">
             <br>
             <strong>Z</strong> ( 
-            <input type="number" id="zamanS" class="eq-param eq-num" value="2030" title="Zaman S"> - 
-            <input type="number" id="zamanZ" class="eq-param eq-num" value="2026" title="Zaman Z"> 
+            <input type="number" id="zamanS" class="eq-param eq-num" value="2030"> - 
+            <input type="number" id="zamanZ" class="eq-param eq-num" value="2026"> 
             ) * [ <br>
             &nbsp;&nbsp;<strong>Maddi:</strong> <input type="number" id="maddiBoyut" class="eq-param eq-num" min="0" max="10" value="5"> + <br>
             &nbsp;&nbsp;<strong>Manevi:</strong> <input type="number" id="maneviBoyut" class="eq-param eq-num" min="0" max="10" value="9"> <br>
@@ -97,7 +94,7 @@
             <strong>Entegrasyon:</strong> <input type="text" id="birlesmeAlani" class="eq-param eq-text" placeholder="Ortam/Ekosistem">
         </div>
 
-        <button class="btn-matrix">Matrisi Hesapla</button>
+        <button class="btn-matrix">MATRİSİ HESAPLA</button>
         
         <div id="matrix-result-panel"></div>
     </div>
