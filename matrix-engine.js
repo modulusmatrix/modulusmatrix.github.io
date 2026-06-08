@@ -1,30 +1,22 @@
-// Modulus X - Geliştirilmiş Karar Matrisi Motoru
+// Modulus X - Mantık ve Karar Mekanizması Algoritması
 
 class ModulusXEngine {
     constructor(maddi, manevi, disBoyut, alanAdi, zamanS, zamanZ) {
-        // Değerleri 0-10 arasına sınırla (Veri kalitesi ve standardizasyon için)
         this.maddi = Math.max(0, Math.min(10, maddi));
         this.manevi = Math.max(0, Math.min(10, manevi));
         this.dis = Math.max(0, Math.min(10, disBoyut));
         this.alan = alanAdi;
-        
-        // Zaman çarpanı değişkenleri
         this.zamanS = zamanS;
         this.zamanZ = zamanZ;
-
-        // Dinamik Alan Katsayısı (X Değişkeni)
         this.X = this.alan.includes("Akademi") || this.alan.includes("İlim") ? 1.5 : 1.0;
     }
 
-    // 1. Geliştirilmiş Matematiksel Altyapı
     hesaplaYerDegistirme(yon = "+") {
         let temelBoyut = this.maddi + this.manevi + this.dis + this.X;
-        // Formüldeki ± dinamizmi
         return yon === "+" ? temelBoyut * 1.2 : temelBoyut * 0.8;
     }
 
     hesaplaBirlesme() {
-        // Manevi derinlik ile dış dünya etkileşiminin sinerjisi + Alan Katsayısı
         return (this.manevi * this.dis) + this.X;
     }
 
@@ -32,13 +24,10 @@ class ModulusXEngine {
         let zamanCarpani = this.zamanS - this.zamanZ;
         let yerDegistirme = this.hesaplaYerDegistirme("+");
         let birlesme = this.hesaplaBirlesme();
-
-        // Ana formülün kurgulanarak skor üretilmesi
         let rawScore = (zamanCarpani * (yerDegistirme + birlesme)) * 15;
         return parseFloat(rawScore.toFixed(1));
     }
 
-    // 2. Yapay Zeka Şerh & Kutsal Metin Eşleştirme Katmanı
     getAISerh(tahminPuani) {
         let temelMetin = `"Zamana andolsun ki insan hüsrandadır. Ancak iman edip salih ameller işleyenler müstesna." [Asr Suresi]`;
         let yorum = "";
@@ -54,7 +43,6 @@ class ModulusXEngine {
         return { kutsalMetin: temelMetin, yapayZekaYorumu: yorum };
     }
 
-    // 3. Rapor ve Dinamik Görev Motoru
     generateGorevler() {
         let gorevler = {
             eylemselPlan: `"${this.alan}" alanında gelişim sağlamak için bugün acilen haftalık çalışma takviminizi ve stratejinizi hazırlayın.`,
@@ -62,9 +50,8 @@ class ModulusXEngine {
             boyutDengesi: "Mevcut boyut dağılımınız dengeli görünüyor, kararlılıkla devam edin."
         };
 
-        // Boyut dengesizliklerine göre dinamik görev değiştirme
         if (this.maddi < 6 && this.manevi > 8) {
-            gorevler.boyutDengesi = "Zihsel ve ilmi yoğunluğunuz maksimum seviyede artarken, fiziksel/dünyevi boyut ihtiyaçlarınızı ve lojistiğinizi ihmal etmeyin.";
+            gorevler.boyutDengesi = "Zihinsel ve ilmi yoğunluğunuz maksimum seviyede artarken, fiziksel/dünyevi boyut ihtiyaçlarınızı ve lojistiğinizi ihmal etmeyin.";
         } else if (this.dis < 5) {
             gorevler.boyutDengesi = "İçsel gelişiminiz güçlü ancak dış dünya, çevre ve ağ bağlarınız zayıf kalmış. Dış boyuta yatırım yapın.";
         }
@@ -72,14 +59,13 @@ class ModulusXEngine {
         return gorevler;
     }
 
-    // Tam Rapor Çıktısı (Arayüze basılacak obje)
     generateFullReport() {
         let puan = this.tahminPuaniHesapla();
         let aiKatmani = this.getAISerh(puan);
         let gorevler = this.generateGorevler();
 
         return {
-            mlGucu: 85, // Makine öğrenmesi kararlılık yüzdesi
+            mlGucu: 85,
             tahminPuani: puan,
             boyutlar: { maddi: this.maddi, manevi: this.manevi, dis: this.dis, alan: this.alan },
             aiKatmani: aiKatmani,
@@ -88,10 +74,31 @@ class ModulusXEngine {
     }
 }
 
-// HTML'deki butona veya tetikleyiciye bağlamak için örnek kullanım fonksiyonu:
-function calistirModulusMatrix(maddi, manevi, dis, alan, s, z) {
-    const engine = new ModulusXEngine(maddi, manevi, dis, alan, s, z);
-    const rapor = engine.generateFullReport();
-    console.log("Modulus X Çıktısı:", rapor);
-    return rapor;
-}
+// Buton tıklama olayını dinleyen ve DOM elementlerini güncelleyen ana fonksiyon
+document.getElementById('btnAnaliz').addEventListener('click', function() {
+    try {
+        const alan = document.getElementById('alan').value;
+        const maddi = parseFloat(document.getElementById('maddi').value) || 0;
+        const manevi = parseFloat(document.getElementById('manevi').value) || 0;
+        const dis = parseFloat(document.getElementById('dis').value) || 0;
+        const zamanS = parseFloat(document.getElementById('zamanS').value) || 0;
+        const zamanZ = parseFloat(document.getElementById('zamanZ').value) || 0;
+
+        const engine = new ModulusXEngine(maddi, manevi, dis, alan, zamanS, zamanZ);
+        const rapor = engine.generateFullReport();
+
+        document.getElementById('resPuan').innerText = rapor.tahminPuani;
+        document.getElementById('resML').innerText = "%" + rapor.mlGucu;
+        document.getElementById('resAyet').innerText = rapor.aiKatmani.kutsalMetin;
+        document.getElementById('resSerh').innerText = rapor.aiKatmani.yapayZekaYorumu;
+        
+        document.getElementById('resEylem').innerText = rapor.gorevler.eylemselPlan;
+        document.getElementById('resBirlesme').innerText = rapor.gorevler.birlesmeAdimi;
+        document.getElementById('resDenge').innerText = rapor.gorevler.boyutDengesi;
+
+        document.getElementById('reportCard').style.display = 'block';
+    } catch (error) {
+        console.error("Modulus X Error:", error);
+        alert("Matris hesaplanırken bir hata oluştu. Detaylar konsolda.");
+    }
+});
