@@ -3,85 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MODULUS X | Matrix</title>
+    <title>MODULUS X | Yer Değiştirme ve Birleşme Teorisidir</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* Beyni en az yoran derin, mat gece mavisi/gri tonu */
         body {
-            background-color: #1b2230; 
-            font-family: 'Segoe UI', Roboto, -apple-system, sans-serif;
+            background-color: #161b26; 
+            font-family: 'Segoe UI', Roboto, sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             color: #d1dcf0;
-            padding: 15px;
+            padding: 20px;
         }
         
-        /* Kart arka planı: Yumuşak antrasit-safir tonu */
         .matrix-core {
-            background: #232c3f;
-            border: 1px solid #2d3952;
+            background: #1f2736;
+            border: 1px solid #2b354a;
             border-radius: 16px;
             width: 100%;
-            max-width: 500px;
+            max-width: 600px;
             padding: 30px;
-            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.3);
+            box-shadow: 0 20px 40px rgba(10, 15, 26, 0.4);
         }
         
         .system-header { text-align: center; margin-bottom: 25px; }
-        .system-title { font-size: 1.8rem; font-weight: 800; color: #5ce1e6; letter-spacing: 4px; }
-        .system-version { font-size: 0.75rem; color: #788fa9; letter-spacing: 2px; margin-top: 5px; text-transform: uppercase; }
+        .system-title { font-size: 2rem; font-weight: 800; color: #4fc3f7; letter-spacing: 3px; }
+        .system-subtitle { font-size: 0.85rem; color: #8fa3bf; margin-top: 5px; letter-spacing: 1px; }
         
-        /* İç Denklem Alanı: Gözü dinlendiren mat arka plan */
-        .equation-wrapper {
-            background: #181f2c;
-            border: 1px solid #263147;
+        /* Formül Şablon Alanı */
+        .formula-box {
+            background: #121721;
+            border: 1px solid #222c3d;
             border-radius: 10px;
-            padding: 22px;
-            margin-bottom: 20px;
-            line-height: 2.5;
-            font-size: 0.95rem;
-            color: #cbd5e1;
-            font-family: 'Courier New', Courier, monospace;
-        }
-        
-        /* Odaklanmayı artıran yumuşak giriş kutuları */
-        .eq-param {
-            background: #232c3f;
-            border: 1px solid #3b4b66;
-            border-radius: 6px;
-            padding: 5px 10px;
-            color: #ffffff;
-            font-family: sans-serif;
+            padding: 20px;
+            margin-bottom: 25px;
+            font-family: 'Courier New', monospace;
             font-size: 0.9rem;
+            color: #a2b6d4;
+            line-height: 1.8;
+        }
+        .formula-highlight { color: #ffb74d; font-weight: bold; }
+
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; font-size: 0.85rem; color: #8fa3bf; margin-bottom: 6px; font-weight: 600; }
+        
+        .row { display: flex; gap: 15px; }
+        .col { flex: 1; }
+
+        .eq-param {
+            width: 100%;
+            background: #1a212e;
+            border: 1px solid #34445c;
+            border-radius: 8px;
+            padding: 10px 12px;
+            color: #ffffff;
+            font-size: 0.95rem;
             outline: none;
             transition: all 0.2s ease;
         }
-        .eq-param:focus { border-color: #5ce1e6; background: #29344b; }
-        .eq-num { width: 65px; text-align: center; }
-        .eq-text { width: 160px; }
+        .eq-param:focus { border-color: #4fc3f7; background: #20293a; }
         
-        /* Değer Kutusu: Bağlayıcı ve sakinleştirici Lavanta tonu */
-        .eq-value { border-color: #93c5fd; color: #93c5fd; width: 180px; font-weight: 600; }
-        .eq-value:focus { border-color: #5ce1e6; }
-
-        /* Buton: Güven veren ve gözü yormayan Turkuaz gradyanı */
         .btn-matrix {
-            width: 100%; background: linear-gradient(135deg, #4faec4 0%, #358da0 100%); border: none; border-radius: 8px;
-            padding: 16px; color: #ffffff; font-weight: 700; font-size: 0.95rem;
+            width: 100%; 
+            background: linear-gradient(135deg, #0288d1 0%, #01579b 100%); 
+            border: none; border-radius: 8px;
+            padding: 16px; color: #ffffff; font-weight: 700; font-size: 1rem;
             cursor: pointer; letter-spacing: 2px; text-transform: uppercase;
-            transition: all 0.2s ease; font-family: sans-serif;
-            box-shadow: 0 4px 12px rgba(53, 141, 160, 0.2);
+            transition: all 0.2s ease; margin-top: 10px;
         }
-        .btn-matrix:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(92, 225, 230, 0.4); }
-        .btn-matrix:disabled { background: #334155; color: #64748b; cursor: not-allowed; box-shadow: none; }
+        .btn-matrix:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(2, 136, 209, 0.4); }
+        .btn-matrix:disabled { background: #2c374e; color: #526480; cursor: not-allowed; }
 
-        /* Sonuç Tablosu */
+        /* Sonuç Rapor Alanı */
         .action-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        .action-table th { color: #5ce1e6; font-size: 0.75rem; text-align: left; padding: 10px 8px; border-bottom: 2px solid #263147; text-transform: uppercase; font-family: sans-serif; }
-        .action-table td { padding: 12px 8px; font-size: 0.8rem; border-bottom: 1px solid #232c3f; color: #e2e8f0; line-height: 1.5; }
+        .action-table th { color: #4fc3f7; font-size: 0.8rem; text-align: left; padding: 10px; border-bottom: 2px solid #222c3d; text-transform: uppercase; }
+        .action-table td { padding: 12px 10px; font-size: 0.85rem; border-bottom: 1px solid #1a212e; color: #e2e8f0; line-height: 1.6; }
     </style>
 </head>
 <body>
@@ -89,27 +87,51 @@
     <div class="matrix-core">
         <div class="system-header">
             <div class="system-title">MODULUS X</div>
-            <div class="system-version">Algorithmic Vector Interface</div>
+            <div class="system-subtitle">Yer Değiştirme ve Birleşme Teorisi Motoru</div>
         </div>
 
-        <div class="equation-wrapper">
-            <strong>DEĞER</strong> = 
-            <input type="text" id="uretilecekDeger" class="eq-param eq-value" placeholder="[Hedef Değer]">
-            <br>
-            <strong>Z</strong> ( 
-            <input type="number" id="zamanS" class="eq-param eq-num" value="2030"> - 
-            <input type="number" id="zamanZ" class="eq-param eq-num" value="2026"> 
-            ) * [ <br>
-            &nbsp;&nbsp;<strong>Maddi:</strong> <input type="number" id="maddiBoyut" class="eq-param eq-num" min="0" max="10" value="5"> + <br>
-            &nbsp;&nbsp;<strong>Manevi:</strong> <input type="number" id="maneviBoyut" class="eq-param eq-num" min="0" max="10" value="9"> <br>
-            ] / <strong>DışÇevre:</strong> <input type="number" id="disBoyut" class="eq-param eq-num" min="0" max="10" value="7">
-            <br>
-            <strong>X_Sahası:</strong> <input type="text" id="xAlani" class="eq-param eq-text" placeholder="Eylem/Problem">
-            <br>
-            <strong>Entegrasyon:</strong> <input type="text" id="birlesmeAlani" class="eq-param eq-text" placeholder="Ortam/Ekosistem">
+        <div class="formula-box">
+            <span class="formula-highlight">Formül:</span> Zaman * ((YD₁ ± YD₂) * B ± (YD₃ ± YD₄) * B...) = <span class="formula-highlight">±DEĞER</span><br>
+            <span style="font-size: 0.8rem; color: #697f9f;">*İnsan sadece yer değiştirir ve birleştirir; değeri yaratan Allah'tır.</span>
         </div>
 
-        <button class="btn-matrix">MATRİSİ HESAPLA</button>
+        <div class="row">
+            <div class="col input-group">
+                <label for="zamanS">S (İleri/Geri Zamansal Seviye)</label>
+                <input type="number" id="zamanS" class="eq-param" value="2100" title="Örnek: Işınlanmayı bulan toplumun hedef yılı">
+            </div>
+            <div class="col input-group">
+                <label for="zamanZ">Z (Dünya Standart Zamanı)</label>
+                <input type="number" id="zamanZ" class="eq-param" value="2026">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col input-group">
+                <label for="maneviBoyut">Manevi Boyut (0 - 10)</label>
+                <input type="number" id="maneviBoyut" class="eq-param" min="0" max="10" value="9">
+            </div>
+            <div class="col input-group">
+                <label for="maddiBoyut">Maddi Boyut (0 - 10)</label>
+                <input type="number" id="maddiBoyut" class="eq-param" min="0" max="10" value="5">
+            </div>
+            <div class="col input-group">
+                <label for="disBoyut">Dış Çevre Boyutu (0 - 10)</label>
+                <input type="number" id="disBoyut" class="eq-param" min="0" max="10" value="7">
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="xAlani">X_Sahası (Yer Değiştirme Yapılacak Eylem/Problem)</label>
+            <input type="text" id="xAlani" class="eq-param" placeholder="Örn: Kitap Yazmak, Teknoloji Geliştirmek">
+        </div>
+
+        <div class="input-group">
+            <label for="birlesmeAlani">Entegrasyon / Birleşme Sahası (Ekosistem/Ortam)</label>
+            <input type="text" id="birlesmeAlani" class="eq-param" placeholder="Örn: Dijital Yayıncılık, İslam Bilim Halkası">
+        </div>
+
+        <button class="btn-matrix">TEORİK SENTEZİ ÇALIŞTIR</button>
         
         <div id="matrix-result-panel"></div>
     </div>
