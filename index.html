@@ -1,79 +1,100 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import datetime
 
-class ModulusXApiService {
-  // Gerçek OpenAI API anahtarınızı buraya yerleştireceksiniz
-  final String _apiKey = 'YOUR_OPENAI_API_KEY'; 
-  final String _apiUrl = 'https://openai.com';
-
-  Future<Map<String, dynamic>> formuluCalistir({
-    required String kullaniciDerdi,
-    required String secilenKesim,
-    required double kaygiSeviyesi,
-    required double azimSeviyesi,
-  }) async {
-    
-    // Yapay zekaya Bayram Gedikli'nin formül kurallarını ve İslami filtreleri öğretiyoruz
-    final String sistemTalimati = """
-    Sen 'Modulus X: AI Decision Matrix' uygulamasının karar motorusun. 
-    Kullanıcının profil bilgileri şunlardır:
-    - Toplumsal Kesim/Katman: $secilenKesim
-    - İçsel Kaygı Skoru (Zamanı geri çeken etken): $kaygiSeviyesi/5
-    - İnanç ve Azim Skoru (Manevi Boyut): $azimSeviyesi/5
-
-    Görevin: Kullanıcının derdini Bayram Gedikli'nin 'Zaman * ((Yer Değiştirme) * Birleşme) = Değer' formülüne göre analiz et.
-    Zaman = S - Z mantığına göre kullanıcının çağın ve sünnetin neresinde olduğunu hesapla.
-    Kuran ve Sünnet süzgecinden geçir. Eğer plan haram, kul hakkı veya zulüm içeriyorsa BİRLEŞMEYİ DURDUR uyarısı ver.
-
-    SADECE aşağıdaki JSON formatında cevap ver, başka hiçbir metin ekleme:
-    {
-      "durum_ozeti": "Kısa durum analizi",
-      "zaman_metresi": "S-Z analizi sonucu (+ veya - yıl/skor)",
-      "dini_referans": "İlgili Ayet ve Hadis meali",
-      "formul_skoru": "Maksimum Değer Kazanışı veya Kaybedişi",
-      "aksiyon_plani": [
-        {"id": 1, "gorev": "Hemen şimdi yapılacak ilk eylem", "sure": "İlk 5 Dakika"},
-        {"id": 2, "gorev": "Yapılacak ikinci eylem", "sure": "İlk 24 Saat"},
-        {"id": 3, "gorev": "Yapılacak üçüncü eylem", "sure": "Bu Hafta"}
-      ]
-    }
-    """;
-
-    try {
-      final response = await http.post(
-        Uri.parse(_apiUrl),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $_apiKey',
-        },
-        body: jsonEncode({
-          'model': 'gpt-4o-mini', // Hızlı ve maliyeti düşük en güncel model
-          'messages': [
-            {'role': 'system', 'content': sistemTalimati},
-            {'role': 'user', 'content': kullaniciDerdi}
-          ],
-          'temperature': 0.3, // Kararların tutarlı ve ciddi olması için düşük sıcaklık
-        }),
-      );
-
-      if (response.statusCode == 200) {
-        // Gelen yanıtı JSON olarak çözüyoruz
-        final Map<String, dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
-        final String aiCevabi = data['choices'][0]['message']['content'];
-        return jsonDecode(aiCevabi); // Uygulama ekranında kullanılacak hazır harita
-      } else {
-        throw Exception('API Hatası: ${response.statusCode}');
-      }
-    } catch (e) {
-      return {
-        "durum_ozeti": "Bağlantı hatası oluştu.",
-        "zaman_metresi": "Hesaplanamadı",
-        "dini_referans": "Hata",
-        "formul_skoru": "Hata",
-        "aksiyon_plani": [
-          {"id": 1, "gorev": "Lütfen internet bağlantınızı kontrol edip tekrar deneyin.", "sure": "Şimdi"}
-        ]
-      };
-    }
-  }
+# 1. KUR'AN VE HADİS VERİ KÜTÜPHANESİ (Bilgi Tabanı)
+ISLAMIC_KNOWLEDGE_BASE = {
+    "pozitif_zaman": [
+        {"kaynak": "Asr Suresi, 1-3", "metin": "Zamana andolsun ki insan hüsrandadır. Ancak iman edip salih ameller işleyenler, birbirlerine hakkı ve sabrı tavsiye edenler müstesna."},
+        {"kaynak": "Hadis-i Şerif (Buhari)", "metin": "İki nimet vardır ki insanların çoğu bunlarda aldanmıştır: Sağlık ve boş vakit."}
+    ],
+    "negatif_zaman": [
+        {"kaynak": "Furkan Suresi, 27", "metin": "O gün zalim, ellerini ısırarak şöyle der: Keşke peygamberle birlikte bir yol tutsaydım!"},
+        {"kaynak": "Hadis-i Şerif (Tirmizi)", "metin": "Kıyamet gününde kul, ömrünü nerede tükettiğinden hesaba çekilmedikçe yerinden kımıldayamaz."}
+    ],
+    "dogru_yer_degistirme": [
+        {"kaynak": "Nisa Suresi, 100", "metin": "Allah yolunda hicret eden kimse, yeryüzünde gidecek çok yer ve bolluk bulur."},
+        {"kaynak": "Mülk Suresi, 15", "metin": "Yeryüzünde yürüyün ve Allah'ın rızkından yiyin. Dönüş ancak O'nadadır."}
+    ],
+    "yanlis_yer_degistirme": [
+        {"## Kaynak": "Hadis-i Şerif", "metin": "Bir yerde veba olduğunu duyarsanız oraya girmeyin; bulunduğunuz yerde çıkarsa oradan ayrılmayın. (Hatalı/istikrarsız yer değişimine karşı temkin)"}
+    ]
 }
+
+# 2. MODULUS X - YAPAY ZEKA KARAR MATRİSİ SINIFI
+class ModulusXAI:
+    def __init__(self):
+        print("[Modulus X] Yapay Zeka Karar Matrisi Başlatıldı...")
+
+    def zaman_hesapla(self, s_degeri, z_degeri):
+        """1.1. ZAMAN = S - Z formülünü çalıştırır"""
+        return s_degeri - z_degeri
+
+    def boyut_toplamı(self, maddi, manevi, dis, x_alani):
+        """Boyut bileşenlerini toplar"""
+        # x_alani metinsel veya sayısal ağırlık olarak alınabilir
+        x_agirlik = len(x_alani) * 0.1  # Örnek yapay zeka ağırlıklandırması
+        return maddi + manevi + dis + x_agirlik
+
+    def yer_degistirme_hesapla(self, b1, b2):
+        """1.2. YER DEĞİŞTİRME formülünü çalıştırır"""
+        return b1 + b2  # Formüldeki net etki varyasyonu
+
+    def birlesme_hesapla(self, b1, b2):
+        """1.3. BİRLEŞME formülünü çalıştırır"""
+        return b1 + b2
+
+    def yapay_zeka_analiz_et(self, zaman, yer_degistirme, birlesme):
+        """Girişleri analiz ederek Kur'an/Hadis referanslı çıktı üretir"""
+        # Formül: Zaman * ((Yer Değiştirme) * Birleşme)
+        net_deger = zaman * (yer_degistirme * birlesme)
+        
+        print("\n" + "="*50)
+        print(f" ANALİZ SONUCU (Net Değer: {net_deger:.2f})")
+        print("="*50)
+
+        # AI Çıkarım Mekanizması
+        if net_deger > 0:
+            print(" DURUM: Doğru yer değiştirme ve maksimum değer kazancı!")
+            print("\n--- YAPAY ZEKA DESTEKLİ İSLAMİ REFERANSLAR ---")
+            for ref in ISLAMIC_KNOWLEDGE_BASE["pozitif_zaman"] + ISLAMIC_KNOWLEDGE_BASE["dogru_yer_degistirme"]:
+                print(f"[{ref['kaynak']}]: {ref['metin']}")
+        else:
+            print(" DURUM: Yanlış yer değiştirme ve maksimum değer kaybı (Hüsran).")
+            print("\n--- YAPAY ZEKA DESTEKLİ İSLAMİ REFERANSLAR ---")
+            for ref in ISLAMIC_KNOWLEDGE_BASE["negatif_zaman"]:
+                print(f"[{ref['kaynak']}]: {ref['metin']}")
+                
+        return net_deger
+
+# 3. PROGRAMIN ÇALIŞTIRILMASI (Simülasyon)
+if __name__ == "__main__":
+    # AI Nesnesini oluştur
+    ai_engine = ModulusXAI()
+
+    print("\n--- FORMÜL PARAMETRE GİRİŞLERİ ---")
+    
+    # Görsellerdeki örneğe uygun senaryo (Işınlanmayı bulan ileri toplum simülasyonu)
+    # S: Birey/toplumun dünya zamanından ileride olma durumu (Örn: 2100 yılı seviyesi)
+    # Z: Ortalama dünya sabit zamanı (Örn: 2030 yılı seviyesi)
+    S = 2100  
+    Z = 2030  
+    
+    # Zaman hesaplama
+    zaman_sonuc = ai_engine.zaman_hesapla(S, Z) # 2100 - 2030 = 70 sene (Görsel 6'daki değer)
+    print(f"1.1. Hesaplanan Zaman Katsayısı (S-Z): {zaman_sonuc}")
+
+    # Boyut Değerleri (Maddi + Manevi + Dış Boyut + X Alanı Adı)
+    # Pozitif ilerleme için manevi ve maddi boyutlar yüksek tutulmuştur
+    maddi_boyut = 8.5
+    manevi_boyut = 9.5
+    dis_boyut = 7.0
+    alan_adi = "Galaksi_Ulasim_Hatti"
+
+    boyut_1 = ai_engine.boyut_toplamı(maddi_boyut, manevi_boyut, dis_boyut, alan_adi)
+    boyut_2 = ai_engine.boyut_toplamı(maddi_boyut, manevi_boyut, dis_boyut, alan_adi)
+
+    # Yer Değiştirme ve Birleşme Fonksiyonları
+    yer_degistirme = ai_engine.yer_degistirme_hesapla(boyut_1, boyut_2)
+    birlesme = ai_engine.birlesme_hesapla(boyut_1, boyut_2)
+
+    # AI Karar Matrisini Çalıştır ve Kutsal Metinlerle Eşleştir
+    ai_engine.yapay_zeka_analiz_et(zaman_sonuc, yer_degistirme, birlesme)
