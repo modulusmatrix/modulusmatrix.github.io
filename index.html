@@ -1,380 +1,37 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MODULUS X | Değer Analiz Merkezi</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Azeret+Mono:wght@300;500&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <style>
-        :root {
-            --bg-book: #FFFDF2;
-            --text-dark: #2C2C2C;
-            --text-muted: #666155;
-            --gold-accent: #B8860B;
-            --border-color: #EAE0C8;
-            --red-alert: #8B0000;
-            --yellow-warn: #D4A373;
-            --green-bless: #2D6A4F;
-        }
+<script type="importmap">
+  {
+    "imports": {
+      "@google/generative-ai": "https://esm.run/@google/generative-ai"
+    }
+  }
+</script>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<script type="module">
+  import { GoogleGenAI } from "@google/generative-ai";
 
-        body {
-            background-color: var(--bg-book);
-            color: var(--text-dark);
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            line-height: 1.6;
-            padding: 40px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
+  // Fonksiyonu dışarıdan erişilebilir kılmak için pencere nesnesine bağlıyoruz
+  window.analizEt = async function() {
+    const GEMINI_API_KEY = document.getElementById('api-key-input').value.trim();
+    const userInput = document.getElementById('user-input').value;
 
-        .book-container {
-            max-width: 800px;
-            width: 100%;
-            background-color: var(--bg-book);
-            padding: 60px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 10px 40px rgba(44, 44, 44, 0.04);
-            position: relative;
-        }
+    if (!GEMINI_API_KEY) {
+        alert('Lütfen önce Google AI Studio API anahtarınızı girin.');
+        return;
+    }
+    if (!userInput.trim()) {
+        alert('Lütfen analiz için durumunuzu yazın.');
+        return;
+    }
 
-        .book-container::before {
-            content: '';
-            position: absolute;
-            top: 20px; bottom: 20px; left: 20px; right: 20px;
-            border: 1px solid rgba(44, 44, 44, 0.03);
-            pointer-events: none;
-        }
+    const button = document.querySelector('button');
+    const originalButtonText = button.innerText;
+    button.innerText = "Formül Hesaplanıyor, Lütfen Bekleyin...";
+    button.disabled = true;
 
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid var(--gold-accent);
-            padding-bottom: 20px;
-        }
-
-        header h1 {
-            font-family: 'Merriweather', serif;
-            font-size: 42px;
-            letter-spacing: -1px;
-            color: #1A1A1A;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--gold-accent);
-        }
-
-        .permanent-quote {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 0 20px;
-        }
-
-        .permanent-quote p {
-            font-family: 'Merriweather', serif;
-            font-size: 18px;
-            font-style: italic;
-            color: var(--text-dark);
-            line-height: 1.5;
-            margin-bottom: 8px;
-        }
-
-        .permanent-quote .author {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 13px;
-            color: var(--text-muted);
-            letter-spacing: 0.5px;
-        }
-
-        /* GÜVENLİK İÇİN API ANAHTARI GİRİŞ ALANI */
-        .api-security-box {
-            background-color: #FAF6E8;
-            border: 1px dashed var(--gold-accent);
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 4px;
-        }
-
-        .api-security-box label {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 12px;
-            color: var(--text-dark);
-            display: block;
-            margin-bottom: 8px;
-        }
-
-        .api-input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border-color);
-            background: #FFFDF2;
-            font-family: monospace;
-            font-size: 14px;
-            margin-bottom: 10px;
-            color: var(--text-dark);
-        }
-
-        .input-section {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .input-section label {
-            font-family: 'Merriweather', serif;
-            font-size: 18px;
-            font-style: italic;
-            color: var(--text-dark);
-        }
-
-        textarea {
-            width: 100%;
-            height: 150px;
-            background-color: #FAF6E8;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-            padding: 20px;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 16px;
-            color: var(--text-dark);
-            resize: none;
-            outline: none;
-        }
-
-        button {
-            background-color: var(--text-dark);
-            color: var(--bg-book);
-            border: none;
-            padding: 18px;
-            font-family: 'Azeret Mono', monospace;
-            font-size: 15px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 10px;
-        }
-
-        button:hover {
-            background-color: var(--gold-accent);
-            color: #FFF;
-        }
-
-        .report-section {
-            display: none;
-            margin-top: 20px;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
-        .formula-box {
-            background: #FAF6E8;
-            border: 1px dashed var(--border-color);
-            padding: 20px;
-            text-align: center;
-            font-family: 'Azeret Mono', monospace;
-            font-size: 16px;
-            margin-bottom: 30px;
-            color: var(--gold-accent);
-        }
-
-        .status-badge {
-            display: inline-block;
-            padding: 6px 16px;
-            font-family: 'Azeret Mono', monospace;
-            font-size: 12px;
-            border-radius: 20px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .badge-red { background-color: #FAD2D2; color: var(--red-alert); }
-        .badge-yellow { background-color: #FFF3CD; color: #856404; }
-        .badge-green { background-color: #D4EDDA; color: var(--green-bless); }
-
-        .report-text h3 {
-            font-family: 'Merriweather', serif;
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-
-        .sacred-text {
-            font-family: 'Merriweather', serif;
-            font-style: italic;
-            border-left: 3px solid var(--gold-accent);
-            padding-left: 20px;
-            margin: 25px 0;
-            color: var(--text-muted);
-            font-size: 18px;
-        }
-
-        .kulliyat-box {
-            background-color: #FAF6E8;
-            border: 1px solid var(--border-color);
-            padding: 25px;
-            margin: 25px 0;
-            border-radius: 4px;
-        }
-
-        .kulliyat-box h5 {
-            font-family: 'Azeret Mono', monospace;
-            font-size: 12px;
-            color: var(--gold-accent);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .kulliyat-text {
-            font-family: 'Merriweather', serif;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #3D3D3D;
-        }
-
-        .action-list {
-            margin-top: 25px;
-            padding-left: 20px;
-        }
-
-        .action-list li {
-            margin-bottom: 12px;
-            font-size: 16px;
-        }
-
-        .certificate-box {
-            display: none;
-            border: 4px double var(--gold-accent);
-            padding: 30px;
-            text-align: center;
-            margin-top: 40px;
-            background-color: #FFFDF2;
-        }
-
-        .certificate-box h4 {
-            font-family: 'Merriweather', serif;
-            font-size: 28px;
-            color: var(--gold-accent);
-            margin-bottom: 10px;
-        }
-
-        .back-btn {
-            background: transparent;
-            color: var(--text-muted);
-            border: 1px solid var(--border-color);
-            padding: 10px 20px;
-            font-size: 12px;
-            margin-top: 40px;
-        }
-
-        .back-btn:hover {
-            background: #FAF6E8;
-            color: var(--text-dark);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-</head>
-<body>
-
-<div class="book-container">
-    <header>
-        <h1>MODULUS X</h1>
-        <div class="subtitle">Ahlaki ve Mantıksal Değer Motoru</div>
-    </header>
-
-    <div class="permanent-quote">
-        <p>"İnsan sadece yer değiştirme ve birleşme yapar, değeri Allah yaratır."</p>
-        <div class="author">YBT (sf. 18) — Bayram Gedikli</div>
-    </div>
-
-    <div id="input-screen" class="input-section">
+    try {
+        // Resmi kütüphane üzerinden bağlantı kuruyoruz
+        const ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
         
-        <div class="api-security-box">
-            <label for="api-key-input"><i class="fa-solid fa-key"></i> Google AI Studio API Key (Şifreniz GitHub'da güvende kalır):</label>
-            <input type="password" id="api-key-input" class="api-input" placeholder="AQ.Ab8RN6... ile başlayan anahtarınızı buraya yapıştırın">
-        </div>
-
-        <label for="user-input">Ömür sermayenizin şu anki durumunu, karar veya dertlerinizi sayfaya dökün:</label>
-        <textarea id="user-input" placeholder="Örn: İş yerimde çok yıprandım, mobbinge uğruyorum. Ne yapmalıyım?"></textarea>
-        <button onclick="analizEt()">Analizi Başlat</button>
-    </div>
-
-    <div id="report-screen" class="report-section">
-        <div class="formula-box">
-            Değer = Zaman × (Yer Değiştirme × Birleşme)
-        </div>
-        
-        <div id="status-badge-container"></div>
-        
-        <div class="report-text">
-            <h3 id="report-title">Durum Değerlendirmesi</h3>
-            <p id="report-desc"></p>
-            
-            <div id="sacred-quote" class="sacred-text"></div>
-            
-            <div id="kulliyat-container" class="kulliyat-box">
-                <h5><i class="fa-solid fa-book-open"></i> Asrın Fehmiyle Hakikat Filtresi</h5>
-                <div id="kulliyat-content" class="kulliyat-text"></div>
-            </div>
-            
-            <h4 style="font-family:'Merriweather',serif; margin-top:20px;">Fiili Görev Silsilesi:</h4>
-            <ul id="tasks" class="action-list"></ul>
-        </div>
-
-        <div id="certificate" class="certificate-box">
-            <h4><i class="fa-solid fa-scroll"></i> Hicret ve Bereket Sertifikası</h4>
-            <p style="font-family:'Merriweather',serif; font-style:italic; font-size:16px;">
-                Zulmü, ataleti ve değer iflasını terk edip rızkını, huzurunu ve izzetini Allah'ın geniş arzında aramak için yola çıkan MODULUS X kurucusu ve kullanıcısına takdim edilmiştir.
-            </p>
-            <div style="font-family:'Azeret Mono',monospace; font-size:11px; margin-top:20px; color:var(--gold-accent);">
-                Durum: Hicret Başlatıldı • 9 Haziran 2026
-            </div>
-        </div>
-
-        <button class="back-btn" onclick="başaDön()"><i class="fa-solid fa-arrow-left"></i> Yeni Analiz</button>
-    </div>
-</div>
-
-<script>
-    async function analizEt() {
-        // Anahtarı doğrudan ekrandaki kutudan çekiyoruz (Kodun içinde hiçbir şifre kalmıyor)
-        const GEMINI_API_KEY = document.getElementById('api-key-input').value.trim();
-        const userInput = document.getElementById('user-input').value;
-
-        if (!GEMINI_API_KEY) {
-            alert('Lütfen önce Google AI Studio API anahtarınızı girin.');
-            return;
-        }
-        if (!userInput.trim()) {
-            alert('Lütfen analiz için durumunuzu yazın.');
-            return;
-        }
-
-        const button = document.querySelector('button');
-        const originalButtonText = button.innerText;
-        button.innerText = "Formül Hesaplanıyor, Lütfen Bekleyin...";
-        button.disabled = true;
-
         const sistemTalimati = `
         Sen MODULUS X uygulamasının ahlaki, felsefi ve matematiksel değer motorusun. 
         Sana gelen girdileri şu anayasaya göre analiz edeceksin:
@@ -395,60 +52,51 @@
         }
         `;
 
-        try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: sistemTalimati + "\n\nKullanıcı Durumu: " + userInput }] }]
-                })
-            });
+        const response = await ai.models.generateContent({
+            model: 'gemini-1.5-flash',
+            contents: sistemTalimati + "\n\nKullanıcı Durumu: " + userInput,
+        });
 
-            const data = await response.json();
-            let rawText = data.candidates[0].content.parts[0].text;
-            
-            rawText = rawText.replace(/```json/g, "").replace(/```/g, "").trim();
-            const sonuc = JSON.parse(rawText);
+        let rawText = response.text;
+        rawText = rawText.replace(/```json/g, "").replace(/```/g, "").trim();
+        const sonuc = JSON.parse(rawText);
 
-            const badgeContainer = document.getElementById('status-badge-container');
-            badgeContainer.innerHTML = `<span class="status-badge badge-${sonuc.badge_type}"><i class="fa-solid fa-circle-info"></i> ${sonuc.badge_text}</span>`;
-            
-            document.getElementById('report-title').innerText = sonuc.title;
-            document.getElementById('report-desc').innerHTML = sonuc.desc;
-            document.getElementById('sacred-quote').innerHTML = sonuc.quote;
-            document.getElementById('kulliyat-content').innerHTML = sonuc.kulliyat;
+        const badgeContainer = document.getElementById('status-badge-container');
+        badgeContainer.innerHTML = `<span class="status-badge badge-${sonuc.badge_type}"><i class="fa-solid fa-circle-info"></i> ${sonuc.badge_text}</span>`;
+        
+        document.getElementById('report-title').innerText = sonuc.title;
+        document.getElementById('report-desc').innerHTML = sonuc.desc;
+        document.getElementById('sacred-quote').innerHTML = sonuc.quote;
+        document.getElementById('kulliyat-content').innerHTML = sonuc.kulliyat;
 
-            const tasksUl = document.getElementById('tasks');
-            tasksUl.innerHTML = "";
-            sonuc.tasks.forEach(task => {
-                tasksUl.innerHTML += `<li>${task}</li>`;
-            });
+        const tasksUl = document.getElementById('tasks');
+        tasksUl.innerHTML = "";
+        sonuc.tasks.forEach(task => {
+            tasksUl.innerHTML += `<li>${task}</li>`;
+        });
 
-            const certificate = document.getElementById('certificate');
-            if (sonuc.badge_type === 'red') {
-                certificate.style.display = 'block';
-            } else {
-                certificate.style.display = 'none';
-            }
-
-            document.getElementById('input-screen').style.display = 'none';
-            document.getElementById('report-screen').style.display = 'block';
-
-        } catch (error) {
-            console.error(error);
-            alert('Yapay zeka motoru bağlanırken bir hata oluştu. Lütfen anahtarınızı ve internetinizi kontrol edin.');
-        } finally {
-            button.innerText = originalButtonText;
-            button.disabled = false;
+        const certificate = document.getElementById('certificate');
+        if (sonuc.badge_type === 'red') {
+            certificate.style.display = 'block';
+        } else {
+            certificate.style.display = 'none';
         }
-    }
 
-    function başaDön() {
-        document.getElementById('input-screen').style.display = 'flex';
-        document.getElementById('report-screen').style.display = 'none';
-        document.getElementById('user-input').value = '';
+        document.getElementById('input-screen').style.display = 'none';
+        document.getElementById('report-screen').style.display = 'block';
+
+    } catch (error) {
+        console.error(error);
+        alert('Yapay zeka motoru bağlanırken resmi kütüphane hatası oluştu. Lütfen anahtarınızı kontrol edin.');
+    } finally {
+        button.innerText = originalButtonText;
+        button.disabled = false;
     }
+  }
+
+  window.başaDön = function() {
+      document.getElementById('input-screen').style.display = 'flex';
+      document.getElementById('report-screen').style.display = 'none';
+      document.getElementById('user-input').value = '';
+  }
 </script>
-
-</body>
-</html>
