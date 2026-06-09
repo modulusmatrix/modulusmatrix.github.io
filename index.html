@@ -6,7 +6,7 @@
     <title>MODULUS X | Değer Analiz Merkezi</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,700;1,300&family=Azeret+Mono:wght@300;500&family=Plus+Jakarta+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght=0,300;0,700;1,300&family=Azeret+Mono:wght=300;500&family=Plus+Jakarta+Sans:wght=400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
     <style>
@@ -43,10 +43,16 @@
             max-width: 800px;
             width: 100%;
             background-color: var(--bg-book);
-            padding: 60px;
+            padding: 40px 20px;
             border: 1px solid var(--border-color);
             box-shadow: 0 10px 40px rgba(44, 44, 44, 0.04);
             position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .book-container {
+                padding: 60px;
+            }
         }
 
         .book-container::before {
@@ -66,29 +72,35 @@
 
         header h1 {
             font-family: 'Merriweather', serif;
-            font-size: 42px;
+            font-size: 32px;
             letter-spacing: -1px;
             color: #1A1A1A;
             margin-bottom: 10px;
         }
 
+        @media (min-width: 768px) {
+            header h1 {
+                font-size: 42px;
+            }
+        }
+
         .subtitle {
             font-family: 'Azeret Mono', monospace;
-            font-size: 13px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             color: var(--gold-accent);
         }
 
         .permanent-quote {
             text-align: center;
             margin-bottom: 40px;
-            padding: 0 20px;
+            padding: 0 10px;
         }
 
         .permanent-quote p {
             font-family: 'Merriweather', serif;
-            font-size: 18px;
+            font-size: 16px;
             font-style: italic;
             color: var(--text-dark);
             line-height: 1.5;
@@ -97,7 +109,7 @@
 
         .permanent-quote .author {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-muted);
             letter-spacing: 0.5px;
         }
@@ -110,7 +122,7 @@
 
         .input-section label {
             font-family: 'Merriweather', serif;
-            font-size: 18px;
+            font-size: 16px;
             font-style: italic;
             color: var(--text-dark);
         }
@@ -121,9 +133,9 @@
             background-color: #FAF6E8;
             border: 1px solid var(--border-color);
             border-radius: 4px;
-            padding: 20px;
+            padding: 15px;
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 16px;
+            font-size: 15px;
             color: var(--text-dark);
             resize: none;
             outline: none;
@@ -133,9 +145,9 @@
             background-color: var(--text-dark);
             color: var(--bg-book);
             border: none;
-            padding: 18px;
+            padding: 16px;
             font-family: 'Azeret Mono', monospace;
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 2px;
@@ -158,10 +170,10 @@
         .formula-box {
             background: #FAF6E8;
             border: 1px dashed var(--border-color);
-            padding: 20px;
+            padding: 15px;
             text-align: center;
             font-family: 'Azeret Mono', monospace;
-            font-size: 16px;
+            font-size: 14px;
             margin-bottom: 30px;
             color: var(--gold-accent);
         }
@@ -170,7 +182,7 @@
             display: inline-block;
             padding: 6px 16px;
             font-family: 'Azeret Mono', monospace;
-            font-size: 12px;
+            font-size: 11px;
             border-radius: 20px;
             font-weight: bold;
             margin-bottom: 20px;
@@ -182,7 +194,7 @@
 
         .report-text h3 {
             font-family: 'Merriweather', serif;
-            font-size: 24px;
+            font-size: 22px;
             margin-bottom: 15px;
         }
 
@@ -190,23 +202,23 @@
             font-family: 'Merriweather', serif;
             font-style: italic;
             border-left: 3px solid var(--gold-accent);
-            padding-left: 20px;
+            padding-left: 15px;
             margin: 25px 0;
             color: var(--text-muted);
-            font-size: 18px;
+            font-size: 16px;
         }
 
         .kulliyat-box {
             background-color: #FAF6E8;
             border: 1px solid var(--border-color);
-            padding: 25px;
+            padding: 20px;
             margin: 25px 0;
             border-radius: 4px;
         }
 
         .kulliyat-box h5 {
             font-family: 'Azeret Mono', monospace;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--gold-accent);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -215,7 +227,7 @@
 
         .kulliyat-text {
             font-family: 'Merriweather', serif;
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.6;
             color: #3D3D3D;
         }
@@ -227,13 +239,13 @@
 
         .action-list li {
             margin-bottom: 12px;
-            font-size: 16px;
+            font-size: 15px;
         }
 
         .certificate-box {
             display: none;
             border: 4px double var(--gold-accent);
-            padding: 30px;
+            padding: 20px;
             text-align: center;
             margin-top: 40px;
             background-color: #FFFDF2;
@@ -241,7 +253,7 @@
 
         .certificate-box h4 {
             font-family: 'Merriweather', serif;
-            font-size: 28px;
+            font-size: 24px;
             color: var(--gold-accent);
             margin-bottom: 10px;
         }
@@ -251,7 +263,7 @@
             color: var(--text-muted);
             border: 1px solid var(--border-color);
             padding: 10px 20px;
-            font-size: 12px;
+            font-size: 11px;
             margin-top: 40px;
         }
 
@@ -309,7 +321,7 @@
 
         <div id="certificate" class="certificate-box">
             <h4><i class="fa-solid fa-scroll"></i> Hicret ve Bereket Sertifikası</h4>
-            <p style="font-family:'Merriweather',serif; font-style:italic; font-size:16px;">
+            <p style="font-family:'Merriweather',serif; font-style:italic; font-size:15px;">
                 Zulmü, ataleti ve değer iflasını terk edip rızkını, huzurunu ve izzetini Allah'ın geniş arzında aramak için yola çıkan MODULUS X kurucusu ve kullanıcısına takdim edilmiştir.
             </p>
             <div style="font-family:'Azeret Mono',monospace; font-size:11px; margin-top:20px; color:var(--gold-accent);">
@@ -329,7 +341,7 @@
             return;
         }
 
-        // Akıllı Filtre Havuzu
+        // Temel Varsayılan Rapor (Eğer özel kelimeler eşleşmezse)
         let sonuc = {
             badge_type: "yellow",
             badge_text: "DURUM ANALİZİ",
@@ -340,18 +352,18 @@
             tasks: ["Bulunduğunuz durumu sakin bir zihinle kağıda dökün.", "Geleceğe yönelik niyetlerinizi 'İhlas' süzgecinden geçirin.", "Fiili olarak yapabileceğiniz ilk küçük yer değiştirmeyi planlayın."]
         };
 
-        // 1. Durum: MOBBING / HAKSIZLIK / BASKI / İSTİFA / İŞ
-        if (userInput.includes('mobbing') || userInput.includes('haksızlık') || userInput.includes('baskı') || userInput.includes('istifa') || userInput.includes('iş') || userInput.includes('patron')) {
+        // Filtre 1: MOBBING / HAKSIZLIK / BASKI / İSTİFA / İŞ
+        if (userInput.includes('mobbing') || userInput.includes('haksızlık') || userInput.includes('baskı') || userInput.includes('istifa') || userInput.includes('iş') || userInput.includes('patron') || userInput.includes('kovuldum')) {
             sonuc.badge_type = "red";
             sonuc.badge_text = "ACİL TAHLİYE / DEĞER İFLASI";
             sonuc.title = "Zulüm Altında Zaman Çarpanı Analizi";
-            sonuc.desc: "Girdiğiniz veriler, mevcut konumunuzda ağır bir değer erimesi (mobbing/baskı) yaşandığını gösteriyor. YBT formülüne göre; zaman çarpanınız zulüm altında yıpranırken, bulunduğunuz yerdeki 'Birleşme' katsayınız negatife düşmüştür. Bu ortamda kalmak, ahlaki ve zihni sermayeyi tüketir. 'Yer Değiştirme' (Hicret) fiiliyatı kaçınılmaz bir zorunluluk haline gelmiştir.",
+            sonuc.desc = "Girdiğiniz veriler, mevcut konumunuzda ağır bir değer erimesi (mobbing/baskı) yaşandığını gösteriyor. YBT formülüne göre; zaman çarpanınız zulüm altında yıpranırken, bulunduğunuz yerdeki 'Birleşme' katsayınız negatife düşmüştür. Bu ortamda kalmak, ahlaki ve zihni sermayeyi tüketir. 'Yer Değiştirme' (Hicret) fiiliyatı kaçınılmaz bir zorunluluk haline gelmiştir.";
             sonuc.quote = "“Allah’ın arzı geniş değil miydi ki orada hicret edesiniz?” — Nisâ Suresi, 97. Ayet";
             sonuc.kulliyat = "Risale-i Nur Külliyatı, Mektubat (Tevakkuf ve Esbab Hakikatleri): Zalimlerin baskısı ve esbabın sukut ettiği anlarda, tevekkül mekanizması devreye girer. Rızkı veren Allah'tır (Rezzak-ı Mutlak). Kul, izzetini korumakla ve meşru dairede yer değiştirerek yeni esbap kapılarını aralamakla mükelleftir. İhlası zedeleyen ortamlardan çekilmek tenbellik değil, muhafazadır.";
             sonuc.tasks = ["Zulüm silsilesine ve mobbinge karşı fiili bağlarınızı koparacak stratejik planı yapın.", "Rızık endişesini bir kenara bırakarak Allah'ın geniş arzında yeni birleşmeler (yeni iş, yeni proje) arayın.", "MODULUS X felsefesini hayatınıza uygulayarak ilk yer değiştirme adımını (istifa veya yeni başvuru) atın."];
         } 
-        // 2. Durum: PARA / RIZIK / MADDİYAT / GEÇİM
-        else if (userInput.includes('para') || userInput.includes('rızık') || userInput.includes('geçim') || userInput.includes('maddi') || userInput.includes('borç')) {
+        // Filtre 2: PARA / RIZIK / MADDİYAT / GEÇİM
+        else if (userInput.includes('para') || userInput.includes('rızık') || userInput.includes('geçim') || userInput.includes('maddi') || userInput.includes('borç') || userInput.includes('maaş')) {
             sonuc.badge_type = "yellow";
             sonuc.badge_text = "RIZIK VE ESBAB SÜZGECİ";
             sonuc.title = "Maddiyat ve Bereket Formülü";
@@ -360,14 +372,14 @@
             sonuc.kulliyat = "Risale-i Nur Külliyatı, İktisat ve Şükür Risaleleri: Rızık ikidir; biri taahhüd-ü rabbani altındaki fıtri rızıktır, insanı yaşatır. Diğeri ise mecazi rızıktır ki hırs yüzünden insanı harama ve zillet altına sokabilir. Kanaat ve iktisat eden, bereket sertifikasını kalben alır. Fiili dua olarak çalışmak esbaptır, neticeyi istemek ve razı olmak tevekküldür.";
             sonuc.tasks = ["Mevcut harcamalarınızı ve mesainizi 'İktisat Risalesi' ölçülerine göre düzenleyin.", "Değer üretebileceğiniz yeni helal birleşme alanları (ek iş, yeni dijital yetenekler) belirleyin.", "Hırs ile değil, şevk ve tevekkül ile çalışarak fiili duanızı tamamlayın."];
         }
-        // 3. Durum: GELECEK / HEDEF / PROJE / BAŞARI
-        else if (userInput.includes('proje') || userInput.includes('başarı') || userInput.includes('hedef') || userInput.includes('gelecek') || userInput.includes('yazılım')) {
+        // Filtre 3: GELECEK / HEDEF / PROJE / BAŞARI / YAZILIM
+        else if (userInput.includes('proje') || userInput.includes('başarı') || userInput.includes('hedef') || userInput.includes('gelecek') || userInput.includes('yazılım') || userInput.includes('kod')) {
             sonuc.badge_type = "green";
             sonuc.badge_text = "MUTLAK DEĞER ÜRETİMİ";
             sonuc.title = "Şevk ve Faaliyet Analizi";
             sonuc.desc = "Harika bir vizyon. Niyetiniz ve hedefiniz YBT formülündeki 'Birleşme' gücünü zirveye taşıyor. Zaman çarpanınızı bu projeye odaklayarak, doğru mekanda ve doğru insanlarla yapacağınız 'Yer Değiştirme'ler, ortaya devasa bir değer (Bereket) çıkaracaktır.";
             sonuc.quote = "“Bir işi bitirince hemen diğerine koyul.” — İnşirâh Suresi, 7. Ayet";
-            sonuc.kulliyat = "Risale-i Nur Külliyatı, Münazarat: 'Bizim düşmanımız cehalet, zaruret, ihtilaftır. Bu üç düşmana karşı sanat, marifet, ittifak silahıyla cihad edeceğiz.' Yazılım, teknoloji ve faydalı projeler asrın marifet ve sanat silahıdır. Bu yoldaki adımlar ihlas ile atılırsa, Allah o emeğin neticesini dünya ve ahirette berekete çevirir.";
+            sonuc.kulliyat = "Risale-i Nur Külliyatı, Münazarat: 'Bizim düşmanımız cehalet, zaruret, ihtilaftır. Bu üç düşmana karşı sanat, marifet, ittifak silahıyla cihad edeceğiz.' Yazılım, teknoloji ve faydalı projeler asrın marifet and sanat silahıdır. Bu yoldaki adımlar ihlas ile atılırsa, Allah o emeğin neticesini dünya ve ahirette berekete çevirir.";
             sonuc.tasks = ["Projenizin ilk çalışan küçük sürümünü (MVP) hemen bugün planlayın.", "Zaman çarpanınızı her gün düzenli olarak bu hedefe vakfedin.", "İhlas dairesinde kalabileceğiniz temiz ve yüksek enerjili çalışma arkadaşları/ortamları bulun."];
         }
 
@@ -406,78 +418,3 @@
 
 </body>
 </html>
-
-function analizEt() {
-    const userInput = document.getElementById('user-input').value.toLowerCase();
-    if (!userInput.trim()) {
-        alert('Lütfen analiz için durumunuzu yazın.');
-        return;
-    }
-
-    // Akıllı Filtre Havuzu
-    let sonuc = {
-        badge_type: "yellow",
-        badge_text: "DURUM ANALİZİ",
-        title: "Genel Tevekkül Değerlendirmesi",
-        desc: "YBT Anayasası gereğince; yaşadığınız süreç ömür sermayenizin zaman çarpanını doğrudan etkilemektedir. Fiili durumunuzdaki 'Yer Değiştirme' ihtiyacı, niyetleriniz ve 'Birleşme' kaliteniz ile ölçülüyor. Sabır ve doğru esbaba teşebbüs ile değer üretimini artırmalısınız.",
-        quote: "“İnsan için ancak çalıştığının karşılığı vardır.” — Necm Suresi, 39. Ayet",
-        kulliyat: "Risale-i Nur Külliyatı'ndan Sözler mecmuasında beyan edildiği gibi: 'Hayat bir faaliyet-i daimedir. Şevk ise onun bineğidir.' Karşılaştığınız durgunluk veya sıkıntı durumlarında yeise (ümitsizliğe) düşmeden, ihlas dairesinde esbaba müracaat etmek asıldır.",
-        tasks: ["Bulunduğunuz durumu sakin bir zihinle kağıda dökün.", "Geleceğe yönelik niyetlerinizi 'İhlas' süzgecinden geçirin.", "Fiili olarak yapabileceğiniz ilk küçük yer değiştirmeyi planlayın."]
-    };
-
-    // 1. Durum: MOBBING / HAKSIZLIK / BASKI / İSTİFA / İŞ
-    if (userInput.includes('mobbing') || userInput.includes('haksızlık') || userInput.includes('baskı') || userInput.includes('istifa') || userInput.includes('iş') || userInput.includes('patron')) {
-        sonuc.badge_type = "red";
-        sonuc.badge_text = "ACİL TAHLİYE / DEĞER İFLASI";
-        sonuc.title = "Zulüm Altında Zaman Çarpanı Analizi";
-        sonuc.desc = "Girdiğiniz veriler, mevcut konumunuzda ağır bir değer erimesi (mobbing/baskı) yaşandığını gösteriyor. YBT formülüne göre; zaman çarpanınız zulüm altında yıpranırken, bulunduğunuz yerdeki 'Birleşme' katsayınız negatife düşmüştür. Bu ortamda kalmak, ahlaki ve zihni sermayeyi tüketir. 'Yer Değiştirme' (Hicret) fiiliyatı kaçınılmaz bir zorunluluk haline gelmiştir.";
-        sonuc.quote = "“Allah’ın arzı geniş değil miydi ki orada hicret edesiniz?” — Nisâ Suresi, 97. Ayet";
-        sonuc.kulliyat = "Risale-i Nur Külliyatı, Mektubat (Tevakkuf ve Esbab Hakikatleri): Zalimlerin baskısı ve esbabın sukut ettiği anlarda, tevekkül mekanizması devreye girer. Rızkı veren Allah'tır (Rezzak-ı Mutlak). Kul, izzetini korumakla ve meşru dairede yer değiştirerek yeni esbap kapılarını aralamakla mükelleftir. İhlası zedeleyen ortamlardan çekilmek tenbellik değil, muhafazadır.";
-        sonuc.tasks = ["Zulüm silsilesine ve mobbinge karşı fiili bağlarınızı koparacak stratejik planı yapın.", "Rızık endişesini bir kenara bırakarak Allah'ın geniş arzında yeni birleşmeler (yeni iş, yeni proje) arayın.", "MODULUS X felsefesini hayatınıza uygulayarak ilk yer değiştirme adımını (istifa veya yeni başvuru) atın."];
-    } 
-    // 2. Durum: PARA / RIZIK / MADDİYAT / GEÇİM
-    else if (userInput.includes('para') || userInput.includes('rızık') || userInput.includes('geçim') || userInput.includes('maddi') || userInput.includes('borç')) {
-        sonuc.badge_type = "yellow";
-        sonuc.badge_text = "RIZIK VE ESBAB SÜZGECİ";
-        sonuc.title = "Maddiyat ve Bereket Formülü";
-        sonuc.desc = "YBT Anayasası'nda belirtildiği gibi; 'İnsan sadece yer değiştirme ve birleşme yapar, değeri Allah yaratır.' Maddi daralmalar, zaman çarpanını iyi kullanamamaktan veya yanlış birleşmelerden kaynaklanır. Para bir amaç değil, doğru birleşmelerin ve helal emeğin bir meyvesidir.";
-        sonuc.quote = "“Şüphesiz rızık veren, güç ve sarsılmaz kuvvet sahibi olan ancak Allah’tır.” — Zâriyât Suresi, 58. Ayet";
-        sonuc.kulliyat = "Risale-i Nur Külliyatı, İktisat ve Şükür Risaleleri: Rızık ikidir; biri taahhüd-ü rabbani altındaki fıtri rızıktır, insanı yaşatır. Diğeri ise mecazi rızıktır ki hırs yüzünden insanı harama ve zillet altına sokabilir. Kanaat ve iktisat eden, bereket sertifikasını kalben alır. Fiili dua olarak çalışmak esbaptır, neticeyi istemek ve razı olmak tevekküldür.";
-        sonuc.tasks = ["Mevcut harcamalarınızı ve mesainizi 'İktisat Risalesi' ölçülerine göre düzenleyin.", "Değer üretebileceğiniz yeni helal birleşme alanları (ek iş, yeni dijital yetenekler) belirleyin.", "Hırs ile değil, şevk ve tevekkül ile çalışarak fiili duanızı tamamlayın."];
-    }
-    // 3. Durum: GELECEK / HEDEF / PROJE / BAŞARI
-    else if (userInput.includes('proje') || userInput.includes('başarı') || userInput.includes('hedef') || userInput.includes('gelecek') || userInput.includes('yazılım')) {
-        sonuc.badge_type = "green";
-        sonuc.badge_text = "MUTLAK DEĞER ÜRETİMİ";
-        sonuc.title = "Şevk ve Faaliyet Analizi";
-        sonuc.desc = "Harika bir vizyon. Niyetiniz ve hedefiniz YBT formülündeki 'Birleşme' gücünü zirveye taşıyor. Zaman çarpanınızı bu projeye odaklayarak, doğru mekanda ve doğru insanlarla yapacağınız 'Yer Değiştirme'ler, ortaya devasa bir değer (Bereket) çıkaracaktır.";
-        sonuc.quote = "“Bir işi bitirince hemen diğerine koyul.” — İnşirâh Suresi, 7. Ayet";
-        sonuc.kulliyat = "Risale-i Nur Külliyatı, Münazarat: 'Bizim düşmanımız cehalet, zaruret, ihtilaftır. Bu üç düşmana karşı sanat, marifet, ittifak silahıyla cihad edeceğiz.' Yazılım, teknoloji ve faydalı projeler asrın marifet ve sanat silahıdır. Bu yoldaki adımlar ihlas ile atılırsa, Allah o emeğin neticesini dünya ve ahirette berekete çevirir.";
-        sonuc.tasks = ["Projenizin ilk çalışan küçük sürümünü (MVP) hemen bugün planlayın.", "Zaman çarpanınızı her gün düzenli olarak bu hedefe vakfedin.", "İhlas dairesinde kalabileceğiniz temiz ve yüksek enerjili çalışma arkadaşları/ortamları bulun."];
-    }
-
-    // Arayüzü Güncelleme İşlemleri
-    const badgeContainer = document.getElementById('status-badge-container');
-    badgeContainer.innerHTML = `<span class="status-badge badge-${sonuc.badge_type}"><i class="fa-solid fa-circle-info"></i> ${sonuc.badge_text}</span>`;
-    
-    document.getElementById('report-title').innerText = sonuc.title;
-    document.getElementById('report-desc').innerHTML = sonuc.desc;
-    document.getElementById('sacred-quote').innerHTML = sonuc.quote;
-    document.getElementById('kulliyat-content').innerHTML = sonuc.kulliyat;
-
-    const tasksUl = document.getElementById('tasks');
-    tasksUl.innerHTML = "";
-    sonuc.tasks.forEach(task => {
-        tasksUl.innerHTML += `<li>${task}</li>`;
-    });
-
-    const certificate = document.getElementById('certificate');
-    if (sonuc.badge_type === 'red') {
-        certificate.style.display = 'block';
-    } else {
-        certificate.style.display = 'none';
-    }
-
-    document.getElementById('input-screen').style.display = 'none';
-    document.getElementById('report-screen').style.display = 'block';
-}
