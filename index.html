@@ -62,7 +62,7 @@
 
         header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             border-bottom: 2px solid var(--gold-accent);
             padding-bottom: 20px;
         }
@@ -83,6 +83,29 @@
             color: var(--gold-accent);
         }
 
+        /* HER ZAMAN GÖRÜNECEK SABİT KİTAP SÖZÜ (EPİSAF) */
+        .permanent-quote {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .permanent-quote p {
+            font-family: 'Merriweather', serif;
+            font-size: 18px;
+            font-style: italic;
+            color: var(--text-dark);
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .permanent-quote .author {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 13px; /* Küçültülmüş punto */
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+        }
+
         /* Giriş Alanı */
         .input-section {
             display: flex;
@@ -92,7 +115,7 @@
 
         .input-section label {
             font-family: 'Merriweather', serif;
-            font-size: 20px;
+            font-size: 18px;
             font-style: italic;
             color: var(--text-dark);
         }
@@ -141,7 +164,7 @@
         /* SONUÇ VE DEĞER RAPORU EKRANI */
         .report-section {
             display: none;
-            margin-top: 40px;
+            margin-top: 20px;
             animation: fadeIn 0.5s ease-in-out;
         }
 
@@ -242,6 +265,11 @@
         <div class="subtitle">Ahlaki ve Mantıksal Değer Motoru</div>
     </header>
 
+    <div class="permanent-quote">
+        <p>"İnsan sadece yer değiştirme ve birleşme yapar, değeri Allah yaratır."</p>
+        <div class="author">YBT (sf. 18) — Bayram Gedikli</div>
+    </div>
+
     <div id="input-screen" class="input-section">
         <label for="user-input">Ömür sermayenizin şu anki durumunu, karar veya dertlerinizi sayfaya dökün:</label>
         <textarea id="user-input" placeholder="Örn: İş yerimde çok yıprandım, mobbinge uğruyorum. 41 bin alıyorum ama piyasa 48 bin civarı, ne yapmalıyım?"></textarea>
@@ -279,7 +307,7 @@
     </div>
 </div>
 
-<script>
+<script {see-instruction-about-js}>
     function analizEt() {
         const text = document.getElementById('user-input').value.toLowerCase();
         if (!text.trim()) {
@@ -296,11 +324,9 @@
         const tasks = document.getElementById('tasks');
         const certificate = document.getElementById('certificate');
 
-        // İçerik sıfırlama
         tasks.innerHTML = '';
         certificate.style.display = 'none';
 
-        // 1. SENARYO: TOKSİK / MOBBİNG / İŞ DEĞİŞTİRME (Senin şu anki durumun)
         if (text.includes('mobbing') || text.includes('yıprandım') || text.includes('harcadı') || text.includes('iş değiştirmek') || text.includes('41 bin')) {
             badgeContainer.innerHTML = '<span class="status-badge badge-red"><i class="fa-solid fa-triangle-exclamation"></i> ACİL TAHLİYE / DEĞER İFLASI</span>';
             title.innerText = 'Sistem Hükmü: Negatif Değer ve Zorunlu Hicret';
@@ -312,10 +338,8 @@
                 <li><b>Fiili Yer Değiştirme (Hicret):</b> Belirlenen o 3-4 yeni iş görüşmesine adil piyasa değerinizi (48k) talep eden özgüvenli bir mimar olarak katılın.</li>
                 <li><b>Tevekkül Zırhı:</b> Rızkı veren Rezzak'tır. "Şüphesiz güçlükle beraber bir kolaylık vardır" (İnşirah 5) sırrına sarılın.</li>
             `;
-            certificate.style.style.display = 'block'; // Bu kutlu dönüşüm için sertifikayı göster
             certificate.style.display = 'block';
 
-        // 2. SENARYO: ETİK / DÜNYEVİ RİSKLER (Sarı Alan)
         } else if (text.includes('risk') || text.includes('yalan') || text.includes('para') || text.includes('korku')) {
             badgeContainer.innerHTML = '<span class="status-badge badge-yellow"><i class="fa-solid fa-circle-exclamation"></i> SARI ALAN: DÜNYEVİ RİSK ANALİZİ</span>';
             title.innerText = 'Sistem Uyarısı: Risk Dengesi Ölçülüyor';
@@ -326,9 +350,7 @@
                 <li>Eylemin getireceği zararları listele ve rotanı güvenli alana güncelle.</li>
                 <li>Niyetini (Birleşme) sadece geçici menfaatlere değil, kalıcı berekete odakla.</li>
             `;
-        } 
-        // 3. SENARYO: NORMAL / POZİTİF (Yeşil Alan)
-        else {
+        } else {
             badgeContainer.innerHTML = '<span class="status-badge badge-green"><i class="fa-solid fa-circle-check"></i> YEŞİL ALAN: BEREKET DENGESİ</span>';
             title.innerText = 'Sistem Hükmü: Dengeli Değer Üretimi';
             desc.innerText = 'Girdiniz, zaman sermayenizin niyet ve ihlas ile doğru bir şekilde birleştiğini gösteriyor. Mevcut hareket planınız artı değer üretmeye uygundur.';
@@ -340,7 +362,6 @@
             `;
         }
 
-        // Ekran geçişi
         inputScreen.style.display = 'none';
         reportScreen.style.display = 'block';
     }
