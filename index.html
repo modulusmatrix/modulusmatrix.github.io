@@ -406,3 +406,78 @@
 
 </body>
 </html>
+
+function analizEt() {
+    const userInput = document.getElementById('user-input').value.toLowerCase();
+    if (!userInput.trim()) {
+        alert('Lütfen analiz için durumunuzu yazın.');
+        return;
+    }
+
+    // Akıllı Filtre Havuzu
+    let sonuc = {
+        badge_type: "yellow",
+        badge_text: "DURUM ANALİZİ",
+        title: "Genel Tevekkül Değerlendirmesi",
+        desc: "YBT Anayasası gereğince; yaşadığınız süreç ömür sermayenizin zaman çarpanını doğrudan etkilemektedir. Fiili durumunuzdaki 'Yer Değiştirme' ihtiyacı, niyetleriniz ve 'Birleşme' kaliteniz ile ölçülüyor. Sabır ve doğru esbaba teşebbüs ile değer üretimini artırmalısınız.",
+        quote: "“İnsan için ancak çalıştığının karşılığı vardır.” — Necm Suresi, 39. Ayet",
+        kulliyat: "Risale-i Nur Külliyatı'ndan Sözler mecmuasında beyan edildiği gibi: 'Hayat bir faaliyet-i daimedir. Şevk ise onun bineğidir.' Karşılaştığınız durgunluk veya sıkıntı durumlarında yeise (ümitsizliğe) düşmeden, ihlas dairesinde esbaba müracaat etmek asıldır.",
+        tasks: ["Bulunduğunuz durumu sakin bir zihinle kağıda dökün.", "Geleceğe yönelik niyetlerinizi 'İhlas' süzgecinden geçirin.", "Fiili olarak yapabileceğiniz ilk küçük yer değiştirmeyi planlayın."]
+    };
+
+    // 1. Durum: MOBBING / HAKSIZLIK / BASKI / İSTİFA / İŞ
+    if (userInput.includes('mobbing') || userInput.includes('haksızlık') || userInput.includes('baskı') || userInput.includes('istifa') || userInput.includes('iş') || userInput.includes('patron')) {
+        sonuc.badge_type = "red";
+        sonuc.badge_text = "ACİL TAHLİYE / DEĞER İFLASI";
+        sonuc.title = "Zulüm Altında Zaman Çarpanı Analizi";
+        sonuc.desc = "Girdiğiniz veriler, mevcut konumunuzda ağır bir değer erimesi (mobbing/baskı) yaşandığını gösteriyor. YBT formülüne göre; zaman çarpanınız zulüm altında yıpranırken, bulunduğunuz yerdeki 'Birleşme' katsayınız negatife düşmüştür. Bu ortamda kalmak, ahlaki ve zihni sermayeyi tüketir. 'Yer Değiştirme' (Hicret) fiiliyatı kaçınılmaz bir zorunluluk haline gelmiştir.";
+        sonuc.quote = "“Allah’ın arzı geniş değil miydi ki orada hicret edesiniz?” — Nisâ Suresi, 97. Ayet";
+        sonuc.kulliyat = "Risale-i Nur Külliyatı, Mektubat (Tevakkuf ve Esbab Hakikatleri): Zalimlerin baskısı ve esbabın sukut ettiği anlarda, tevekkül mekanizması devreye girer. Rızkı veren Allah'tır (Rezzak-ı Mutlak). Kul, izzetini korumakla ve meşru dairede yer değiştirerek yeni esbap kapılarını aralamakla mükelleftir. İhlası zedeleyen ortamlardan çekilmek tenbellik değil, muhafazadır.";
+        sonuc.tasks = ["Zulüm silsilesine ve mobbinge karşı fiili bağlarınızı koparacak stratejik planı yapın.", "Rızık endişesini bir kenara bırakarak Allah'ın geniş arzında yeni birleşmeler (yeni iş, yeni proje) arayın.", "MODULUS X felsefesini hayatınıza uygulayarak ilk yer değiştirme adımını (istifa veya yeni başvuru) atın."];
+    } 
+    // 2. Durum: PARA / RIZIK / MADDİYAT / GEÇİM
+    else if (userInput.includes('para') || userInput.includes('rızık') || userInput.includes('geçim') || userInput.includes('maddi') || userInput.includes('borç')) {
+        sonuc.badge_type = "yellow";
+        sonuc.badge_text = "RIZIK VE ESBAB SÜZGECİ";
+        sonuc.title = "Maddiyat ve Bereket Formülü";
+        sonuc.desc = "YBT Anayasası'nda belirtildiği gibi; 'İnsan sadece yer değiştirme ve birleşme yapar, değeri Allah yaratır.' Maddi daralmalar, zaman çarpanını iyi kullanamamaktan veya yanlış birleşmelerden kaynaklanır. Para bir amaç değil, doğru birleşmelerin ve helal emeğin bir meyvesidir.";
+        sonuc.quote = "“Şüphesiz rızık veren, güç ve sarsılmaz kuvvet sahibi olan ancak Allah’tır.” — Zâriyât Suresi, 58. Ayet";
+        sonuc.kulliyat = "Risale-i Nur Külliyatı, İktisat ve Şükür Risaleleri: Rızık ikidir; biri taahhüd-ü rabbani altındaki fıtri rızıktır, insanı yaşatır. Diğeri ise mecazi rızıktır ki hırs yüzünden insanı harama ve zillet altına sokabilir. Kanaat ve iktisat eden, bereket sertifikasını kalben alır. Fiili dua olarak çalışmak esbaptır, neticeyi istemek ve razı olmak tevekküldür.";
+        sonuc.tasks = ["Mevcut harcamalarınızı ve mesainizi 'İktisat Risalesi' ölçülerine göre düzenleyin.", "Değer üretebileceğiniz yeni helal birleşme alanları (ek iş, yeni dijital yetenekler) belirleyin.", "Hırs ile değil, şevk ve tevekkül ile çalışarak fiili duanızı tamamlayın."];
+    }
+    // 3. Durum: GELECEK / HEDEF / PROJE / BAŞARI
+    else if (userInput.includes('proje') || userInput.includes('başarı') || userInput.includes('hedef') || userInput.includes('gelecek') || userInput.includes('yazılım')) {
+        sonuc.badge_type = "green";
+        sonuc.badge_text = "MUTLAK DEĞER ÜRETİMİ";
+        sonuc.title = "Şevk ve Faaliyet Analizi";
+        sonuc.desc = "Harika bir vizyon. Niyetiniz ve hedefiniz YBT formülündeki 'Birleşme' gücünü zirveye taşıyor. Zaman çarpanınızı bu projeye odaklayarak, doğru mekanda ve doğru insanlarla yapacağınız 'Yer Değiştirme'ler, ortaya devasa bir değer (Bereket) çıkaracaktır.";
+        sonuc.quote = "“Bir işi bitirince hemen diğerine koyul.” — İnşirâh Suresi, 7. Ayet";
+        sonuc.kulliyat = "Risale-i Nur Külliyatı, Münazarat: 'Bizim düşmanımız cehalet, zaruret, ihtilaftır. Bu üç düşmana karşı sanat, marifet, ittifak silahıyla cihad edeceğiz.' Yazılım, teknoloji ve faydalı projeler asrın marifet ve sanat silahıdır. Bu yoldaki adımlar ihlas ile atılırsa, Allah o emeğin neticesini dünya ve ahirette berekete çevirir.";
+        sonuc.tasks = ["Projenizin ilk çalışan küçük sürümünü (MVP) hemen bugün planlayın.", "Zaman çarpanınızı her gün düzenli olarak bu hedefe vakfedin.", "İhlas dairesinde kalabileceğiniz temiz ve yüksek enerjili çalışma arkadaşları/ortamları bulun."];
+    }
+
+    // Arayüzü Güncelleme İşlemleri
+    const badgeContainer = document.getElementById('status-badge-container');
+    badgeContainer.innerHTML = `<span class="status-badge badge-${sonuc.badge_type}"><i class="fa-solid fa-circle-info"></i> ${sonuc.badge_text}</span>`;
+    
+    document.getElementById('report-title').innerText = sonuc.title;
+    document.getElementById('report-desc').innerHTML = sonuc.desc;
+    document.getElementById('sacred-quote').innerHTML = sonuc.quote;
+    document.getElementById('kulliyat-content').innerHTML = sonuc.kulliyat;
+
+    const tasksUl = document.getElementById('tasks');
+    tasksUl.innerHTML = "";
+    sonuc.tasks.forEach(task => {
+        tasksUl.innerHTML += `<li>${task}</li>`;
+    });
+
+    const certificate = document.getElementById('certificate');
+    if (sonuc.badge_type === 'red') {
+        certificate.style.display = 'block';
+    } else {
+        certificate.style.display = 'none';
+    }
+
+    document.getElementById('input-screen').style.display = 'none';
+    document.getElementById('report-screen').style.display = 'block';
+}
