@@ -1,96 +1,35 @@
 import random
 
-# -------------------------
-# DİNAMİK AĞIRLIKLAR
-# -------------------------
-def get_weights(X):
-    return {
-        "M": max(0.1, 0.3 - X * 0.2),
-        "S": 0.2,
-        "E": 0.2,
-        "X": 0.2 + X * 0.3,
-        "T": 0.1
-    }
+STATE = {
+    "stress": 0.5,
+    "confidence": 0.5,
+    "risk_appetite": 0.5
+}
 
-# -------------------------
-# ANA SKOR MOTORU
-# -------------------------
-def calculate(M, S, E, X, T):
-    W = get_weights(X)
+def update_state(M,S,E,X,T):
+    STATE["stress"] = min(1, STATE["stress"] + X - S)
+    STATE["confidence"] = min(1, STATE["confidence"] + T - X)
+    STATE["risk_appetite"] = min(1, STATE["risk_appetite"] + M - E)
 
-    raw = (
-        W["M"] * M +
-        W["S"] * S +
-        W["E"] * E -
-        W["X"] * X +
-        W["T"] * T
-    )
+def policy():
+    if STATE["stress"] > 0.6:
+        return "risk_averse"
+    elif STATE["confidence"] > 0.6:
+        return "aggressive"
+    return "balanced"
 
-    # sigmoid benzeri normalizasyon
-    score = 1 / (1 + pow(2.718, -raw))
+def run(M,S,E,X,T):
+    update_state(M,S,E,X,T)
 
-    return round(score, 3)
+    mode = policy()
 
-# -------------------------
-# DAĞILIM MODELİ
-# -------------------------
-def distribution(score, X):
-    noise = X * 0.3
+    if mode == "risk_averse":
+        return {"decision": "safe path", "state": STATE}
+    elif mode == "aggressive":
+        return {"decision": "high risk path", "state": STATE}
+    else:
+        return {"decision": "balanced path", "state": STATE}
 
-    return {
-        "low": round(max(0, score - noise - random.uniform(0, 0.1)), 3),
-        "mid": score,
-        "high": round(min(1, score + noise + random.uniform(0, 0.1)), 3)
-    }
-
-# -------------------------
-# SENARYO MOTORU
-# -------------------------
-def scenarios(score, X):
-    return [
-        {
-            "path": "stable",
-            "value": round(score, 3)
-        },
-        {
-            "path": "growth",
-            "value": round(min(1, score + (0.2 * (1 - X))), 3)
-        },
-        {
-            "path": "decline",
-            "value": round(max(0, score - (0.3 * X)), 3)
-        },
-        {
-            "path": "chaos",
-            "value": round(random.uniform(0, 1), 3)
-        }
-    ]
-
-# -------------------------
-# TEST INPUT
-# -------------------------
-event = "iş değişimi"
-
-M = 0.4
-S = 0.7
-E = 0.6
-X = 0.3
-T = 0.8
-
-# -------------------------
-# RUN ENGINE
-# -------------------------
-score = calculate(M, S, E, X, T)
-dist = distribution(score, X)
-scn = scenarios(score, X)
-
-# -------------------------
-# OUTPUT
-# -------------------------
-print("\nEVENT:", event)
-print("SCORE:", score)
-print("DISTRIBUTION:", dist)
-print("SCENARIOS:")
-
-for s in scn:
-    print("-", s)
+# test
+print(run(0.4,0.7,0.6,0.3,0.8))
+print(run(0.9,0.2,0.8,0.1,0.7))
