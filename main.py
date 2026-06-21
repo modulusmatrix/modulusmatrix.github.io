@@ -1,8 +1,21 @@
-# Modulus X - AI Decision Matrix (Yapay Zeka Karar Matrisi)
+def calculate(M, S, E, X, T):
+    Wm, Ws, We, Wx, Wt = 0.25, 0.2, 0.2, 0.2, 0.15
 
-Bu proje, felsefi ve matematiksel bir formül olan `Zaman * ((Yer Değiştirme) * Birleşme)` algoritmasını temel alır. Girilen toplumsal ve bireysel verileri işleyerek, sonuçları Kur'an-ı Kerim ayetleri ve Hadis-i Şerifler ile analiz eden bir yapay zeka karar mekanizmasıdır.
+    score = (
+        Wm * M +
+        Ws * S +
+        We * E -
+        Wx * X +
+        Wt * T
+    )
 
-## 🚀 Özellikler
-- **Modulus X Formül Entegrasyonu:** Zaman (S-Z), Yer Değiştirme ve Birleşme hesaplamaları.
-- **Yapay Zeka Çıkarım Motoru:** Sonuçların pozitif/negatif yönüne göre durum analizi.
-- **İslami Bilgi Tabanı:** Ayet ve Hadis eşleştirmeleri.
+    return round(score, 3)
+
+event = "test event"
+M, S, E, X, T = 0.4, 0.7, 0.6, 0.3, 0.8
+
+score = calculate(M,S,E,X,T)
+
+print("EVENT:", event)
+print("SCORE:", score)
+print("CONFIDENCE:", round(1-X,3))
